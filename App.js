@@ -25,7 +25,7 @@ export default function App() {
             padding: '8.013px 35.091px 34.668px 35.628px',
             justifyContent: 'center',
             alignItems: 'center',
-            borderRadius: '10px 10px 0px 0px',
+         
             border: '2px solid #E6E6E6',
             backgroundColor: '#FFF',
           },

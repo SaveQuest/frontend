@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
-import * as Font from 'expo-font';
-import SafeIcon from '../components/SafeIcon';
-import NotificationIcon from '../components/NotificationIcon';
-import SettingsIcon from '../components/SettingsIcon';
-import PlusIcon from '../components/PlusIcon';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import * as Font from "expo-font";
+import SafeIcon from "../components/SafeIcon";
+import NotificationIcon from "../components/NotificationIcon";
+import SettingsIcon from "../components/SettingsIcon";
+import PlusIcon from "../components/PlusIcon";
+import QuestList from "../components/QuestList";
 
 export default function Home() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -12,9 +13,9 @@ export default function Home() {
   useEffect(() => {
     const loadFonts = async () => {
       await Font.loadAsync({
-        'Pretendard-Regular': require('../assets/fonts/Pretendard-Regular.otf'),
-        'Pretendard-Bold': require('../assets/fonts/Pretendard-Bold.otf'),
-        'Pretendard-Medium': require('../assets/fonts/Pretendard-Medium.otf'),
+        "Pretendard-Regular": require("../assets/fonts/Pretendard-Regular.otf"),
+        "Pretendard-Bold": require("../assets/fonts/Pretendard-Bold.otf"),
+        "Pretendard-Medium": require("../assets/fonts/Pretendard-Medium.otf"),
       });
       setFontsLoaded(true);
     };
@@ -73,7 +74,7 @@ export default function Home() {
             </View>
             <Image
               style={styles.characterImage}
-              source={require('../assets/character.png')}
+              source={require("../assets/character.png")}
               resizeMode="contain"
             />
           </View>
@@ -82,7 +83,7 @@ export default function Home() {
         <Text style={styles.sectionTitle}>진행중인 도전과제</Text>
 
         <View style={styles.tasks}>
-          <Task
+          <QuestList
             title="편의점에서 총 5,000원 이하로 사용하기 [~6/12]"
             amountUsed="₩1,000"
             status="safe"
@@ -90,7 +91,7 @@ export default function Home() {
             goal="5,000원"
             iconColor="#81C966"
           />
-          <Task
+          <QuestList
             title="쇼핑몰에서 총 15,000원 이하로 사용하기 [~6/12]"
             amountUsed="₩14,000"
             status="warning"
@@ -98,7 +99,7 @@ export default function Home() {
             goal="15,000원"
             iconColor="#F7941D"
           />
-          <Task
+          <QuestList
             title="게임에서 총 50,000원 이하로 사용하기 [~6/12]"
             amountUsed="₩999,999,999"
             status="danger"
@@ -112,146 +113,111 @@ export default function Home() {
   );
 }
 
-const Task = ({ title, amountUsed, status, progress, goal, iconColor }) => (
-  <View style={styles.task}>
-    <View style={styles.taskHeader}>
-      <Text style={styles.taskTitle}>{title}</Text>
-      <View style={[styles.statusBadge, styles[status]]}>
-        <Text style={styles.statusBadgeText}>
-          {status === 'safe' ? '안전' : status === 'warning' ? '위험' : '실패'}
-        </Text>
-      </View>
-    </View>
-
-    <View style={styles.taskContent}>
-      <Text style={styles.amountUsed}>
-        지금까지 {'\n'}
-        <Text style={[styles.bold, { color: iconColor }]}>{amountUsed}</Text> 사용
-      </Text>
-      <View style={styles.iconContainer}>
-        <PlusIcon />
-        <View style={styles.safeIconWithText}>
-          <SafeIcon />
-          <Text style={styles.safeIconText}>50</Text>
-        </View>
-      </View>
-    </View>
-
-    <View style={styles.progressBar}>
-      <View style={[styles.progress, { width: `${progress}%`, backgroundColor: iconColor }]} />
-      <View style={[styles.goalLine, { left: '100%' }]} />
-      <View style={styles.goalAmountContainer}>
-        <Text style={styles.goalAmount}>{goal}</Text>
-      </View>
-    </View>
-  </View>
-);
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
   },
   scrollView: {
     flexGrow: 1,
-    padding: 20,
+    padding: 15,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 77,
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 30,
+    alignItems: "center",
   },
   userName: {
-    color: '#000',
-    textAlign: 'center',
-    fontFamily: 'Pretendard-Bold',
+    color: "#000",
+    textAlign: "center",
+    fontFamily: "Pretendard-Bold",
     fontSize: 27.077,
-    fontStyle: 'normal',
-    fontWeight: '700',
+    fontStyle: "normal",
+    fontWeight: "700",
     lineHeight: 35.041,
   },
   userSuffix: {
-    color: '#55555E',
-    fontFamily: 'Pretendard-Medium',
+    color: "#55555E",
+    fontFamily: "Pretendard-Medium",
     fontSize: 27.077,
-    fontStyle: 'normal',
-    fontWeight: '500',
+    fontStyle: "normal",
+    fontWeight: "500",
     lineHeight: 35.041,
   },
   iconsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   iconWithText: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginRight: 20,
   },
   iconText: {
     marginLeft: 4,
     fontSize: 15.287,
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: '700',
-    color: '#5D5D5D',
-    textAlign: 'center',
+    fontFamily: "Pretendard-Bold",
+    fontWeight: "700",
+    color: "#5D5D5D",
+    textAlign: "center",
     lineHeight: 19.783,
   },
   notificationBadge: {
-    position: 'absolute',
+    position: "absolute",
     right: -6,
     top: -4,
-    backgroundColor: 'green',
+    backgroundColor: "green",
     borderRadius: 10,
     width: 20,
     height: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   notificationText: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 12,
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: 'bold',
+    fontFamily: "Pretendard-Bold",
+    fontWeight: "bold",
   },
   amountUsedToday: {
-    color: '#55555E',
-    textAlign: 'left',
-    fontFamily: 'Pretendard-Medium',
+    color: "#55555E",
+    textAlign: "left",
+    fontFamily: "Pretendard-Medium",
     fontSize: 14.124,
-    fontStyle: 'normal',
-    fontWeight: '500',
+    fontStyle: "normal",
+    fontWeight: "500",
     lineHeight: 18.278,
     marginTop: 12,
   },
   amountComparison: {
     fontSize: 14,
-    fontFamily: 'Pretendard-Medium',
+    fontFamily: "Pretendard-Medium",
     marginTop: 5,
-    color: '#666',
+    color: "#666",
     marginBottom: 26,
-    textAlign: 'left',
+    textAlign: "left",
   },
   bold: {
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: 'bold',
+    fontFamily: "Pretendard-Bold",
+    fontWeight: "bold",
   },
   red: {
-    fontFamily: 'Pretendard-Bold',
-    color: 'red',
+    fontFamily: "Pretendard-Bold",
+    color: "red",
   },
   card: {
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: 17.196,
     padding: 20,
     marginBottom: 20,
     marginTop: 8,
   },
   cardContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   cardText: {
     flex: 1,
@@ -259,58 +225,58 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 17.196,
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: '700',
-    color: '#389348',
+    fontFamily: "Pretendard-Bold",
+    fontWeight: "700",
+    color: "#389348",
     lineHeight: 19.489,
   },
   level: {
     fontSize: 9.171,
-    fontFamily: 'Pretendard-Medium',
-    fontWeight: '500',
-    color: '#55555E',
+    fontFamily: "Pretendard-Medium",
+    fontWeight: "500",
+    color: "#55555E",
     lineHeight: 19.489,
   },
   levelValue: {
     fontSize: 12.611,
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: '700',
-    color: '#389348',
+    fontFamily: "Pretendard-Bold",
+    fontWeight: "700",
+    color: "#389348",
     lineHeight: 19.489,
   },
   progressBarBackground: {
     height: 9,
-    backgroundColor: '#E6E6E6',
+    backgroundColor: "#E6E6E6",
     borderRadius: 10,
     marginTop: 4,
-    width: '100%',
+    width: "100%",
   },
   progressBarFill: {
-    height: '100%',
-    backgroundColor: '#389348',
+    height: "100%",
+    backgroundColor: "#389348",
     borderRadius: 10,
-    width: '70%',
+    width: "70%",
   },
   subtitle: {
     fontSize: 12.793,
-    fontFamily: 'Pretendard-Medium',
-    fontWeight: '500',
-    color: '#55555E',
+    fontFamily: "Pretendard-Medium",
+    fontWeight: "500",
+    color: "#55555E",
     marginTop: 13,
     lineHeight: 19.489,
   },
   challengeCount: {
     fontSize: 13,
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: 'bold',
-    color: '#389348',
+    fontFamily: "Pretendard-Bold",
+    fontWeight: "bold",
+    color: "#389348",
     marginTop: 2,
   },
   value: {
     fontSize: 15.374,
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: '700',
-    color: '#389348',
+    fontFamily: "Pretendard-Bold",
+    fontWeight: "700",
+    color: "#389348",
     lineHeight: 19.489,
   },
   characterImage: {
@@ -320,112 +286,13 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: '700',
-    color: '#333',
+    fontFamily: "Pretendard-Bold",
+    fontWeight: "700",
+    color: "#333",
     marginTop: 20,
     marginBottom: 10,
   },
   tasks: {
     flex: 1,
-  },
-  task: {
-    backgroundColor: '#FFF',
-    borderRadius: 17.196,
-    padding: 20,
-    marginBottom: 10,
-  },
-  taskHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  taskTitle: {
-    fontSize: 15,
-    fontFamily: 'Pretendard-Medium',
-    fontWeight: '500',
-    color: '#333',
-    lineHeight: 19.489,
-  },
-  statusBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 20,
-    backgroundColor: '#E6E6E6',
-  },
-  safe: {
-    borderRadius: 3.439,
-    backgroundColor: '#81C966',
-  },
-  warning: {
-    borderRadius: 3.439,
-    backgroundColor: '#F7941D',
-  },
-  danger: {
-    borderRadius: 3.439,
-    backgroundColor: '#FF4C4C',
-  },
-  statusBadgeText: {
-    fontSize: 12,
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-  taskContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  amountUsed: {
-    fontSize: 13,
-    fontFamily: 'Pretendard-Medium',
-    fontWeight: '500',
-    color: '#333',
-    lineHeight: 19.489,
-  },
-  iconContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  safeIconWithText: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  safeIconText: {
-    marginLeft: 4,
-    fontSize: 15,
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: '700',
-    color: '#5D5D5D',
-  },
-  progressBar: {
-    height: 9,
-    backgroundColor: '#E6E6E6',
-    borderRadius: 10,
-    marginTop: 10,
-    position: 'relative',
-    overflow: 'hidden',
-  },
-  progress: {
-    height: '100%',
-    borderRadius: 10,
-  },
-  goalLine: {
-    position: 'absolute',
-    height: '100%',
-    width: 2,
-    backgroundColor: '#333',
-  },
-  goalAmountContainer: {
-    position: 'absolute',
-    right: 0,
-    top: -20,
-  },
-  goalAmount: {
-    fontSize: 13,
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: '700',
-    color: '#333',
   },
 });
