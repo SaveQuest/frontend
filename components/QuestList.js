@@ -61,7 +61,6 @@ export default function QuestList({
 
 const styles = StyleSheet.create({
   bold: {
-    fontFamily: "Pretendard-Bold",
     fontWeight: "bold",
   },
   task: {
@@ -77,7 +76,6 @@ const styles = StyleSheet.create({
   },
   taskTitle: {
     fontSize: 15,
-    fontFamily: "Pretendard-Medium",
     fontWeight: "500",
     color: "#333",
     lineHeight: 19.489,
@@ -102,7 +100,6 @@ const styles = StyleSheet.create({
   },
   statusBadgeText: {
     fontSize: 12,
-    fontFamily: "Pretendard-Bold",
     fontWeight: "bold",
     color: "#FFF",
   },
@@ -114,7 +111,6 @@ const styles = StyleSheet.create({
   },
   amountUsed: {
     fontSize: 15,
-    fontFamily: "Pretendard-Medium",
     fontWeight: "500",
     color: "#333",
     lineHeight: 19.489,
@@ -130,7 +126,6 @@ const styles = StyleSheet.create({
   safeIconText: {
     marginLeft: 4,
     fontSize: 15,
-    fontFamily: "Pretendard-Bold",
     fontWeight: "700",
     color: "#5D5D5D",
   },
@@ -159,7 +154,6 @@ const styles = StyleSheet.create({
   },
   goalAmount: {
     fontSize: 13,
-    fontFamily: "Pretendard-Bold",
     fontWeight: "700",
     color: "#333",
   },

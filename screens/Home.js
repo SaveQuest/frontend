@@ -1,55 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
-import * as Font from "expo-font";
-import SafeIcon from "../components/SafeIcon";
-import NotificationIcon from "../components/NotificationIcon";
-import SettingsIcon from "../components/SettingsIcon";
-import PlusIcon from "../components/PlusIcon";
 import QuestList from "../components/QuestList";
+import FontLoad from "../hooks/FontLoad";
+import Header from "../components/Header";
+import Card from "../components/Card";
 
 export default function Home() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-
-  useEffect(() => {
-    const loadFonts = async () => {
-      await Font.loadAsync({
-        "Pretendard-Regular": require("../assets/fonts/Pretendard-Regular.otf"),
-        "Pretendard-Bold": require("../assets/fonts/Pretendard-Bold.otf"),
-        "Pretendard-Medium": require("../assets/fonts/Pretendard-Medium.otf"),
-      });
-      setFontsLoaded(true);
-    };
-
-    loadFonts();
-  }, []);
-
-  if (!fontsLoaded) {
-    return null;
-  }
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <View style={styles.header}>
-          <Text style={styles.userName}>
-            차호림<Text style={styles.userSuffix}>님</Text>
-          </Text>
-
-          <View style={styles.iconsContainer}>
-            <View style={styles.iconWithText}>
-              <SafeIcon />
-              <Text style={styles.iconText}>260</Text>
-            </View>
-            <View style={styles.iconWithText}>
-              <NotificationIcon />
-              <View style={styles.notificationBadge}>
-                <Text style={styles.notificationText}>2</Text>
-              </View>
-            </View>
-            <SettingsIcon />
-          </View>
-        </View>
-
+        <Header home />
         <Text style={styles.amountUsedToday}>
           오늘 <Text style={styles.bold}>1,425,765원</Text> 을 사용 하셨습니다.
         </Text>
@@ -57,7 +18,7 @@ export default function Home() {
           어제보다 <Text style={styles.red}>434,123원</Text> 더 사용 하셨습니다.
         </Text>
 
-        <View style={styles.card}>
+        <Card>
           <View style={styles.cardContent}>
             <View style={styles.cardText}>
               <Text style={styles.title}>절약의 신</Text>
@@ -68,7 +29,7 @@ export default function Home() {
                 <View style={styles.progressBarFill} />
               </View>
               <Text style={styles.subtitle}>성공한 도전과제</Text>
-              <Text style={styles.challengeCount}>321개</Text>
+              <Text style={styles.value}>321개</Text>
               <Text style={styles.subtitle}>앱 설치후 절약한 평균 금액</Text>
               <Text style={styles.value}>321,532원</Text>
             </View>
@@ -78,7 +39,7 @@ export default function Home() {
               resizeMode="contain"
             />
           </View>
-        </View>
+        </Card>
 
         <Text style={styles.sectionTitle}>진행중인 도전과제</Text>
 
@@ -116,103 +77,31 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
   },
   scrollView: {
     flexGrow: 1,
     padding: 15,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 30,
-    alignItems: "center",
-  },
-  userName: {
-    color: "#000",
-    textAlign: "center",
-    fontFamily: "Pretendard-Bold",
-    fontSize: 27.077,
-    fontStyle: "normal",
-    fontWeight: "700",
-    lineHeight: 35.041,
-  },
-  userSuffix: {
-    color: "#55555E",
-    fontFamily: "Pretendard-Medium",
-    fontSize: 27.077,
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: 35.041,
-  },
-  iconsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  iconWithText: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginRight: 20,
-  },
-  iconText: {
-    marginLeft: 4,
-    fontSize: 15.287,
-    fontFamily: "Pretendard-Bold",
-    fontWeight: "700",
-    color: "#5D5D5D",
-    textAlign: "center",
-    lineHeight: 19.783,
-  },
-  notificationBadge: {
-    position: "absolute",
-    right: -6,
-    top: -4,
-    backgroundColor: "green",
-    borderRadius: 10,
-    width: 20,
-    height: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  notificationText: {
-    color: "#FFF",
-    fontSize: 12,
-    fontFamily: "Pretendard-Bold",
-    fontWeight: "bold",
-  },
   amountUsedToday: {
     color: "#55555E",
     textAlign: "left",
-    fontFamily: "Pretendard-Medium",
     fontSize: 14.124,
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 18.278,
-    marginTop: 12,
   },
   amountComparison: {
     fontSize: 14,
-    fontFamily: "Pretendard-Medium",
     marginTop: 5,
     color: "#666",
     marginBottom: 26,
     textAlign: "left",
   },
   bold: {
-    fontFamily: "Pretendard-Bold",
     fontWeight: "bold",
   },
   red: {
-    fontFamily: "Pretendard-Bold",
     color: "red",
-  },
-  card: {
-    backgroundColor: "#FFF",
-    borderRadius: 17.196,
-    padding: 20,
-    marginBottom: 20,
-    marginTop: 8,
   },
   cardContent: {
     flexDirection: "row",
@@ -225,21 +114,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 17.196,
-    fontFamily: "Pretendard-Bold",
     fontWeight: "700",
     color: "#389348",
     lineHeight: 19.489,
   },
   level: {
-    fontSize: 9.171,
-    fontFamily: "Pretendard-Medium",
+    fontSize: 13,
     fontWeight: "500",
     color: "#55555E",
     lineHeight: 19.489,
   },
   levelValue: {
-    fontSize: 12.611,
-    fontFamily: "Pretendard-Bold",
+    fontSize: 15,
     fontWeight: "700",
     color: "#389348",
     lineHeight: 19.489,
@@ -259,22 +145,13 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 12.793,
-    fontFamily: "Pretendard-Medium",
     fontWeight: "500",
     color: "#55555E",
     marginTop: 13,
     lineHeight: 19.489,
   },
-  challengeCount: {
-    fontSize: 13,
-    fontFamily: "Pretendard-Bold",
-    fontWeight: "bold",
-    color: "#389348",
-    marginTop: 2,
-  },
   value: {
     fontSize: 15.374,
-    fontFamily: "Pretendard-Bold",
     fontWeight: "700",
     color: "#389348",
     lineHeight: 19.489,
@@ -286,7 +163,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontFamily: "Pretendard-Bold",
     fontWeight: "700",
     color: "#333",
     marginTop: 20,

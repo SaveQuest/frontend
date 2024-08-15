@@ -1,9 +1,9 @@
 import React from 'react';
 import Svg, { Path, Rect } from 'react-native-svg';
 
-export default function SafeIcon() {
+export default function SafeIcon({style}) {
   return (
-    <Svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+    <Svg style={style} xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
       <Path d="M6.25 6.25V3.125C4.52411 3.125 3.125 4.52411 3.125 6.25H6.25Z" fill="#1B5A27" />
       <Path d="M12.5 3.125V0H4.16667C1.86548 0 0 1.86548 0 4.16667V12.5H3.125V9.375V6.25C3.125 4.52411 4.52411 3.125 6.25 3.125H9.375H12.5Z" fill="#389348" />
       <Path d="M3.125 12.5H0V20.8333C0 23.1345 1.86548 25 4.16667 25H12.5V21.875H9.375H6.25C4.52411 21.875 3.125 20.4759 3.125 18.75V17.1875V15.625V12.5Z" fill="#81C966" />

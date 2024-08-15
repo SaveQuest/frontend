@@ -27,7 +27,7 @@ export default function App() {
             alignItems: 'center',
          
             border: '2px solid #E6E6E6',
-            backgroundColor: '#FFF',
+            backgroundColor: 'white',
           },
           tabBarItemStyle: {
             marginHorizontal: 45,
