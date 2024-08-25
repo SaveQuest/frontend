@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Font from 'expo-font';
-import { styles } from '../styles/AgreementScreenStyles';  // 스타일 파일 경로를 가져옵니다
+import { styles } from '../styles/AgreementScreenStyles';  
 
 export default function AgreementScreen({ navigation, setAgreed }) {
   const [allChecked, setAllChecked] = useState(false);
