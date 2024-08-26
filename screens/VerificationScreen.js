@@ -180,7 +180,7 @@ export default function VerificationScreen() {
               styles.submitButton,
               isFormComplete ? styles.submitButtonActive : styles.submitButtonInactive,
             ]}
-            onPress={() => navigation.navigate('NextScreen')}  
+            onPress={() => navigation.navigate('Main')}
             disabled={!isFormComplete}
           >
             <Text
