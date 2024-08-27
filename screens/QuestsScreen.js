@@ -33,11 +33,26 @@ const QuestsScreen = () => {
             </View>
             <View style={styles.my}>
               <View style={styles.left}>
-                <Text style={styles.plac}>나의 한달 평균 소비 금액</Text>
-                <Text style={styles.left}>₩54,000</Text>
+                <View>
+                  <Text style={styles.one}>나의 한달 평균 소비 금액</Text>
+                  <Text style={styles.two}>₩54,000</Text>
+                </View>
+                <View>
+                  <Text style={styles.one}>지금까지 줄인 소비 금액</Text>
+                  <Text style={styles.two}>₩3,000</Text>
+                </View>
               </View>
-              <View style={styles.right}>
 
+              <View style={styles.right}>
+                <View style={styles.myGame}>
+                  <View>
+                    <Text style={styles.name}>차호림</Text>
+                    <Text style={styles.level}>Lv.998</Text>
+                  </View>
+
+                  <Text style={styles.gameName}>절약의 신</Text>
+                  <Text style={styles.myRank}>현재 순위 1위</Text>
+                </View>
               </View>
             </View>
             <View style={styles.rank}></View>
@@ -65,7 +80,6 @@ const styles = StyleSheet.create({
   header: {
     width: "100%",
     height: 80,
-    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "green",
@@ -73,7 +87,7 @@ const styles = StyleSheet.create({
   content: {
     width: "100%",
     backgroundColor: "#FFF",
-    padding: 8,
+    padding: 12,
   },
   challengeHead: {
     color: "#FFF",
@@ -106,6 +120,24 @@ const styles = StyleSheet.create({
   my: {
     marginTop: 10,
     marginBottom: 10,
+    flexDirection: "row",
+  },
+  left: {
+    flex: 1,
+    gap: 12,
+  },
+  one: {
+    color: "#575757",
+    fontSize: 14,
+  },
+  two: {
+    color: "#000;",
+    fontSize: 26,
+    fontWeight: "bold",
+  },
+
+  right: {
+    flex: 1,
   },
 });
 
