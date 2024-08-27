@@ -61,13 +61,14 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {/* <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Agreement">
           {(props) => <AgreementScreen {...props} setAgreed={setAgreed} />}
         </Stack.Screen>
         <Stack.Screen name="Verification" component={VerificationScreen} />
         {agreed && <Stack.Screen name="Main" component={TabNavigator} />}
-      </Stack.Navigator>
+      </Stack.Navigator> */}
+      <TabNavigator/>
     </NavigationContainer>
   );
 }
