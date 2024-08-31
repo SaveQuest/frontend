@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import Home from './screens/Home';
-import QuestIcon from './components/QuestIcon';
-import HomeIcon from './components/HomeIcon';
-import ProfileIcon from './components/ProfileIcon';
-import QuestsScreen from './screens/QuestsScreen';
-import ProfileScreen from './screens/ProfileScreen';
-import AgreementScreen from './screens/AgreementScreen'; 
-import VerificationScreen from './screens/VerificationScreen';
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import Home from "./screens/Home";
+import QuestIcon from "./components/QuestIcon";
+import HomeIcon from "./components/HomeIcon";
+import ProfileIcon from "./components/ProfileIcon";
+import QuestsScreen from "./screens/QuestsScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import AgreementScreen from "./screens/AgreementScreen";
+import VerificationScreen from "./screens/VerificationScreen";
+import DetailRank from "./components/DetailRank";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -24,23 +25,23 @@ function TabNavigator() {
         tabBarStyle: {
           height: 80,
           borderTopWidth: 0.5,
-          borderTopColor: '#e5e5e5',
-          backgroundColor: '#FFF',
+          borderTopColor: "#e5e5e5",
+          backgroundColor: "#FFF",
           paddingBottom: 10,
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
-          borderColor: '#E6E6E6',
+          borderColor: "#E6E6E6",
           borderWidth: 2,
-          flexDirection: 'row',
-          justifyContent: 'center',
+          flexDirection: "row",
+          justifyContent: "center",
           paddingHorizontal: 20,
         },
         tabBarIcon: ({ focused }) => {
-          if (route.name === 'Home') {
+          if (route.name === "Home") {
             return <HomeIcon />;
-          } else if (route.name === 'Quests') {
+          } else if (route.name === "Quests") {
             return <QuestIcon />;
-          } else if (route.name === 'Profile') {
+          } else if (route.name === "Profile") {
             return <ProfileIcon />;
           }
         },
@@ -56,6 +57,15 @@ function TabNavigator() {
   );
 }
 
+function RootNavigator() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MainPage" component={TabNavigator} />
+      <Stack.Screen name="DetailRank" component={DetailRank} />
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   const [agreed, setAgreed] = useState(false);
 
@@ -66,9 +76,9 @@ export default function App() {
           {(props) => <AgreementScreen {...props} setAgreed={setAgreed} />}
         </Stack.Screen>
         <Stack.Screen name="Verification" component={VerificationScreen} />
-        {agreed && <Stack.Screen name="Main" component={TabNavigator} />}
+        {agreed && <Stack.Screen name="Main" component={RootNavigator} />}
       </Stack.Navigator> */}
-      <TabNavigator/>
+      <RootNavigator/>
     </NavigationContainer>
   );
 }

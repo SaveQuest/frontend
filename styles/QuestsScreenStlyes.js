@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
       backgroundColor: "#FFF",
       borderRadius: 17.196,
       overflow: "hidden",
+      marginBottom:10
     },
     header: {
       width: "100%",
@@ -124,7 +125,14 @@ const styles = StyleSheet.create({
     rankTabText:{
       fontWeight:'bold',
       fontSize:15
-    }
+    },
+    sectionTitle: {
+      fontSize: 16,
+      fontWeight: "700",
+      color: "#333",
+      marginTop: 20,
+      marginBottom: 10,
+    },
   });
 
 export default styles
