@@ -23,6 +23,22 @@ const tasks = [
     goal: "50,000원",
     iconColor: "#FF4C4C",
   },
+  {
+    title: "외식에서 총 20,000원 이하로 사용하기 [~6/15]",
+    amountUsed: "₩12,000",
+    status: "safe",
+    progress: 60,
+    goal: "20,000원",
+    iconColor: "#81C966",
+  },
+  {
+    title: "서점에서 총 10,000원 이하로 사용하기 [~6/15]",
+    amountUsed: "₩3,000",
+    status: "safe",
+    progress: 30,
+    goal: "10,000원",
+    iconColor: "#81C966",
+  },
 ];
 
 export default tasks;

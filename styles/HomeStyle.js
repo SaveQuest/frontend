@@ -60,6 +60,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  
   cardText: {
     flex: 1,
     marginBottom: 5,
@@ -70,6 +71,11 @@ export default StyleSheet.create({
     fontWeight: '700',
     color: '#389348',
     lineHeight: 19,
+  },
+  headerContainer: {
+    paddingTop:20,
+    paddingHorizontal: 20,  // 좌우 패딩 추가하여 헤더가 화면 끝에 맞지 않도록 조정
+    backgroundColor: '#f0f0f0',  // 배경색 맞춤
   },
   level: {
     fontSize: 13,
@@ -127,5 +133,25 @@ export default StyleSheet.create({
   },
   tasks: {
     flex: 1,
+  },
+  selectTaskButton: {  // 버튼 스타일 수정
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 17,
+    backgroundColor: '#fff',
+    marginTop: 20,
+    width: '100%',  // 버튼의 가로 크기를 화면의 95%로 설정
+  },
+  selectTaskButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  arrowIcon: {
+    width: 20,
+    height: 20,
+    tintColor: '#333',
   },
 });

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import CoinIcon from './SafeIcon'; 
+import CoinIcon from './SafeIcon';  // 코인 아이콘 컴포트 임포트
+import tasks from '../stores/tasks'; // tasks 데이터 임포트
 
-const ModalComponent = ({ visible, onClose, tasks }) => {
+const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
   const [selectedTaskIndexes, setSelectedTaskIndexes] = useState([]);
 
   const filledTasks = [...tasks];
   while (filledTasks.length < 5) {
     filledTasks.push(...tasks);
   }
-  filledTasks.length = 5; 
+  filledTasks.length = 5;  // 5개까지만 사용
 
   const handleTaskSelect = (index) => {
     if (selectedTaskIndexes.includes(index)) {
@@ -18,6 +19,12 @@ const ModalComponent = ({ visible, onClose, tasks }) => {
     } else if (selectedTaskIndexes.length < 3) {
       setSelectedTaskIndexes([...selectedTaskIndexes, index]);
     }
+  };
+
+  const handleDone = () => {
+    const selectedTasks = selectedTaskIndexes.map(index => tasks[index]);
+    onTasksSelected(selectedTasks);  // 선택된 태스크를 부모 컴포넌트로 전달
+    onClose();
   };
 
   return (
@@ -58,13 +65,13 @@ const ModalComponent = ({ visible, onClose, tasks }) => {
                   <Text style={[
                     styles.taskPoints, 
                     selectedTaskIndexes.includes(index) ? styles.taskPointsSelected : null,
-                  ]}>+50</Text>
+                  ]}>+{task.progress}</Text>  
                 </View>
               </TouchableOpacity>
             ))}
           </ScrollView>
 
-          <TouchableOpacity style={styles.doneButton} onPress={onClose}>
+          <TouchableOpacity style={styles.doneButton} onPress={handleDone}>
             <Text style={styles.doneButtonText}>완료</Text>
           </TouchableOpacity>
         </View>
@@ -82,7 +89,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: '85%',
-    height: '65%',   
+    height: '65%',
     backgroundColor: '#fff',
     borderRadius: 20,
     padding: 20,
@@ -111,19 +118,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     borderRadius: 20,
-    backgroundColor: '#fff', 
+    backgroundColor: '#fff',
     marginBottom: 10,
-    borderWidth: 1, 
-    borderColor: '#E0E0E0', 
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
   },
   taskItemSelected: {
     backgroundColor: '#4CAF50',
   },
   taskText: {
-    flex: 1, 
+    flex: 1,
     fontSize: 14,
-    color: '#333', 
-    marginLeft: 10, 
+    color: '#333',
+    marginLeft: 10,
   },
   taskTextSelected: {
     color: 'white',
@@ -131,7 +138,7 @@ const styles = StyleSheet.create({
   taskPointsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 20,  
+    marginLeft: 20,
   },
   taskPoints: {
     marginLeft: 5,
