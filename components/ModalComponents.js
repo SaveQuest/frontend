@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import CoinIcon from './SafeIcon';  
 import tasks from '../stores/tasks';
@@ -11,7 +11,8 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
   while (filledTasks.length < 5) {
     filledTasks.push(...tasks);
   }
-  filledTasks.length = 5; 
+  filledTasks.length = 5;
+
   const handleTaskSelect = (index) => {
     if (selectedTaskIndexes.includes(index)) {
       setSelectedTaskIndexes(selectedTaskIndexes.filter(i => i !== index));
@@ -21,8 +22,21 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
   };
 
   const handleDone = () => {
-    const selectedTasks = selectedTaskIndexes.map(index => tasks[index]);
-    onTasksSelected(selectedTasks); 
+    if (selectedTaskIndexes.length !== 3) {
+      Alert.alert("도전과제 선택", "3개의 도전과제를 선택해주세요.");
+      return;
+    }
+
+    const selectedTasks = selectedTaskIndexes.map(index => {
+      const task = tasks[index];
+      const amountUsed = parseInt(task.amountUsed.replace(/[₩,]/g, ''), 10);
+      const goal = parseInt(task.goal.replace(/[₩,]/g, ''), 10);
+      const progress = Math.min(100, Math.round((amountUsed / goal) * 100)); 
+      
+      return { ...task, progress };  
+    });
+
+    onTasksSelected(selectedTasks);  
     onClose();
   };
 
@@ -36,7 +50,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
-            <Text style={styles.greetingText}>좋은 아침! 차호림님</Text>
+            <Text style={styles.chaText}>차호림님</Text>
             <TouchableOpacity onPress={onClose}>
               <Ionicons name="close" size={24} color="#888" />
             </TouchableOpacity>
@@ -99,14 +113,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
-  greetingText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  chaText:{
+    fontSize:25,
+    fontWeight:'bold',
   },
   titleText: {
     fontSize: 18,
-    color: '#4CAF50',
+    color: '#81C966',
     marginBottom: 20,
+    fontWeight:'bold',
   },
   taskList: {
     width: '100%',

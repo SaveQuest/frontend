@@ -1,34 +1,39 @@
-import React, { useState, useEffect } from "react";  // useEffect 추가
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from "react-native";  // Image 추가
-import { Ionicons } from '@expo/vector-icons'; // 아이콘 임포트
+import React, { useState, useEffect } from "react"; 
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from "react-native"; 
+import { Ionicons } from '@expo/vector-icons'; 
 import QuestList from "../components/QuestList";
 import Header from "../components/Header";
 import Card from "../components/Card";
-import ModalComponent from "../components/ModalComponents"; // 모달 컴포넌트 임포트
-import styles from '../styles/HomeStyle';  // 스타일 파일 임포트
+import ModalComponent from "../components/ModalComponents";
+import styles from '../styles/HomeStyle';  
 import tasks from '../stores/tasks';
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedTasks, setSelectedTasks] = useState([]); // 선택된 태스크 관리
+  const [selectedTasks, setSelectedTasks] = useState([]); 
 
   const handleTasksSelected = (newTasks) => {
-    setSelectedTasks((prevTasks) => [...prevTasks, ...newTasks]); // 기존 선택된 태스크에 새 태스크 추가
-    setModalVisible(false); // 모달 닫기
+    const updatedTasks = newTasks.map(task => {
+      const amountUsed = parseInt(task.amountUsed.replace(/[₩,]/g, ''), 10); 
+      const goal = parseInt(task.goal.replace(/[₩,]/g, ''), 10);
+      const progress = Math.min(100, Math.round((amountUsed / goal) * 100)); 
+      return { ...task, progress };
+    });
+    
+    setSelectedTasks((prevTasks) => [...prevTasks, ...updatedTasks]); 
+    setModalVisible(false);
   };
 
   const handleOpenModal = () => {
-    setModalVisible(true); // 모달 열기
+    setModalVisible(true); 
   };
 
-  // 홈 화면이 처음 열리면 모달을 자동으로 띄운다
   useEffect(() => {
     setModalVisible(true);
-  }, []);  // 빈 배열을 두어 컴포넌트가 처음 마운트될 때만 실행되게 함
+  }, []);  
 
   return (
     <View style={styles.container}>
-      {/* 헤더를 감싸는 View에 패딩을 준다 */}
       <View style={styles.headerContainer}>
         <Header home />
       </View>
@@ -74,7 +79,7 @@ export default function Home() {
                 title={task.title}
                 amountUsed={task.amountUsed}
                 status={task.status}
-                progress={task.progress}
+                progress={task.progress} 
                 goal={task.goal}
                 iconColor={task.iconColor}
               />
@@ -91,7 +96,7 @@ export default function Home() {
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
           tasks={tasks}
-          onTasksSelected={handleTasksSelected} // 선택된 태스크를 Home 컴포넌트로 전달
+          onTasksSelected={handleTasksSelected}
         />
       </ScrollView>
     </View>
