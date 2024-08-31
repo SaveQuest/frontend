@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import CoinIcon from './SafeIcon';  // 코인 아이콘 컴포트 임포트
-import tasks from '../stores/tasks'; // tasks 데이터 임포트
+import CoinIcon from './SafeIcon';  
+import tasks from '../stores/tasks';
 
 const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
   const [selectedTaskIndexes, setSelectedTaskIndexes] = useState([]);
@@ -11,8 +11,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
   while (filledTasks.length < 5) {
     filledTasks.push(...tasks);
   }
-  filledTasks.length = 5;  // 5개까지만 사용
-
+  filledTasks.length = 5; 
   const handleTaskSelect = (index) => {
     if (selectedTaskIndexes.includes(index)) {
       setSelectedTaskIndexes(selectedTaskIndexes.filter(i => i !== index));
@@ -23,7 +22,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
 
   const handleDone = () => {
     const selectedTasks = selectedTaskIndexes.map(index => tasks[index]);
-    onTasksSelected(selectedTasks);  // 선택된 태스크를 부모 컴포넌트로 전달
+    onTasksSelected(selectedTasks); 
     onClose();
   };
 
