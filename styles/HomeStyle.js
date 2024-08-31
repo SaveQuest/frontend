@@ -74,8 +74,8 @@ export default StyleSheet.create({
   },
   headerContainer: {
     paddingTop:20,
-    paddingHorizontal: 20,  // 좌우 패딩 추가하여 헤더가 화면 끝에 맞지 않도록 조정
-    backgroundColor: '#f0f0f0',  // 배경색 맞춤
+    paddingHorizontal: 20,  
+    backgroundColor: '#f0f0f0',  
   },
   level: {
     fontSize: 13,
@@ -134,7 +134,7 @@ export default StyleSheet.create({
   tasks: {
     flex: 1,
   },
-  selectTaskButton: {  // 버튼 스타일 수정
+  selectTaskButton: { 
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -142,7 +142,7 @@ export default StyleSheet.create({
     borderRadius: 17,
     backgroundColor: '#fff',
     marginTop: 20,
-    width: '100%',  // 버튼의 가로 크기를 화면의 95%로 설정
+    width: '100%', 
   },
   selectTaskButtonText: {
     fontSize: 16,

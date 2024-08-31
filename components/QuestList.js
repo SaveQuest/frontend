@@ -38,7 +38,6 @@ export default function QuestList({
           <PlusIcon />
           <View style={styles.safeIconWithText}>
             <SafeIcon />
-            {/* 하드코딩된 50 대신 progress 값을 사용 */}
             <Text style={styles.safeIconText}>{progress}</Text>
           </View>
         </View>
