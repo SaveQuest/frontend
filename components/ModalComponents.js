@@ -74,11 +74,11 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
                   {task.title}
                 </Text>
                 <View style={styles.taskPointsContainer}>
-                  <CoinIcon size={20} /> 
+                  <Text style={styles.plustext}>+</Text><CoinIcon size={20} /> 
                   <Text style={[
                     styles.taskPoints, 
                     selectedTaskIndexes.includes(index) ? styles.taskPointsSelected : null,
-                  ]}>+{task.progress}</Text>  
+                  ]}>{task.progress}</Text>  
                 </View>
               </TouchableOpacity>
             ))}
@@ -101,10 +101,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: '85%',
+    width: '90%',
     height: '65%',
     backgroundColor: '#fff',
-    borderRadius: 20,
+    borderRadius: 15,
     padding: 20,
   },
   modalHeader: {
@@ -153,6 +153,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: 20,
+  },
+  plustext: {
+    fontSize: 20, 
+    fontWeight: 'bold',
+    color: '#000000',
+    marginRight:5,
   },
   taskPoints: {
     marginLeft: 5,
