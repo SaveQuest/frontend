@@ -23,7 +23,7 @@ export default StyleSheet.create({
     color: '#55555E',
     textAlign: 'left',
     fontFamily: 'Pretendard-Medium',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '500',
     lineHeight: 18,
     marginBottom: 5,
@@ -31,7 +31,7 @@ export default StyleSheet.create({
   amountComparison: {
     color: '#666',
     fontFamily: 'Pretendard-Medium',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '500',
     marginBottom: 20,
   },
@@ -72,14 +72,14 @@ export default StyleSheet.create({
     lineHeight: 19,
   },
   level: {
-    fontSize: 9,
+    fontSize: 13,
     fontFamily: 'Pretendard-Medium',
     fontWeight: '500',
     color: '#55555E',
     lineHeight: 19,
   },
   levelValue: {
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: 'Pretendard-Bold',
     fontWeight: '700',
     color: '#389348',
@@ -99,7 +99,7 @@ export default StyleSheet.create({
     width: '70%',
   },
   subtitle: {
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: 'Pretendard-Medium',
     fontWeight: '500',
     color: '#55555E',
@@ -107,7 +107,7 @@ export default StyleSheet.create({
     lineHeight: 19,
   },
   value: {
-    fontSize: 15,
+    fontSize: 17,
     fontFamily: 'Pretendard-Bold',
     fontWeight: '700',
     color: '#389348',

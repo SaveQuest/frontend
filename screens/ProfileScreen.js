@@ -84,7 +84,10 @@ const ProfileScreen = () => {
         <View style={styles.separator} />
 
         <View style={styles.levelBarSection}>
-          <Text style={styles.levelText}>Lv.998</Text>
+          <View style={styles.levelTextContainer}>
+            <Text style={styles.levelLabelText}>Lv.</Text> 
+            <Text style={styles.levelNumberText}>998</Text>  
+          </View>
           <View style={styles.levelBarContainer}>
             <View style={styles.levelBarFill} />
           </View>
@@ -107,6 +110,7 @@ const ProfileScreen = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -248,11 +252,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
   },
-  levelText: {
+  levelTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  levelLabelText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',  // "Lv." 텍스트는 검정색
+  },
+  levelNumberText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#8BC34A',
-    marginRight: 10,
+    color: '#8BC34A',  // "998" 텍스트는 기존 초록색
   },
   levelBarContainer: {
     flex: 1,
@@ -267,7 +280,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#8BC34A',
     borderRadius: 10,
   },
-
   buttonSection: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -288,7 +300,6 @@ const styles = StyleSheet.create({
     marginTop: 10, 
     color: '#4683EE', 
   },
-
   storeText: {
     color: '#E15558',  
   },

@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import QuestList from "../components/QuestList";
 import Header from "../components/Header";
 import Card from "../components/Card";
+import ModalComponent from "../components/ModalComponents"; 
 import styles from '../styles/HomeStyle';
 import tasks from '../stores/tasks';
 
 export default function Home() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+   
+    setModalVisible(true);
+  }, []);
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -56,6 +68,12 @@ export default function Home() {
             />
           ))}
         </View>
+
+        <ModalComponent
+          visible={modalVisible}
+          onClose={handleCloseModal}
+          tasks={tasks}
+        />
       </ScrollView>
     </View>
   );

@@ -16,7 +16,7 @@ const tasks = [
     iconColor: "#F7941D",
   },
   {
-    title: "게임에서 총 50,000원 이하로 사용하기 [~6/12]",
+    title: "게임에서 총 30,000원 이하로 사용하기 [~6/12]",
     amountUsed: "₩999,999,999",
     status: "danger",
     progress: 100,
