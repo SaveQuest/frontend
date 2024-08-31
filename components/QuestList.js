@@ -38,7 +38,7 @@ export default function QuestList({
           <PlusIcon />
           <View style={styles.safeIconWithText}>
             <SafeIcon />
-            <Text style={styles.safeIconText}>50</Text>
+            <Text style={styles.safeIconText}>{progress}</Text>
           </View>
         </View>
       </View>

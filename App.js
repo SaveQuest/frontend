@@ -11,6 +11,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import AgreementScreen from "./screens/AgreementScreen";
 import VerificationScreen from "./screens/VerificationScreen";
 import DetailRank from "./components/DetailRank";
+import DetailChallenge from "./components/DetailChallenge";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -62,6 +63,7 @@ function RootNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MainPage" component={TabNavigator} />
       <Stack.Screen name="DetailRank" component={DetailRank} />
+      <Stack.Screen name="DetailChallenge" component={DetailChallenge} />
     </Stack.Navigator>
   );
 }

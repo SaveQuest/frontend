@@ -2,10 +2,10 @@ import { StyleSheet, Text, View } from "react-native";
 
 export default function RankBox({ count,name,lv,cName,money }) {
   const getRankColor = () => {
-    if (count === 1) return "#C3B000";
-    if (count === 2) return "#6E6E6E";
-    if (count === 3) return "#FF9A9A";
-    return "gray";
+    if (count === 1) return "#E9D063";
+    if (count === 2) return "#D5D6D8";
+    if (count === 3) return "#AC835B";
+    return "white";
   };
   return (
     <View style={styles.Box}>
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     borderColor: "#E4E4E4",
     backgroundColor: "#282828",
     flexDirection: "row",
+    marginBottom:3
   },
   BoxLeft: {
     flex: 1,
@@ -82,5 +83,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: 0,
     padding: 0,
+    position:'relative',
+    bottom:3
   },
 });

@@ -1,14 +1,44 @@
-import React from "react";
-import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import React, { useState, useEffect } from "react"; 
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from "react-native"; 
+import { Ionicons } from '@expo/vector-icons'; 
 import QuestList from "../components/QuestList";
 import Header from "../components/Header";
 import Card from "../components/Card";
+import ModalComponent from "../components/ModalComponents";
+import styles from '../styles/HomeStyle';  
+import tasks from '../stores/tasks';
 
 export default function Home() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTasks, setSelectedTasks] = useState([]); 
+
+  const handleTasksSelected = (newTasks) => {
+    const updatedTasks = newTasks.map(task => {
+      const amountUsed = parseInt(task.amountUsed.replace(/[₩,]/g, ''), 10); 
+      const goal = parseInt(task.goal.replace(/[₩,]/g, ''), 10);
+      const progress = Math.min(100, Math.round((amountUsed / goal) * 100)); 
+      return { ...task, progress };
+    });
+    
+    setSelectedTasks((prevTasks) => [...prevTasks, ...updatedTasks]); 
+    setModalVisible(false);
+  };
+
+  const handleOpenModal = () => {
+    setModalVisible(true); 
+  };
+
+  useEffect(() => {
+    setModalVisible(true);
+  }, []);  
+
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <View style={styles.headerContainer}>
         <Header home />
+      </View>
+
+      <ScrollView contentContainerStyle={styles.scrollView}>
         <Text style={styles.amountUsedToday}>
           오늘 <Text style={styles.bold}>1,425,765원</Text> 을 사용 하셨습니다.
         </Text>
@@ -42,131 +72,33 @@ export default function Home() {
         <Text style={styles.sectionTitle}>진행중인 도전과제</Text>
 
         <View style={styles.tasks}>
-          <QuestList
-            title="편의점에서 총 5,000원 이하로 사용하기 [~6/12]"
-            amountUsed="₩1,000"
-            status="safe"
-            progress={20}
-            goal="5,000원"
-            iconColor="#81C966"
-          />
-          <QuestList
-            title="쇼핑몰에서 총 15,000원 이하로 사용하기 [~6/12]"
-            amountUsed="₩14,000"
-            status="warning"
-            progress={93}
-            goal="15,000원"
-            iconColor="#F7941D"
-          />
-          <QuestList
-            title="게임에서 총 50,000원 이하로 사용하기 [~6/12]"
-            amountUsed="₩999,999,999"
-            status="danger"
-            progress={100}
-            goal="50,000원"
-            iconColor="#FF4C4C"
-          />
+          {selectedTasks.length > 0 ? (
+            selectedTasks.map((task, index) => (
+              <QuestList
+                key={index}
+                title={task.title}
+                amountUsed={task.amountUsed}
+                status={task.status}
+                progress={task.progress} 
+                goal={task.goal}
+                iconColor={task.iconColor}
+              />
+            ))
+          ) : (
+            <TouchableOpacity style={styles.selectTaskButton} onPress={handleOpenModal}>
+              <Text style={styles.selectTaskButtonText}>오늘 도전과제 선택</Text>
+              <Ionicons name="chevron-forward" size={20} color="#333" style={styles.arrowIcon} />
+            </TouchableOpacity>
+          )}
         </View>
+
+        <ModalComponent
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          tasks={tasks}
+          onTasksSelected={handleTasksSelected}
+        />
       </ScrollView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollView: {
-    flexGrow: 1,
-    padding: 15,
-  },
-  amountUsedToday: {
-    color: "#55555E",
-    textAlign: "left",
-    fontSize: 14.124,
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: 18.278,
-  },
-  amountComparison: {
-    fontSize: 14,
-    marginTop: 5,
-    color: "#666",
-    marginBottom: 26,
-    textAlign: "left",
-  },
-  bold: {
-    fontWeight: "bold",
-  },
-  red: {
-    color: "red",
-  },
-  cardContent: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  cardText: {
-    flex: 1,
-    marginBottom: 5,
-  },
-  title: {
-    fontSize: 17.196,
-    fontWeight: "700",
-    color: "#389348",
-    lineHeight: 19.489,
-  },
-  level: {
-    fontSize: 13,
-    fontWeight: "500",
-    color: "#55555E",
-    lineHeight: 19.489,
-  },
-  levelValue: {
-    fontSize: 15,
-    fontWeight: "700",
-    color: "#389348",
-    lineHeight: 19.489,
-  },
-  progressBarBackground: {
-    height: 9,
-    backgroundColor: "#E6E6E6",
-    borderRadius: 10,
-    marginTop: 4,
-    width: "100%",
-  },
-  progressBarFill: {
-    height: "100%",
-    backgroundColor: "#389348",
-    borderRadius: 10,
-    width: "70%",
-  },
-  subtitle: {
-    fontSize: 12.793,
-    fontWeight: "500",
-    color: "#55555E",
-    marginTop: 13,
-    lineHeight: 19.489,
-  },
-  value: {
-    fontSize: 15.374,
-    fontWeight: "700",
-    color: "#389348",
-    lineHeight: 19.489,
-  },
-  characterImage: {
-    width: 150,
-    height: 150,
-    marginLeft: 20,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: "700",
-    color: "#333",
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  tasks: {
-    flex: 1,
-  },
-});

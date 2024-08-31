@@ -14,7 +14,7 @@ import RankBox from "../components/RankBox";
 import QuestList from "../components/QuestList";
 import Card from "../components/Card";
 
-const QuestsScreen = ({navigation}) => {
+const QuestsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -22,7 +22,7 @@ const QuestsScreen = ({navigation}) => {
 
         <View style={styles.challenge}>
           <ImageBackground
-            source={require("../assets/Logo.png")}
+            source={require("../assets/LogoBackground.png")}
             style={styles.header}
           >
             <Text style={styles.challengeHead}>challenge</Text>
@@ -66,7 +66,10 @@ const QuestsScreen = ({navigation}) => {
             </View>
 
             <View style={styles.rank}>
-              <TouchableOpacity style={styles.rankTab} onPress={() => navigation.navigate('DetailRank')}>
+              <TouchableOpacity
+                style={styles.rankTab}
+                onPress={() => navigation.navigate("DetailRank")}
+              >
                 <Text style={styles.rankTabText}>랭킹</Text>
                 <Text style={styles.rankTabText}>자세히 보기 &gt;</Text>
               </TouchableOpacity>
@@ -96,14 +99,26 @@ const QuestsScreen = ({navigation}) => {
         </View>
 
         <Card>
-          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
-            <View style={{flexDirection:'row',alignItems:'center',gap:6}}>
-            <SafeIcon />
-            <Text style={{fontSize:15, fontWeight:'bold'}}>진행중인 챌린지</Text>
-            </View>
+          <TouchableOpacity onPress={() => navigation.navigate("DetailChallenge")}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
+              >
+                <SafeIcon />
+                <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+                  진행중인 챌린지
+                </Text>
+              </View>
 
-            <Text style={{fontSize:20, fontWeight:'bold'}}>&gt;</Text>
-          </View>
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>&gt;</Text>
+            </View>
+          </TouchableOpacity>
         </Card>
 
         <View>
