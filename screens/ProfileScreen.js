@@ -260,12 +260,12 @@ const styles = StyleSheet.create({
   levelLabelText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#000',  // "Lv." 텍스트는 검정색
+    color: '#000',  
   },
   levelNumberText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#8BC34A',  // "998" 텍스트는 기존 초록색
+    color: '#8BC34A',  
   },
   levelBarContainer: {
     flex: 1,
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
   },
   buttonSection: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginVertical: 20,
   },
   menuButton: {
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     borderRadius: 20,  
     alignItems: 'center',
-    width: '35%',
+    width: '45%',
   },
   menuButtonText: {
     fontSize: 16,
