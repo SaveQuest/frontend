@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import DetailHeader from "./DetailHeader";
 import ArrowIcon from "./ArrowIcon";
+import ChallengeBox from "./ChallengeBox";
 
 export default function DetailChallenge({ navigation }) {
   return (
@@ -47,6 +48,9 @@ export default function DetailChallenge({ navigation }) {
         </View>
       </ImageBackground>
       
+      <View style={styles.contents}>
+          <ChallengeBox/>
+      </View>
 
     </View>
   );
@@ -85,4 +89,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'space-between'
   },
+  contents:{
+    padding:12,
+  }
 });
