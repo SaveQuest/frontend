@@ -8,8 +8,9 @@ import CameraIcon from '../components/CameraIcon';
 import MyroomIcon from '../components/MyroomIcon'; 
 import StoreIcon from '../components/StoreIcon';
 import ShareSection from '../Share/ShareSection ';
+import BeforeQuest from '../components/BeforeQuest';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleCameraIconPress = async () => {
@@ -105,7 +106,7 @@ const ProfileScreen = () => {
         </View>
 
         <ShareSection />
-        
+        <BeforeQuest navigation={navigation}/>
       </ScrollView>
     </View>
   );

@@ -20,7 +20,12 @@ export default function QuestList({
               ? "안전"
               : status === "warning"
               ? "위험"
-              : "실패"}
+              :status === "fail"
+              ? "실패"
+              :status === "success"
+              ?'성공'
+              :null
+            }
           </Text>
         </View>
       </View>
@@ -94,9 +99,13 @@ const styles = StyleSheet.create({
     borderRadius: 3.439,
     backgroundColor: "#F7941D",
   },
-  danger: {
+  fail: {
     borderRadius: 3.439,
     backgroundColor: "#FF4C4C",
+  },
+  success: {
+    borderRadius: 3.439,
+    backgroundColor: "#2F6DE3",
   },
   statusBadgeText: {
     fontSize: 12,

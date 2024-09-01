@@ -13,6 +13,7 @@ import styles from "../styles/QuestsScreenStlyes";
 import RankBox from "../components/RankBox";
 import QuestList from "../components/QuestList";
 import Card from "../components/Card";
+import BeforeQuest from "../components/BeforeQuest";
 
 const QuestsScreen = ({ navigation }) => {
   return (
@@ -148,6 +149,7 @@ const QuestsScreen = ({ navigation }) => {
             iconColor="#FF4C4C"
           />
         </View>
+        <BeforeQuest navigation={navigation}/>
       </ScrollView>
     </View>
   );

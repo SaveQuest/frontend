@@ -10,6 +10,7 @@ import ArrowIcon from "./ArrowIcon";
 import ChallengeBox from "./ChallengeBox";
 
 export default function DetailChallenge({ navigation }) {
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -49,7 +50,9 @@ export default function DetailChallenge({ navigation }) {
       </ImageBackground>
       
       <View style={styles.contents}>
-          <ChallengeBox/>
+          <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100}/>
+          <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100}/>
+          <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100}/>
       </View>
 
     </View>
@@ -91,5 +94,6 @@ const styles = StyleSheet.create({
   },
   contents:{
     padding:12,
+    gap:12
   }
 });
