@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#f3f5f6',
   },
   scrollView: {
     flexGrow: 1,
@@ -75,7 +75,7 @@ export default StyleSheet.create({
   headerContainer: {
     paddingTop:20,
     paddingHorizontal: 20,  
-    backgroundColor: '#f0f0f0',  
+    backgroundColor: '#f3f5f6',  
   },
   level: {
     fontSize: 13,

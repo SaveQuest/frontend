@@ -24,11 +24,8 @@ export default function DetailChallenge({ navigation }) {
         </View>
         <View style={styles.title}>
           <View style={{ alignItems: "center", marginBottom:17 }}>
-            <Text style={{ fontSize: 14, color: "white", opacity: 0.8 }}>
-              challenge
-            </Text>
-            <Text style={{ fontSize: 22, color: "white", fontWeight: "bold" }}>
-              Save Quest
+            <Text style={{ fontSize: 18, color: "white",fontWeight:'bold', opacity: 0.8 }}>
+              챌린지
             </Text>
           </View>
 
@@ -67,7 +64,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     backgroundColor: "white",
-    paddingTop: 15,
+    paddingTop: 30,
     height: 151,
   },
   headerContent: {

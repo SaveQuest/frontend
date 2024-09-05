@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Text } from "react-native"; 
 import Home from "./screens/Home";
 import QuestIcon from "./components/QuestIcon";
 import HomeIcon from "./components/HomeIcon";
@@ -23,32 +24,62 @@ function TabNavigator() {
       initialRouteName="Home"
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarShowLabel: false,
         tabBarStyle: {
           height: 80,
           borderTopWidth: 0.5,
           borderTopColor: "#e5e5e5",
           backgroundColor: "#FFF",
-          paddingBottom: 10,
+          paddingBottom: 12,
+          paddingTop: 1,
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,
           borderColor: "#E6E6E6",
           borderWidth: 2,
           flexDirection: "row",
           justifyContent: "center",
-          paddingHorizontal: 20,
+          paddingHorizontal:10,
         },
         tabBarIcon: ({ focused }) => {
-          if (route.name === "Home") {
-            return <HomeIcon />;
-          } else if (route.name === "Quests") {
-            return <QuestIcon />;
-          } else if (route.name === "Profile") {
-            return <ProfileIcon />;
+          let iconColor = focused ? "#81C966" : "#b6b6b6";
+
+          switch (route.name) {
+            case "Home":
+              return <HomeIcon color={iconColor} />;
+            case "Quests":
+              return <QuestIcon color={iconColor} />;
+            case "Profile":
+              return <ProfileIcon color={iconColor} />;
           }
+        },
+        tabBarLabel: ({ focused }) => {
+          let label;
+          switch (route.name) {
+            case "Home":
+              label = "홈";
+              break;
+            case "Quests":
+              label = "퀘스트";
+              break;
+            case "Profile":
+              label = "마이페이지";
+              break;
+          }
+          return (
+            <Text
+              style={{
+                fontSize: 12,
+                color: focused ? "#81C966" : "#8e8e8e",
+                marginTop: -2, 
+                fontWeight: "bold",
+              }}
+            >
+              {label}
+            </Text>
+          );
         },
         tabBarItemStyle: {
           marginHorizontal: 15,
+          paddingBottom: 5,
         },
       })}
     >
@@ -58,6 +89,8 @@ function TabNavigator() {
     </Tab.Navigator>
   );
 }
+
+
 
 function RootNavigator() {
   return (

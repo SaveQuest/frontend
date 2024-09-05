@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  ImageBackground,
-  TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, TouchableOpacity, Text } from "react-native";
 import Head from "../components/Header";
 import SafeIcon from "../components/SafeIcon";
 import styles from "../styles/QuestsScreenStlyes";
@@ -14,88 +7,50 @@ import RankBox from "../components/RankBox";
 import QuestList from "../components/QuestList";
 import Card from "../components/Card";
 import BeforeQuest from "../components/BeforeQuest";
+import Feather from 'react-native-vector-icons/Feather';
+import ChallengeHeaderComponent from '../components/ChallengeHeaderComponent'; 
 
 const QuestsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <View style={styles.headerContainer}>
         <Head />
+      </View>
 
-        <View style={styles.challenge}>
-          <ImageBackground
-            source={require("../assets/LogoBackground.png")}
-            style={styles.header}
-          >
-            <Text style={styles.challengeHead}>challenge</Text>
-            <Text style={styles.challengeContext}>Save Quest</Text>
-          </ImageBackground>
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <View style={styles.challenge}>  
+          <ChallengeHeaderComponent />
 
-          <View style={styles.content}>
-            <View style={styles.title}>
-              <Text style={styles.titleDate}>6월 15일 토요일 까지</Text>
-              <Text style={styles.titleTitle}>
-                한달동안 평균 소비 금액 줄이기
-              </Text>
-            </View>
-            <View style={styles.my}>
-              <View style={styles.left}>
-                <View>
-                  <Text style={styles.one}>나의 한달 평균 소비 금액</Text>
-                  <Text style={styles.two}>₩54,000</Text>
-                </View>
-                <View>
-                  <Text style={styles.one}>지금까지 줄인 소비 금액</Text>
-                  <Text style={styles.two}>₩3,000</Text>
-                </View>
-              </View>
+          <View style={[styles.rank, { paddingBottom: 50 }]}>  
+            <TouchableOpacity
+              style={styles.rankTab}
+              onPress={() => navigation.navigate("DetailRank")}
+            >
+              <Text style={styles.rankTabText}>랭킹</Text>
+              <Feather name="chevron-right" size={24} color="#000" />
+            </TouchableOpacity>
 
-              <View style={styles.right}>
-                <View style={styles.myGame}>
-                  <Text style={styles.name}>
-                    차호림
-                    <Text style={styles.level}>
-                      <Text style={styles.levelLog}>Lv.</Text>998
-                    </Text>
-                  </Text>
-
-                  <Text style={styles.gameName}>절약의 신</Text>
-                  <View style={styles.box}>
-                    <Text style={styles.myRank}>현재 순위 1위</Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-
-            <View style={styles.rank}>
-              <TouchableOpacity
-                style={styles.rankTab}
-                onPress={() => navigation.navigate("DetailRank")}
-              >
-                <Text style={styles.rankTabText}>랭킹</Text>
-                <Text style={styles.rankTabText}>자세히 보기 &gt;</Text>
-              </TouchableOpacity>
-              <RankBox
-                count={1}
-                name={"차호림"}
-                lv={998}
-                cName={"지금까지 줄인 소비 금액"}
-                money={"3,000"}
-              />
-              <RankBox
-                count={2}
-                name={"한유찬"}
-                lv={998}
-                cName={"지금까지 줄인 소비 금액"}
-                money={"3,000"}
-              />
-              <RankBox
-                count={3}
-                name={"신이현"}
-                lv={998}
-                cName={"지금까지 줄인 소비 금액"}
-                money={"3,000"}
-              />
-            </View>
+            <RankBox
+              count={1}
+              name={"차호림"}
+              lv={998}
+              cName={"지금까지 줄인 소비 금액"}
+              money={"3,000"}
+            />
+            <RankBox
+              count={2}
+              name={"한유찬"}
+              lv={998}
+              cName={"지금까지 줄인 소비 금액"}
+              money={"3,000"}
+            />
+            <RankBox
+              count={3}
+              name={"신이현"}
+              lv={998}
+              cName={"지금까지 줄인 소비 금액"}
+              money={"3,000"}
+            />
           </View>
         </View>
 
@@ -113,11 +68,11 @@ const QuestsScreen = ({ navigation }) => {
               >
                 <SafeIcon />
                 <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                  진행중인 챌린지
+                  현재 진행중인 챌린지
                 </Text>
               </View>
 
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>&gt;</Text>
+              <Feather name="chevron-right" size={20} color="#000" />
             </View>
           </TouchableOpacity>
         </Card>
@@ -149,7 +104,7 @@ const QuestsScreen = ({ navigation }) => {
             iconColor="#FF4C4C"
           />
         </View>
-        <BeforeQuest navigation={navigation}/>
+        <BeforeQuest navigation={navigation} />
       </ScrollView>
     </View>
   );
