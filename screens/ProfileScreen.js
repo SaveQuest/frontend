@@ -10,7 +10,7 @@ import StoreIcon from '../components/StoreIcon';
 import ShareSection from '../Share/ShareSection ';
 import BeforeQuest from '../components/BeforeQuest';
 
-const ProfileScreen = ({navigation}) => {
+const ProfileScreen = ({ navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleCameraIconPress = async () => {
@@ -52,7 +52,6 @@ const ProfileScreen = ({navigation}) => {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={false}>
-
         <View style={styles.topSection}>
           <View style={styles.profileTextContainer}>
             <Text style={styles.profileName}>차호림</Text>
@@ -99,18 +98,20 @@ const ProfileScreen = ({navigation}) => {
             <MyroomIcon />
             <Text style={styles.menuButtonText}>마이홈</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuButton}>
+
+          <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('StoreScreen')}>
             <StoreIcon />
             <Text style={[styles.menuButtonText, styles.storeText]}>상점</Text>
           </TouchableOpacity>
         </View>
 
         <ShareSection />
-        <BeforeQuest navigation={navigation}/>
+        <BeforeQuest navigation={navigation} />
       </ScrollView>
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

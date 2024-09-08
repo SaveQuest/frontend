@@ -13,10 +13,8 @@ import DetailHeader from "./DetailHeader";
 export default function DetailRank({ navigation }) {
   return (
     <View style={styles.container}>
-      {/* 고정된 DetailHeader */}
       <DetailHeader navigation={navigation} title={'순위'} n={'MainPage'}/>
 
-      {/* 고정된 topRank */}
       <View style={styles.topRank}>
         <RankTopBox
           rank={2}
@@ -41,7 +39,6 @@ export default function DetailRank({ navigation }) {
         />
       </View>
 
-      {/* 스크롤 가능한 내용 */}
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.anyRank}>
           {Array.from({ length: 30 }, (_, index) => (

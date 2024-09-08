@@ -1,19 +1,18 @@
-import React, { useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { Text } from "react-native"; 
-import Home from "./screens/Home";
-import QuestIcon from "./components/QuestIcon";
-import HomeIcon from "./components/HomeIcon";
-import ProfileIcon from "./components/ProfileIcon";
-import QuestsScreen from "./screens/QuestsScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import AgreementScreen from "./screens/AgreementScreen";
-import VerificationScreen from "./screens/VerificationScreen";
-import DetailRank from "./components/DetailRank";
-import DetailChallenge from "./components/DetailChallenge";
-import DetailBeforeQuest from "./components/DetailBeforeQuest";
+import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Text } from 'react-native'; 
+import Home from './screens/Home';
+import QuestIcon from './components/QuestIcon';
+import HomeIcon from './components/HomeIcon';
+import ProfileIcon from './components/ProfileIcon';
+import QuestsScreen from './screens/QuestsScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import StoreScreen from './screens/StoreScreen'; 
+import DetailRank from './components/DetailRank';
+import DetailChallenge from './components/DetailChallenge';
+import DetailBeforeQuest from './components/DetailBeforeQuest';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -37,7 +36,7 @@ function TabNavigator() {
           borderWidth: 2,
           flexDirection: "row",
           justifyContent: "center",
-          paddingHorizontal:10,
+          paddingHorizontal: 10,
         },
         tabBarIcon: ({ focused }) => {
           let iconColor = focused ? "#81C966" : "#b6b6b6";
@@ -69,7 +68,7 @@ function TabNavigator() {
               style={{
                 fontSize: 12,
                 color: focused ? "#81C966" : "#8e8e8e",
-                marginTop: -2, 
+                marginTop: -2,
                 fontWeight: "bold",
               }}
             >
@@ -90,8 +89,6 @@ function TabNavigator() {
   );
 }
 
-
-
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -99,6 +96,7 @@ function RootNavigator() {
       <Stack.Screen name="DetailRank" component={DetailRank} />
       <Stack.Screen name="DetailChallenge" component={DetailChallenge} />
       <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
+      <Stack.Screen name="StoreScreen" component={StoreScreen} /> 
     </Stack.Navigator>
   );
 }
@@ -108,14 +106,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Agreement">
-          {(props) => <AgreementScreen {...props} setAgreed={setAgreed} />}
-        </Stack.Screen>
-        <Stack.Screen name="Verification" component={VerificationScreen} />
-        {agreed && <Stack.Screen name="Main" component={RootNavigator} />}
-      </Stack.Navigator> */}
-      <RootNavigator/>
+      <RootNavigator />
     </NavigationContainer>
   );
 }
