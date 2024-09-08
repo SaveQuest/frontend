@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text } from 'react-native'; 
+import { Text } from 'react-native';
 import Home from './screens/Home';
 import QuestIcon from './components/QuestIcon';
 import HomeIcon from './components/HomeIcon';
 import ProfileIcon from './components/ProfileIcon';
+import StoreIcon from './components/StoreIcon';
 import QuestsScreen from './screens/QuestsScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import StoreScreen from './screens/StoreScreen'; 
+import StoreScreen from './screens/StoreScreen';
 import DetailRank from './components/DetailRank';
 import DetailChallenge from './components/DetailChallenge';
 import DetailBeforeQuest from './components/DetailBeforeQuest';
@@ -39,13 +40,15 @@ function TabNavigator() {
           paddingHorizontal: 10,
         },
         tabBarIcon: ({ focused }) => {
-          let iconColor = focused ? "#81C966" : "#b6b6b6";
+          let iconColor = focused ? "#81C966" : "#b6b6b6"; 
 
           switch (route.name) {
             case "Home":
               return <HomeIcon color={iconColor} />;
             case "Quests":
               return <QuestIcon color={iconColor} />;
+            case "Store":
+              return <StoreIcon color={iconColor} />; 
             case "Profile":
               return <ProfileIcon color={iconColor} />;
           }
@@ -58,6 +61,9 @@ function TabNavigator() {
               break;
             case "Quests":
               label = "퀘스트";
+              break;
+            case "Store":
+              label = "상점";
               break;
             case "Profile":
               label = "마이페이지";
@@ -82,12 +88,14 @@ function TabNavigator() {
         },
       })}
     >
-      <Tab.Screen name="Quests" component={QuestsScreen} />
       <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Quests" component={QuestsScreen} />
+      <Tab.Screen name="Store" component={StoreScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
+
 
 function RootNavigator() {
   return (

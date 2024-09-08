@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  ImageBackground,
-  TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, TouchableOpacity, Text, ImageBackground } from "react-native";
 import Head from "../components/Header";
 import SafeIcon from "../components/SafeIcon";
 import styles from "../styles/QuestsScreenStlyes";
@@ -14,14 +7,16 @@ import RankBox from "../components/RankBox";
 import QuestList from "../components/QuestList";
 import Card from "../components/Card";
 import BeforeQuest from "../components/BeforeQuest";
-import Feather from 'react-native-vector-icons/Feather'; 
+import Feather from 'react-native-vector-icons/Feather';
 
 const QuestsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <View style={[styles.headerContainer, { paddingLeft: 20 }]}>
         <Head />
-
+      </View>
+      
+      <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.challenge}>
           <ImageBackground
             source={require("../assets/LogoBackground.png")}
@@ -149,7 +144,7 @@ const QuestsScreen = ({ navigation }) => {
             iconColor="#FF4C4C"
           />
         </View>
-        <BeforeQuest navigation={navigation}/>
+        <BeforeQuest navigation={navigation} />
       </ScrollView>
     </View>
   );
