@@ -14,7 +14,7 @@ import RankBox from "../components/RankBox";
 import QuestList from "../components/QuestList";
 import Card from "../components/Card";
 import BeforeQuest from "../components/BeforeQuest";
-import Feather from 'react-native-vector-icons/Feather'; // Feather 아이콘 추가
+import Feather from 'react-native-vector-icons/Feather'; 
 
 const QuestsScreen = ({ navigation }) => {
   return (
@@ -73,7 +73,6 @@ const QuestsScreen = ({ navigation }) => {
                 onPress={() => navigation.navigate("DetailRank")}
               >
                 <Text style={styles.rankTabText}>랭킹</Text>
-                {/* Feather 아이콘으로 화살표 교체 */}
                 <Feather name="chevron-right" size={24} color="#000" />
               </TouchableOpacity>
               <RankBox
@@ -118,7 +117,6 @@ const QuestsScreen = ({ navigation }) => {
                   진행중인 챌린지
                 </Text>
               </View>
-              {/* Feather 아이콘으로 화살표 교체 */}
               <Feather name="chevron-right" size={20} color="#000" />
             </View>
           </TouchableOpacity>
