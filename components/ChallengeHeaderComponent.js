@@ -125,10 +125,10 @@ const styles = StyleSheet.create({
   },
 
   statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     marginBottom: 5,
+    alignItems: 'flex-start',
   },
+
 
   statBoxWithBorder: {
     flex: 1,
@@ -136,12 +136,13 @@ const styles = StyleSheet.create({
     paddingBottom: 1,
     backgroundColor: '#fff',
     borderRadius: 10,
-    marginHorizontal: 5,
     marginBottom: 10,
     alignSelf: 'flex-start',
     borderWidth: 1.5,
     borderColor: '#e4e4e4',
+    width: '100%',
   },
+
 
   statTitle: {
     fontSize: 14,
