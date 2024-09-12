@@ -14,18 +14,23 @@ export default function BeforeQuest({ navigation }) {
           </View>
 
           <View style={styles.contents}>
-            <SafeIcon width="35" height="35" />
-            <View style={styles.details}>
-              <View style={styles.content}>
-                <Text style={styles.label}>누적 획득한 코인</Text>
-                <Text style={styles.value}>4600</Text>
+            <View style={styles.coinContainer}>
+              <SafeIcon width="50" height="50" />  
+              <View style={styles.coinInfo}>
+                <Text style={styles.label}>획득한 코인</Text>
+                <Text style={styles.coinValue}>4,600 코인</Text>
               </View>
-              <View style={styles.content}>
-                <Text style={styles.label}>성공한 도전과제</Text>
+            </View>
+
+            <View style={styles.verticalLine} />
+
+            <View style={styles.resultContainer}>
+              <View style={styles.result}>
+                <Text style={styles.label}>성공</Text>
                 <Text style={[styles.value, { color: "#389348" }]}>321</Text>
               </View>
-              <View style={styles.content}>
-                <Text style={styles.label}>실패한 도전과제</Text>
+              <View style={styles.result}>
+                <Text style={styles.label}>실패</Text>
                 <Text style={[styles.value, { color: "#EC2424" }]}>11</Text>
               </View>
             </View>
@@ -38,44 +43,60 @@ export default function BeforeQuest({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 5, 
+    paddingVertical: 5,
+    paddingHorizontal: 0,
     backgroundColor: "#fff",
-    borderRadius: 30,
+    borderRadius: 15,
+    elevation: 3,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 20,  
+    marginBottom: 15,
   },
   headerText: {
-    fontSize: 17,
-    fontWeight: "bold",
-  },
-  headerArrow: {
     fontSize: 20,
     fontWeight: "bold",
+    color: "#333", 
   },
   contents: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
-  details: {
+  coinContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    flex: 1,
-    marginLeft: 15,
+    alignItems: "center",
   },
-  content: {
-    alignItems: "flex-start", 
+  coinInfo: {
+    marginLeft: 10,
+  },
+  coinValue: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#43B319",  
+  },
+  verticalLine: {
+    width: 1,
+    height: "100%",
+    backgroundColor: "#E6E6E6",
+    marginHorizontal: 20,
+  },
+  resultContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  result: {
+    alignItems: "center",
+    marginHorizontal: 10,
   },
   label: {
-    fontSize: 14,
+    fontSize: 16,
+    color: "#777777",  
   },
   value: {
     fontSize: 17,
     fontWeight: "bold",
-    color: "#87cc6e",
   },
 });

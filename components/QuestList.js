@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 import SafeIcon from "../components/SafeIcon";
-import PlusIcon from "../components/PlusIcon";
 
 export default function QuestList({
   title,
@@ -20,31 +19,30 @@ export default function QuestList({
               ? "안전"
               : status === "warning"
               ? "위험"
-              :status === "fail"
+              : status === "fail"
               ? "실패"
-              :status === "success"
-              ?'성공'
-              :null
-            }
+              : status === "success"
+              ? "성공"
+              : null}
           </Text>
         </View>
       </View>
 
       <View style={styles.taskContent}>
-        <Text style={styles.amountUsed}>
-          <Text style={{ color: "777777", fontSize: 15 }}>지금까지</Text>
-          {"\n"}
-          <Text style={[styles.bold, { color: iconColor, fontSize: 18 }]}>
-            {amountUsed}
-          </Text>{" "}
-          사용
-        </Text>
-        <View style={styles.iconContainer}>
-          <PlusIcon />
-          <View style={styles.safeIconWithText}>
-            <SafeIcon />
-            <Text style={styles.safeIconText}>{progress}</Text>
-          </View>
+        <View style={styles.amountUsed}>
+          <Text style={{ fontSize: 16, color: iconColor }}>지금까지 </Text>
+          <Text style={{ fontSize: 20, fontWeight: "bold", color: iconColor }}>
+            {amountUsed}원{" "}
+          </Text>
+          <Text style={{ fontSize: 16, color: iconColor }}>사용함</Text>
+        </View>
+
+        {/* 세로줄 추가 */}
+        <View style={styles.verticalLine} />
+
+        <View style={styles.safeIconWithText}>
+          <SafeIcon />
+          <Text style={styles.safeIconText}>{progress}</Text>
         </View>
       </View>
 
@@ -70,7 +68,7 @@ const styles = StyleSheet.create({
   },
   task: {
     backgroundColor: "#FFF",
-    borderRadius: 17.196,
+    borderRadius: 17,
     padding: 20,
     marginBottom: 10,
   },
@@ -119,14 +117,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   amountUsed: {
-    fontSize: 15,
-    fontWeight: "500",
-    color: "#333",
-    lineHeight: 19.489,
-  },
-  iconContainer: {
-    flexDirection: "row",
+    flexDirection: "row", 
     alignItems: "center",
+  },
+  verticalLine: {
+    width: 1,
+    height: "100%",
+    backgroundColor: "#E6E6E6",
+    marginHorizontal: 10,
   },
   safeIconWithText: {
     flexDirection: "row",
@@ -134,21 +132,25 @@ const styles = StyleSheet.create({
   },
   safeIconText: {
     marginLeft: 4,
-    fontSize: 15,
+    fontSize: 16.553,
     fontWeight: "700",
-    color: "#5D5D5D",
+    fontStyle: "normal",
+    lineHeight: 21.422, 
+    letterSpacing: -0.414, 
+    color: "#43B319",
+    fontFamily: "Inter",
   },
   progressBar: {
-    height: 9,
+    height: 15, 
     backgroundColor: "#E6E6E6",
-    borderRadius: 10,
+    borderRadius: 3,
     marginTop: 10,
     position: "relative",
     overflow: "hidden",
   },
   progress: {
-    height: "100%",
-    borderRadius: 10,
+    height: "100%", 
+    borderRadius: 3,
   },
   goalLine: {
     position: "absolute",

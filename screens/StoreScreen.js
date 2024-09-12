@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Platform, StatusBar } from 'react-native';
 import SafeIcon from '../components/SafeIcon'; 
 import NotificationIcon from '../components/NotificationIcon';
 import SettingsIcon from '../components/SettingsIcon';
@@ -92,14 +92,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f5f6',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: 20,
-    marginTop: 4,
+    marginTop: Platform.OS === 'ios' ? 4 : 16, 
     paddingRight: 20,
+  },
+   headerContainer: {
+    paddingTop:100,
+    paddingHorizontal: 20,  
+    backgroundColor: '#f3f5f6',  
   },
   iconsContainer: {
     flexDirection: 'row',

@@ -109,7 +109,7 @@ const QuestsScreen = ({ navigation }) => {
               >
                 <SafeIcon />
                 <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                  진행중인 챌린지
+                  챌린지 참여하기
                 </Text>
               </View>
               <Feather name="chevron-right" size={20} color="#000" />

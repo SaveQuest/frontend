@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView } from 'react-native';
 import Home from './screens/Home';
 import QuestIcon from './components/QuestIcon';
 import HomeIcon from './components/HomeIcon';
@@ -26,65 +26,70 @@ function TabNavigator() {
         headerShown: false,
         tabBarStyle: {
           height: 80,
-          borderTopWidth: 0.5,
-          borderTopColor: "#e5e5e5",
           backgroundColor: "#FFF",
+          borderRadius: 40,
+          marginHorizontal: 20,
           paddingBottom: 12,
           paddingTop: 1,
-          borderTopLeftRadius: 10,
-          borderTopRightRadius: 10,
-          borderColor: "#E6E6E6",
-          borderWidth: 2,
-          flexDirection: "row",
-          justifyContent: "center",
-          paddingHorizontal: 10,
+          position: 'reletive', 
+          left: 0,
+          right: 0,
+          bottom: 10, 
         },
         tabBarIcon: ({ focused }) => {
-          let iconColor = focused ? "#81C966" : "#b6b6b6"; 
+          let iconColor = focused ? "#FFF" : "#b6b6b6"; 
+          let backgroundColor = focused ? "#81C966" : "#FFF";
 
-          switch (route.name) {
-            case "Home":
-              return <HomeIcon color={iconColor} />;
-            case "Quests":
-              return <QuestIcon color={iconColor} />;
-            case "Store":
-              return <StoreIcon color={iconColor} />; 
-            case "Profile":
-              return <ProfileIcon color={iconColor} />;
-          }
+          return (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: backgroundColor,
+                  width: 70,
+                  height: 60,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 35,
+                  marginTop: 30,
+                }}
+              >
+                <View style={{ position: 'absolute', top: 10 }}>
+                  {route.name === "Home" && <HomeIcon color={iconColor} />}
+                  {route.name === "Quests" && <QuestIcon color={iconColor} />}
+                  {route.name === "Store" && <StoreIcon color={iconColor} />}
+                  {route.name === "Profile" && <ProfileIcon color={iconColor} />}
+                </View>
+              </View>
+            </View>
+          );
         },
         tabBarLabel: ({ focused }) => {
-          let label;
-          switch (route.name) {
-            case "Home":
-              label = "홈";
-              break;
-            case "Quests":
-              label = "퀘스트";
-              break;
-            case "Store":
-              label = "상점";
-              break;
-            case "Profile":
-              label = "마이페이지";
-              break;
-          }
+          let labelColor = focused ? "#FFF" : "#b6b6b6";
+
           return (
             <Text
               style={{
                 fontSize: 12,
-                color: focused ? "#81C966" : "#8e8e8e",
-                marginTop: -2,
+                color: labelColor,
+                marginTop: 5,
                 fontWeight: "bold",
               }}
             >
-              {label}
+              {route.name === "Home" && "홈"}
+              {route.name === "Quests" && "퀘스트"}
+              {route.name === "Store" && "상점"}
+              {route.name === "Profile" && "내 정보"}
             </Text>
           );
         },
         tabBarItemStyle: {
           marginHorizontal: 15,
-          paddingBottom: 5,
+          paddingBottom: 2,
         },
       })}
     >
@@ -95,7 +100,6 @@ function TabNavigator() {
     </Tab.Navigator>
   );
 }
-
 
 function RootNavigator() {
   return (
@@ -109,9 +113,19 @@ function RootNavigator() {
   );
 }
 
-export default function App() {
-  const [agreed, setAgreed] = useState(false);
+function ScreenWithScroll({ children }) {
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 150 }} 
+      >
+        {children}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
 
+export default function App() {
   return (
     <NavigationContainer>
       <RootNavigator />
