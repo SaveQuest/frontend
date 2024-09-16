@@ -38,7 +38,7 @@ function TabNavigator() {
         },
         tabBarIcon: ({ focused }) => {
           let iconColor = focused ? "#FFF" : "#b6b6b6"; 
-          let backgroundColor = focused ? "#81C966" : "#FFF";
+          let backgroundColor = focused ? "#43b319" : "#FFF";
 
           return (
             <View
@@ -50,11 +50,11 @@ function TabNavigator() {
               <View
                 style={{
                   backgroundColor: backgroundColor,
-                  width: 70,
-                  height: 60,
+                  width: 78,
+                  height: 68,
                   justifyContent: 'center',
                   alignItems: 'center',
-                  borderRadius: 35,
+                  borderRadius: 40,
                   marginTop: 30,
                 }}
               >

@@ -1,77 +1,103 @@
-import React, { useState, useEffect } from "react"; 
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from "react-native"; 
-import { Ionicons } from '@expo/vector-icons'; 
+import React, { useState, useRef } from "react";
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, FlatList, Dimensions, Animated } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 import QuestList from "../components/QuestList";
 import Header from "../components/Header";
-import Card from "../components/Card";
 import ModalComponent from "../components/ModalComponents";
-import styles from '../styles/HomeStyle';  
 import tasks from '../stores/tasks';
+
+const { width } = Dimensions.get('window');
+const CARD_WIDTH = width * 0.8;
+const CARD_MARGIN = 10;
+
+const CarouselItem = ({ item }) => (
+  <View style={styles.carouselItem}>
+    <Text style={styles.carouselTitle}>{item.title}</Text>
+    <Text style={styles.carouselAmount}>{item.amount}</Text>
+    <Text style={styles.carouselPercentage}>{item.percentage}</Text>
+  </View>
+);
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedTasks, setSelectedTasks] = useState([]); 
+  const [selectedTasks, setSelectedTasks] = useState([]);
+  const [carouselData, setCarouselData] = useState([
+    { id: '1', title: '이번달 SaveQuest로', amount: '13만원 아꼈어요', percentage: '+12%' },
+    { id: '2', title: '성공한 도전과제', amount: '653개 성공', percentage: '+5%' },
+    { id: '3', title: '절약한 평균금액', amount: '32만원 절약', percentage: '30% 달성' },
+  ]);
+
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const flatListRef = useRef();
 
   const handleTasksSelected = (newTasks) => {
     const updatedTasks = newTasks.map(task => {
-      const amountUsed = parseInt(task.amountUsed.replace(/[₩,]/g, ''), 10); 
+      const amountUsed = parseInt(task.amountUsed.replace(/[₩,]/g, ''), 10);
       const goal = parseInt(task.goal.replace(/[₩,]/g, ''), 10);
-      const progress = Math.min(100, Math.round((amountUsed / goal) * 100)); 
+      const progress = Math.min(100, Math.round((amountUsed / goal) * 100));
       return { ...task, progress };
     });
     
-    setSelectedTasks((prevTasks) => [...prevTasks, ...updatedTasks]); 
+    setSelectedTasks((prevTasks) => [...prevTasks, ...updatedTasks]);
     setModalVisible(false);
   };
 
   const handleOpenModal = () => {
-    setModalVisible(true); 
-  };
-
-  useEffect(() => {
     setModalVisible(true);
-  }, []);  
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Header home />
       </View>
-
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <Text style={styles.amountUsedToday}>
-          오늘 <Text style={styles.bold}>1,425,765원</Text> 을 사용 하셨습니다.
-        </Text>
-        <Text style={styles.amountComparison}>
-          어제보다 <Text style={styles.red}>434,123원</Text> 더 사용 하셨습니다.
-        </Text>
+        <View style={styles.welcomeMessageContainer}>
+          <Text style={styles.welcomeMessage}>
+            <Text style={styles.userName}>주현명</Text>님 화창한 날{'\n'}SaveQuest로 절약해보시는건 어떠신가요?
+          </Text>
+        </View>
 
-        <Card>
-          <View style={styles.cardContent}>
-            <View style={styles.cardText}>
-              <Text style={styles.title}>절약의 신</Text>
-              <Text style={styles.level}>
-                Lv.<Text style={styles.levelValue}>998</Text>
-              </Text>
-              <View style={styles.progressBarBackground}>
-                <View style={styles.progressBarFill} />
-              </View>
-              <Text style={styles.subtitle}>성공한 도전과제</Text>
-              <Text style={styles.value}>321개</Text>
-              <Text style={styles.subtitle}>앱 설치후 절약한 평균 금액</Text>
-              <Text style={styles.value}>321,532원</Text>
-            </View>
-            <Image
-              style={styles.characterImage}
-              source={require("../assets/character.png")}
-              resizeMode="contain"
-            />
-          </View>
-        </Card>
+        <FlatList
+          data={carouselData}
+          renderItem={({ item }) => <CarouselItem item={item} />}
+          keyExtractor={item => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={CARD_WIDTH + CARD_MARGIN * 2}
+          decelerationRate="fast"
+          contentContainerStyle={styles.carouselContainer}
+          style={[styles.carousel, { marginBottom: selectedTasks.length > 0 ? 0 : -300 }]}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            { useNativeDriver: false }
+          )}
+          ref={flatListRef}
+        />
+
+        <View style={styles.indicatorContainer}>
+          {carouselData.map((_, index) => {
+            const inputRange = [(index - 1) * (CARD_WIDTH + CARD_MARGIN * 2), index * (CARD_WIDTH + CARD_MARGIN * 2), (index + 1) * (CARD_WIDTH + CARD_MARGIN * 2)];
+
+            const dotWidth = scrollX.interpolate({
+              inputRange,
+              outputRange: [10, 30, 10],
+              extrapolate: 'clamp',
+            });
+
+            const dotOpacity = scrollX.interpolate({
+              inputRange,
+              outputRange: [1, 0.3, 1],
+              extrapolate: 'clamp',
+            });
+            
+            return <Animated.View key={index} style={[styles.indicator, { width: dotWidth, opacity: dotOpacity }]} />;
+          })}
+        </View>
 
         <Text style={styles.sectionTitle}>진행중인 도전과제</Text>
 
-        <View style={styles.tasks}>
+        <View style={[styles.tasks, { marginTop: selectedTasks.length > 0 ? 20 : 0 }]}>
           {selectedTasks.length > 0 ? (
             selectedTasks.map((task, index) => (
               <QuestList
@@ -79,7 +105,7 @@ export default function Home() {
                 title={task.title}
                 amountUsed={task.amountUsed}
                 status={task.status}
-                progress={task.progress} 
+                progress={task.progress}
                 goal={task.goal}
                 iconColor={task.iconColor}
               />
@@ -102,3 +128,124 @@ export default function Home() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f3f5f6',
+  },
+  headerContainer: {
+    paddingTop: 20,
+    paddingHorizontal: 20,
+    backgroundColor: '#f3f5f6',
+  },
+  scrollView: {
+    flexGrow: 1,
+    padding: 20,
+    paddingBottom: 0,
+  },
+  welcomeMessageContainer: {
+    marginBottom: 15,
+  },
+  welcomeMessage: {
+    color: '#4D5764',
+    fontFamily: 'Wanted Sans',
+    fontSize: 22,
+    fontStyle: 'normal',
+    fontWeight: '500',
+    lineHeight: 'normal',
+  },
+  userName: {
+    color: '#43b319',
+    fontWeight: 'bold',
+  },
+  carousel: {
+    marginBottom: 20,
+  },
+  carouselContainer: {
+    paddingHorizontal: CARD_MARGIN,
+  },
+  carouselItem: {
+    width: CARD_WIDTH,
+    height: 150,
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    marginHorizontal: CARD_MARGIN,
+    justifyContent: 'center',
+    position: 'relative',
+    borderWidth: 2,
+    borderColor: '#eeeeee',
+  },
+  carouselTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#b4b9be',
+    marginBottom: 10,
+  },
+  carouselAmount: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#43b319',
+    marginBottom: 5,
+  },
+  carouselPercentage: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    backgroundColor: '#e3fada',
+    color: '#318711',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    fontSize: 14,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    overflow: 'hidden',
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontFamily: 'Pretendard-Bold',
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 10,
+  },
+  tasks: {
+    flex: 1,
+  },
+  selectTaskButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 17,
+    backgroundColor: '#fff',
+    marginTop: 20,
+    width: '100%',
+  },
+  selectTaskButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  arrowIcon: {
+    width: 20,
+    height: 20,
+    tintColor: '#333',
+  },
+  indicatorContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  indicator: {
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#4d5764',
+    marginHorizontal: 5,
+  },
+});

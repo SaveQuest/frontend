@@ -4,58 +4,48 @@ import SafeIcon from "../components/SafeIcon";
 export default function QuestList({
   title,
   amountUsed,
-  status,
   progress,
   goal,
+  points,
   iconColor,
 }) {
   return (
     <View style={styles.task}>
-      <View style={styles.taskHeader}>
-        <Text style={styles.taskTitle}>{title}</Text>
-        <View style={[styles.statusBadge, styles[status]]}>
-          <Text style={styles.statusBadgeText}>
-            {status === "safe"
-              ? "안전"
-              : status === "warning"
-              ? "위험"
-              : status === "fail"
-              ? "실패"
-              : status === "success"
-              ? "성공"
-              : null}
-          </Text>
+      <View style={styles.header}>
+        <SafeIcon />
+        <Text style={styles.points}>{progress}</Text> 
+      </View>
+
+      <Text style={styles.title}>{title}</Text>
+
+      <View style={styles.amountContainer}>
+        <View style={styles.amountSection}>
+          <Text style={styles.label}>오늘 사용한 금액</Text>
+          <Text style={styles.amount}>{`${amountUsed.toLocaleString()}`}</Text>
+        </View>
+
+        <View style={styles.amountSection}>
+          <Text style={styles.label}>목표 금액</Text>
+          <Text style={styles.amount}>{`₩${goal.toLocaleString()}`}</Text>
         </View>
       </View>
 
-      <View style={styles.taskContent}>
-        <View style={styles.amountUsed}>
-          <Text style={{ fontSize: 16, color: iconColor }}>지금까지 </Text>
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: iconColor }}>
-            {amountUsed}원{" "}
-          </Text>
-          <Text style={{ fontSize: 16, color: iconColor }}>사용함</Text>
-        </View>
-
-        {/* 세로줄 추가 */}
-        <View style={styles.verticalLine} />
-
-        <View style={styles.safeIconWithText}>
-          <SafeIcon />
-          <Text style={styles.safeIconText}>{progress}</Text>
-        </View>
-      </View>
-
-      <View style={styles.progressBar}>
-        <View
-          style={[
-            styles.progress,
-            { width: `${progress}%`, backgroundColor: iconColor },
-          ]}
-        />
-        <View style={[styles.goalLine, { left: "100%" }]} />
-        <View style={styles.goalAmountContainer}>
-          <Text style={styles.goalAmount}>{goal}</Text>
+      <View style={styles.progressBarContainer}>
+        <View style={styles.progressBar}>
+          <View
+            style={[
+              styles.progress,
+              {
+                width: `${progress}%`,
+                backgroundColor:
+                  progress >= 100
+                    ? "#f52d2d"
+                    : progress >= 50
+                    ? "#ff7b00"
+                    : "#43b319",
+              },
+            ]}
+          />
         </View>
       </View>
     </View>
@@ -63,109 +53,66 @@ export default function QuestList({
 }
 
 const styles = StyleSheet.create({
-  bold: {
-    fontWeight: "bold",
-  },
   task: {
     backgroundColor: "#FFF",
-    borderRadius: 17,
-    padding: 20,
+    borderRadius: 12,
+    padding: 15,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
   },
-  taskHeader: {
+  points: {
+    marginLeft: 4,
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#43B319",
+  },
+  title: {
+    color: "#23282F",
+    fontSize: 18,
+    fontWeight: "600",
+    letterSpacing: -0.45,
+    marginBottom: 15,
+  },
+  amountContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    marginBottom: 10,
   },
-  taskTitle: {
+  amountSection: {
+    alignItems: "flex-start",
+  },
+  label: {
+    color: "#4D5764",
     fontSize: 15,
     fontWeight: "500",
-    color: "#333",
-    lineHeight: 19.489,
+    lineHeight: 20,
+    letterSpacing: -0.325,
   },
-  statusBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 20,
-    backgroundColor: "#E6E6E6",
+  amount: {
+    color: "#23282F",
+    fontSize: 17,
+    fontWeight: "600",
+    lineHeight: 23,
+    letterSpacing: -0.375,
   },
-  safe: {
-    borderRadius: 3.439,
-    backgroundColor: "#81C966",
-  },
-  warning: {
-    borderRadius: 3.439,
-    backgroundColor: "#F7941D",
-  },
-  fail: {
-    borderRadius: 3.439,
-    backgroundColor: "#FF4C4C",
-  },
-  success: {
-    borderRadius: 3.439,
-    backgroundColor: "#2F6DE3",
-  },
-  statusBadgeText: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#FFF",
-  },
-  taskContent: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  progressBarContainer: {
     alignItems: "center",
-    marginTop: 10,
-  },
-  amountUsed: {
-    flexDirection: "row", 
-    alignItems: "center",
-  },
-  verticalLine: {
-    width: 1,
-    height: "100%",
-    backgroundColor: "#E6E6E6",
-    marginHorizontal: 10,
-  },
-  safeIconWithText: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  safeIconText: {
-    marginLeft: 4,
-    fontSize: 16.553,
-    fontWeight: "700",
-    fontStyle: "normal",
-    lineHeight: 21.422, 
-    letterSpacing: -0.414, 
-    color: "#43B319",
-    fontFamily: "Inter",
   },
   progressBar: {
-    height: 15, 
-    backgroundColor: "#E6E6E6",
-    borderRadius: 3,
-    marginTop: 10,
-    position: "relative",
+    width: "100%",
+    height: 10,
+    backgroundColor: "#E5E7EB",
+    borderRadius: 5,
     overflow: "hidden",
   },
   progress: {
-    height: "100%", 
-    borderRadius: 3,
-  },
-  goalLine: {
-    position: "absolute",
     height: "100%",
-    width: 2,
-    backgroundColor: "#333",
-  },
-  goalAmountContainer: {
-    position: "absolute",
-    right: 0,
-    top: -20,
-  },
-  goalAmount: {
-    fontSize: 13,
-    fontWeight: "700",
-    color: "#333",
+    borderRadius: 5,
   },
 });

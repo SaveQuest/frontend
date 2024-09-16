@@ -10,7 +10,7 @@ const ChallengeHeaderComponent = () => {
     labels: ['9/05', '9/08', '9/11', '9/14', '9/17'],
     datasets: [
       {
-        data: [4000, 2000, 9000, 3000, 1000],
+        data: [9000, 2000, 9000, 3000, 1000],
         strokeWidth: 2,
         color: () => '#4fb081',
       },
