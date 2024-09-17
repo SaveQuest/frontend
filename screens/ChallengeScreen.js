@@ -9,7 +9,7 @@ import Card from "../components/Card";
 import BeforeQuest from "../components/BeforeQuest";
 import Feather from 'react-native-vector-icons/Feather';
 
-const QuestsScreen = ({ navigation }) => {
+const ChallengeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header />
@@ -148,4 +148,4 @@ const QuestsScreen = ({ navigation }) => {
   );
 };
 
-export default QuestsScreen;
+export default ChallengeScreen;

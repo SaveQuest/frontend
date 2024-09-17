@@ -8,7 +8,7 @@ import QuestIcon from './components/QuestIcon';
 import HomeIcon from './components/HomeIcon';
 import ProfileIcon from './components/ProfileIcon';
 import StoreIcon from './components/StoreIcon';
-import QuestsScreen from './screens/QuestsScreen';
+import ChallengeScreen from './screens/ChallengeScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import StoreScreen from './screens/StoreScreen';
 import DetailRank from './components/DetailRank';
@@ -48,7 +48,7 @@ function TabNavigator() {
             <View style={{ gap: 8, alignItems: "center" }}>
               <View>
                 {route.name === "Home" && <HomeIcon color={color} />}
-                {route.name === "Quests" && <QuestIcon color={color} />}
+                {route.name === "Challenge" && <QuestIcon color={color} />}
                 {route.name === "Store" && <StoreIcon color={color} />}
                 {route.name === "Profile" && <ProfileIcon color={color} />}
               </View>
@@ -60,7 +60,7 @@ function TabNavigator() {
                 }}
               >
                 {route.name === "Home" && "홈"}
-                {route.name === "Quests" && "퀘스트"}
+                {route.name === "Challenge" && "챌린지"}
                 {route.name === "Store" && "상점"}
                 {route.name === "Profile" && "내 정보"}
               </Text>
@@ -71,7 +71,7 @@ function TabNavigator() {
       })}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Quests" component={QuestsScreen} />
+      <Tab.Screen name="Challenge" component={ChallengeScreen} />
       <Tab.Screen name="Store" component={StoreScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
