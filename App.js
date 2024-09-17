@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text, View, ScrollView, SafeAreaView } from 'react-native';
+import { Text, View } from 'react-native';
 import Home from './screens/Home';
 import QuestIcon from './components/QuestIcon';
 import HomeIcon from './components/HomeIcon';
@@ -15,7 +15,6 @@ import DetailRank from './components/DetailRank';
 import DetailChallenge from './components/DetailChallenge';
 import DetailBeforeQuest from './components/DetailBeforeQuest';
 import { useFonts } from 'expo-font';
-import { TouchableOpacity } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -45,7 +44,7 @@ function TabNavigator() {
           const color = focused ? "#FFF" : "#b6b6b6";
 
           return (
-            <View style={{ gap: 8, alignItems: "center" }}>
+            <View style={{ gap: 4, alignItems: "center" }}>
               <View>
                 {route.name === "Home" && <HomeIcon color={color} />}
                 {route.name === "Challenge" && <QuestIcon color={color} />}
@@ -56,7 +55,7 @@ function TabNavigator() {
                 style={{
                   fontSize: 13,
                   color,
-                  fontWeight: "bold",
+                  fontFamily: "WantedSans-Medium",
                 }}
               >
                 {route.name === "Home" && "홈"}
