@@ -15,6 +15,7 @@ import DetailRank from './components/DetailRank';
 import DetailChallenge from './components/DetailChallenge';
 import DetailBeforeQuest from './components/DetailBeforeQuest';
 import { useFonts } from 'expo-font';
+import { TouchableOpacity } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -25,76 +26,48 @@ function TabNavigator() {
       initialRouteName="Home"
       screenOptions={({ route }) => ({
         headerShown: false,
+        tabBarActiveBackgroundColor: "#43b319",
+        tabBarItemStyle: {
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: 50,
+          margin: 6,
+        },
         tabBarStyle: {
-          height: 80,
+          height: 70,
           backgroundColor: "#FFF",
           borderRadius: 40,
-          marginHorizontal: 20,
-          paddingBottom: 12,
-          paddingTop: 1,
-          position: 'reletive', 
-          left: 0,
-          right: 0,
-          bottom: 10, 
+          marginHorizontal: 13,
+          marginBottom: 10,
         },
         tabBarIcon: ({ focused }) => {
-          let iconColor = focused ? "#FFF" : "#b6b6b6"; 
-          let backgroundColor = focused ? "#43b319" : "#FFF";
-        
-          const isHomeOrQuests = route.name === "Home" || route.name === "Quests";
-        
+          const color = focused ? "#FFF" : "#b6b6b6";
+
           return (
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <View
+            <View style={{ gap: 8, alignItems: "center" }}>
+              <View>
+                {route.name === "Home" && <HomeIcon color={color} />}
+                {route.name === "Quests" && <QuestIcon color={color} />}
+                {route.name === "Store" && <StoreIcon color={color} />}
+                {route.name === "Profile" && <ProfileIcon color={color} />}
+              </View>
+              <Text
                 style={{
-                  backgroundColor: backgroundColor,
-                  width: 78,
-                  height: 68,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 40,
-                  marginTop: 30,
+                  fontSize: 13,
+                  color,
+                  fontWeight: "bold",
                 }}
               >
-                <View style={{ position: 'absolute', top: isHomeOrQuests ? 15 : 10 }}> 
-                  {route.name === "Home" && <HomeIcon color={iconColor} />}
-                  {route.name === "Quests" && <QuestIcon color={iconColor} />}
-                  {route.name === "Store" && <StoreIcon color={iconColor} />}
-                  {route.name === "Profile" && <ProfileIcon color={iconColor} />}
-                </View>
-              </View>
+                {route.name === "Home" && "홈"}
+                {route.name === "Quests" && "퀘스트"}
+                {route.name === "Store" && "상점"}
+                {route.name === "Profile" && "내 정보"}
+              </Text>
             </View>
           );
         },
-        
-        tabBarLabel: ({ focused }) => {
-          let labelColor = focused ? "#FFF" : "#b6b6b6";
-
-          return (
-            <Text
-              style={{
-                fontSize: 12,
-                color: labelColor,
-                marginTop: 5,
-                fontWeight: "bold",
-              }}
-            >
-              {route.name === "Home" && "홈"}
-              {route.name === "Quests" && "퀘스트"}
-              {route.name === "Store" && "상점"}
-              {route.name === "Profile" && "내 정보"}
-            </Text>
-          );
-        },
-        tabBarItemStyle: {
-          marginHorizontal: 15,
-          paddingBottom: 2,
-        },
+        tabBarShowLabel: false
       })}
     >
       <Tab.Screen name="Home" component={Home} />
@@ -112,7 +85,7 @@ function RootNavigator() {
       <Stack.Screen name="DetailRank" component={DetailRank} />
       <Stack.Screen name="DetailChallenge" component={DetailChallenge} />
       <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
-      <Stack.Screen name="StoreScreen" component={StoreScreen} /> 
+      <Stack.Screen name="StoreScreen" component={StoreScreen} />
     </Stack.Navigator>
   );
 }
@@ -126,7 +99,7 @@ export default function App() {
     "WantedSans-SemiBold": require("./assets/fonts/WantedSans-SemiBold.otf"),
   })
 
-  if(!loaded) return null
+  if (!loaded) return null
 
   return (
     <NavigationContainer>
