@@ -123,6 +123,7 @@ export default function App() {
     "Pretendard-Medium": require("./assets/fonts/Pretendard-Medium.otf"),
     "Pretendard-Regular": require("./assets/fonts/Pretendard-Regular.otf"),
     "WantedSans-Medium": require("./assets/fonts/WantedSans-Medium.otf"),
+    "WantedSans-SemiBold": require("./assets/fonts/WantedSans-SemiBold.otf"),
   })
 
   if(!loaded) return null
