@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import SafeIcon from '../components/SafeIcon';
-import NotificationIcon from '../components/NotificationIcon';
-import SettingsIcon from '../components/SettingsIcon';
+import Header from '../components/Header'; 
 import CameraIcon from '../components/CameraIcon';
 import MyroomIcon from '../components/MyroomIcon'; 
 import StoreIcon from '../components/StoreIcon';
@@ -35,20 +33,8 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.iconsContainer}>
-          <View style={styles.iconWithText}>
-            <SafeIcon />
-            <Text style={styles.iconText}>260</Text>
-          </View>
-          <View style={styles.iconWithText}>
-            <NotificationIcon />
-            <View style={styles.notificationBadge}>
-              <Text style={styles.notificationText}>2</Text>
-            </View>
-          </View>
-          <SettingsIcon />
-        </View>
+      <View style={styles.headerContainer}>
+        <Header home />
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={false}>
@@ -117,48 +103,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    paddingTop: 51,
+    paddingTop: 20,
     backgroundColor: '#F3F5F6',  
   },
   scrollView: {
     flexGrow: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  iconsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  iconWithText: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 20,
-  },
-  iconText: {
-    marginLeft: 4,
-    fontSize: 15,
-    fontWeight: '700',
-    color: '#5D5D5D',
-  },
-  notificationBadge: {
-    position: 'absolute',
-    right: -6,
-    top: -4,
-    backgroundColor: 'green',
-    borderRadius: 10,
-    width: 20,
-    height: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  notificationText: {
-    color: '#FFF',
-    fontSize: 12,
-    fontWeight: 'bold',
   },
   topSection: {
     flexDirection: 'row',
@@ -304,32 +253,6 @@ const styles = StyleSheet.create({
   },
   storeText: {
     color: '#E15558',  
-  },
-  previousChallenges: {
-    paddingVertical: 20,
-    borderTopWidth: 1,
-    borderColor: '#E0E0E0',
-  },
-  previousLabel: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  previousStats: {
-    flexDirection: 'column',
-  },
-  bottomNavigation: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderColor: '#E0E0E0',
-  },
-  navButton: {
-    padding: 10,
-    backgroundColor: '#F0F0F0',
-    borderRadius: 10,
-    alignItems: 'center',
   },
 });
 

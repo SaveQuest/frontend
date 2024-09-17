@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Platform, StatusBar } from 'react-native';
-import SafeIcon from '../components/SafeIcon'; 
-import NotificationIcon from '../components/NotificationIcon';
-import SettingsIcon from '../components/SettingsIcon';
+import Header from '../components/Header'; 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -25,20 +23,8 @@ const StoreScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.iconsContainer}>
-          <View style={styles.iconWithText}>
-            <SafeIcon />
-            <Text style={styles.iconText}>260</Text>
-          </View>
-          <View style={styles.iconWithText}>
-            <NotificationIcon />
-            <View style={styles.notificationBadge}>
-              <Text style={styles.notificationText}>2</Text>
-            </View>
-          </View>
-          <SettingsIcon />
-        </View>
+      <View style={styles.headerContainer}>
+        <Header home={true} /> 
       </View>
 
       <View style={styles.searchContainer}>
@@ -91,52 +77,14 @@ const StoreScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop:20,
     backgroundColor: '#f3f5f6',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginBottom: 20,
-    marginTop: Platform.OS === 'ios' ? 4 : 16, 
-    paddingRight: 20,
-  },
-   headerContainer: {
-    paddingTop:100,
-    paddingHorizontal: 20,  
-    backgroundColor: '#f3f5f6',  
-  },
-  iconsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  iconWithText: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 20,
-  },
-  iconText: {
-    marginLeft: 4,
-    fontSize: 15,
-    fontWeight: '700',
-    color: '#5D5D5D',
-  },
-  notificationBadge: {
-    position: 'absolute',
-    right: -6,
-    top: -4,
-    backgroundColor: 'green',
-    borderRadius: 10,
-    width: 20,
-    height: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  notificationText: {
-    color: '#FFF',
-    fontSize: 12,
-    fontWeight: 'bold',
+  headerContainer: {
+    marginTop: -27,
+    paddingHorizontal: 20,
+    backgroundColor: '#f3f5f6',
   },
   searchContainer: {
     flexDirection: 'row',

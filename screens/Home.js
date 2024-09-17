@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, FlatList, Dimensions, Animated } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import QuestList from "../components/QuestList";
@@ -7,8 +7,9 @@ import ModalComponent from "../components/ModalComponents";
 import tasks from '../stores/tasks';
 
 const { width } = Dimensions.get('window');
-const CARD_WIDTH = width * 0.8;
-const CARD_MARGIN = 10;
+const CARD_WIDTH = width*0.9;
+const CARD_MARGIN = 0;
+const SNAP_INTERVAL = CARD_WIDTH + CARD_MARGIN;
 
 const CarouselItem = ({ item }) => (
   <View style={styles.carouselItem}>
@@ -29,6 +30,18 @@ export default function Home() {
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef();
+  const currentIndex = useRef(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (flatListRef.current) {
+        currentIndex.current = (currentIndex.current + 1) % carouselData.length;
+        flatListRef.current.scrollToIndex({ index: currentIndex.current, animated: true });
+      }
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [carouselData]);
 
   const handleTasksSelected = (newTasks) => {
     const updatedTasks = newTasks.map(task => {
@@ -64,10 +77,10 @@ export default function Home() {
           keyExtractor={item => item.id}
           horizontal
           showsHorizontalScrollIndicator={false}
-          snapToInterval={CARD_WIDTH + CARD_MARGIN * 2}
+          snapToInterval={CARD_WIDTH + CARD_MARGIN}
           decelerationRate="fast"
           contentContainerStyle={styles.carouselContainer}
-          style={[styles.carousel, { marginBottom: selectedTasks.length > 0 ? 0 : -300 }]}
+          style={[styles.carousel, { marginBottom: selectedTasks.length > 0 ? 0 : -350 }]}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { x: scrollX } } }],
             { useNativeDriver: false }
@@ -167,10 +180,10 @@ const styles = StyleSheet.create({
   },
   carouselItem: {
     width: CARD_WIDTH,
-    height: 150,
+    height: 100,
     backgroundColor: '#fff',
     borderRadius: 15,
-    paddingVertical: 20,
+    paddingVertical: 10,
     paddingHorizontal: 20,
     paddingTop: 10,
     marginHorizontal: CARD_MARGIN,

@@ -39,7 +39,9 @@ function TabNavigator() {
         tabBarIcon: ({ focused }) => {
           let iconColor = focused ? "#FFF" : "#b6b6b6"; 
           let backgroundColor = focused ? "#43b319" : "#FFF";
-
+        
+          const isHomeOrQuests = route.name === "Home" || route.name === "Quests";
+        
           return (
             <View
               style={{
@@ -58,7 +60,7 @@ function TabNavigator() {
                   marginTop: 30,
                 }}
               >
-                <View style={{ position: 'absolute', top: 10 }}>
+                <View style={{ position: 'absolute', top: isHomeOrQuests ? 15 : 10 }}> 
                   {route.name === "Home" && <HomeIcon color={iconColor} />}
                   {route.name === "Quests" && <QuestIcon color={iconColor} />}
                   {route.name === "Store" && <StoreIcon color={iconColor} />}
@@ -68,6 +70,7 @@ function TabNavigator() {
             </View>
           );
         },
+        
         tabBarLabel: ({ focused }) => {
           let labelColor = focused ? "#FFF" : "#b6b6b6";
 
