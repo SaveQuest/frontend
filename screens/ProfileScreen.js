@@ -3,8 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'rea
 import * as ImagePicker from 'expo-image-picker';
 import Header from '../components/Header'; 
 import CameraIcon from '../components/CameraIcon';
-import MyroomIcon from '../components/MyroomIcon'; 
-import StoreIcon from '../components/StoreIcon';
 import ShareSection from '../Share/ShareSection ';
 import BeforeQuest from '../components/BeforeQuest';
 
@@ -79,25 +77,12 @@ const ProfileScreen = ({ navigation }) => {
           </View>
         </View>
 
-        <View style={styles.buttonSection}>
-          <TouchableOpacity style={styles.menuButton}>
-            <MyroomIcon />
-            <Text style={styles.menuButtonText}>마이홈</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('StoreScreen')}>
-            <StoreIcon />
-            <Text style={[styles.menuButtonText, styles.storeText]}>상점</Text>
-          </TouchableOpacity>
-        </View>
-
         <ShareSection />
         <BeforeQuest navigation={navigation} />
       </ScrollView>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -230,29 +215,6 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#8BC34A',
     borderRadius: 10,
-  },
-  buttonSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 20,
-  },
-  menuButton: {
-    backgroundColor: '#ffffff',  
-    paddingVertical: 20,
-    opacity: 0.7, 
-    paddingHorizontal: 40,
-    borderRadius: 20,  
-    alignItems: 'center',
-    width: '45%',
-  },
-  menuButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginTop: 10, 
-    color: '#4683EE', 
-  },
-  storeText: {
-    color: '#E15558',  
   },
 });
 

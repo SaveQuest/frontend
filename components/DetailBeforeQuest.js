@@ -30,10 +30,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
+    paddingHorizontal: 5, 
   },
   scrollView: {
     flexGrow: 1,
     padding: 15,
     paddingBottom: 50,
   },
-});
+})

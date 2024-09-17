@@ -13,6 +13,8 @@ export default function RankTopBox({ rank, name, content, money,style }) {
       ? ["#AC835B", "#956532"]
       : null;
   const styles = StyleSheet.create({
+    container: {
+    },
     box: {
       marginTop: 30,
       backgroundColor: "#282830",
@@ -66,27 +68,29 @@ export default function RankTopBox({ rank, name, content, money,style }) {
   });
 
   return (
-    <View style={[styles.box,style]}>
-      {rank == 1 ? (
-        <Crown1 style={styles.Crown} />
-      ) : rank == 2 ? (
-        <Crown2 style={styles.Crown} />
-      ) : rank == 3 ? (
-        <Crown3 style={styles.Crown} />
-      ) : null}
-      <View style={styles.characterImageBox}>
-        <Image
-          style={styles.characterImage}
-          source={require("../assets/character.png")}
-          resizeMode="contain"
-        />
-      </View>
+    <View style={[styles.container, style]}>
+      <View style={styles.box}>
+        {rank == 1 ? (
+          <Crown1 style={styles.Crown} />
+        ) : rank == 2 ? (
+          <Crown2 style={styles.Crown} />
+        ) : rank == 3 ? (
+          <Crown3 style={styles.Crown} />
+        ) : null}
+        <View style={styles.characterImageBox}>
+          <Image
+            style={styles.characterImage}
+            source={require("../assets/character.png")}
+            resizeMode="contain"
+          />
+        </View>
 
-      <View style={styles.userBox}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.content}>{content}</Text>
-        <View style={styles.moneyBox}>
-          <Text style={styles.money}>₩{money}</Text>
+        <View style={styles.userBox}>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.content}>{content}</Text>
+          <View style={styles.moneyBox}>
+            <Text style={styles.money}>₩{money}</Text>
+          </View>
         </View>
       </View>
     </View>

@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import DetailHeader from "./DetailHeader";
 import ArrowIcon from "./ArrowIcon";
 import ChallengeBox from "./ChallengeBox";
 
@@ -13,45 +12,46 @@ export default function DetailChallenge({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require("../assets/LogoBackground.png")}
-        style={styles.header}
-      >
-        <View style={styles.headerContent}>
-          <TouchableOpacity onPress={() => navigation.navigate("MainPage")}>
-            <ArrowIcon color={"white"} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.title}>
-          <View style={{ alignItems: "center", marginBottom:17 }}>
-            <Text style={{ fontSize: 18, color: "white",fontWeight:'bold', opacity: 0.8 }}>
-              챌린지
-            </Text>
+      <View style={styles.headerContainer}>
+        <ImageBackground
+          source={require("../assets/LogoBackground.png")}
+          style={styles.header}
+        >
+          <View style={styles.headerContent}>
+            <TouchableOpacity onPress={() => navigation.navigate("MainPage")}>
+              <ArrowIcon color={"white"} />
+            </TouchableOpacity>
           </View>
+          <View style={styles.title}>
+            <View style={{ alignItems: "center", marginBottom:17 }}>
+              <Text style={{ fontSize: 18, color: "white", fontWeight:'bold', opacity: 0.8 }}>
+                챌린지
+              </Text>
+            </View>
 
-          <View style={styles.process}>
-            <View>
-              <Text style={{ fontSize: 15, color: "white"}}>진행중인 챌린지 수</Text>
-              <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>21</Text>
-            </View>
-            <View>
-              <Text style={{ fontSize: 15, color: "white"}}>챌린지 플레이어</Text>
-              <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>21</Text>
-            </View>
-            <View>
-              <Text style={{ fontSize: 15, color: "white"}}>얻을 수 있는 코인 수</Text>
-              <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>21</Text>
+            <View style={styles.process}>
+              <View>
+                <Text style={{ fontSize: 15, color: "white" }}>진행중인 챌린지 수</Text>
+                <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>21</Text>
+              </View>
+              <View>
+                <Text style={{ fontSize: 15, color: "white" }}>챌린지 플레이어</Text>
+                <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>21</Text>
+              </View>
+              <View>
+                <Text style={{ fontSize: 15, color: "white" }}>얻을 수 있는 코인 수</Text>
+                <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>21</Text>
+              </View>
             </View>
           </View>
-        </View>
-      </ImageBackground>
+        </ImageBackground>
+      </View>
       
       <View style={styles.contents}>
-          <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100}/>
-          <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100}/>
-          <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100}/>
+        <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100} />
+        <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100} />
+        <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100} />
       </View>
-
     </View>
   );
 }
@@ -59,6 +59,10 @@ export default function DetailChallenge({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 5,
+  },
+  headerContainer: {
+    marginHorizontal: -5, 
   },
   header: {
     flexDirection: "row",
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     padding: 12,
-    zIndex:99
+    zIndex: 99,
   },
   title: {
     fontWeight: "bold",
@@ -86,11 +90,11 @@ const styles = StyleSheet.create({
   },
   process: {
     width: "100%",
-    flexDirection:'row',
-    justifyContent:'space-between'
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  contents:{
-    padding:12,
-    gap:12
-  }
+  contents: {
+    padding: 12,
+    gap: 12,
+  },
 });
