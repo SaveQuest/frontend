@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Platform, StatusBar } from 'react-native';
-import Header from '../components/Header'; 
+import Header from '../components/Header';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -24,7 +24,7 @@ const StoreScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <Header home={true} /> 
+        <Header home={true} />
       </View>
 
       <View style={styles.searchContainer}>
@@ -77,7 +77,7 @@ const StoreScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:20,
+    marginTop: 20,
     backgroundColor: '#f3f5f6',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
@@ -89,44 +89,45 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 20, 
+    marginHorizontal: 20,
     marginBottom: 10,
   },
   searchInput: {
     flex: 1,
-    height: 40,
+    height: 42,
     borderColor: '#BDBDBD',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
-    paddingBottom: 20,
-    paddingTop: 20,
     backgroundColor: '#FFF',
-    fontSize: 16, 
+    fontSize: 16,
   },
   searchButton: {
     marginLeft: 10,
-    backgroundColor: '#4CAF50',
-    paddingVertical: 15,
+    backgroundColor: '#389348',
+    justifyContent: "center",
     paddingHorizontal: 20,
     borderRadius: 8,
+    height: 42
   },
   searchButtonText: {
     color: '#FFF',
     fontWeight: 'bold',
-    fontSize: 16, 
+    fontSize: 15,
+    lineHeight: 25
   },
   tabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: '#FFF',
-    paddingVertical: 10,
     marginHorizontal: 20,
     borderRadius: 8,
   },
   tabButton: {
+    flex: 1,
     alignItems: 'center',
+    paddingVertical: 10
   },
   tabText: {
     color: '#BDBDBD',
