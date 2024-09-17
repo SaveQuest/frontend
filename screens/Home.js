@@ -81,7 +81,7 @@ export default function Home() {
           snapToInterval={CARD_WIDTH + CARD_MARGIN}
           decelerationRate="fast"
           contentContainerStyle={styles.carouselContainer}
-          style={[styles.carousel, { marginBottom: selectedTasks.length > 0 ? 0 : -350 }]}
+          style={styles.carousel}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { x: scrollX } } }],
             { useNativeDriver: false }
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   carousel: {
-    marginBottom: 20,
+    flexGrow: 0
   },
   carouselContainer: {
     paddingHorizontal: CARD_MARGIN,
