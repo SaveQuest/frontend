@@ -166,7 +166,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontStyle: 'normal',
     fontWeight: '500',
-    lineHeight: 'normal',
   },
   userName: {
     color: '#43b319',
