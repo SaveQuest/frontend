@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import Header from '../components/Header'; 
+import Header from '../components/Header';
 import CameraIcon from '../components/CameraIcon';
 import ShareSection from '../Share/ShareSection ';
 import BeforeQuest from '../components/BeforeQuest';
@@ -31,9 +31,7 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Header home />
-      </View>
+      <Header />
 
       <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.topSection}>
@@ -69,8 +67,8 @@ const ProfileScreen = ({ navigation }) => {
 
         <View style={styles.levelBarSection}>
           <View style={styles.levelTextContainer}>
-            <Text style={styles.levelLabelText}>Lv.</Text> 
-            <Text style={styles.levelNumberText}>998</Text>  
+            <Text style={styles.levelLabelText}>Lv.</Text>
+            <Text style={styles.levelNumberText}>998</Text>
           </View>
           <View style={styles.levelBarContainer}>
             <View style={styles.levelBarFill} />
@@ -87,12 +85,11 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    paddingTop: 20,
-    backgroundColor: '#F3F5F6',  
+    backgroundColor: '#F3F5F6',
   },
   scrollView: {
     flexGrow: 1,
+    paddingHorizontal: 20,
   },
   topSection: {
     flexDirection: 'row',
@@ -154,7 +151,7 @@ const styles = StyleSheet.create({
   },
   moneyLabelRow: {
     fontSize: 19,
-    fontWeight:'bold',
+    fontWeight: 'bold',
     color: '#7E7E7E',
   },
   moneyAmountRow: {
@@ -170,7 +167,7 @@ const styles = StyleSheet.create({
   },
   challengeLabel: {
     fontSize: 19,
-    fontWeight:'bold',
+    fontWeight: 'bold',
     color: '#7E7E7E',
   },
   challengeAmount: {
@@ -196,12 +193,12 @@ const styles = StyleSheet.create({
   levelLabelText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#000',  
+    color: '#000',
   },
   levelNumberText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#8BC34A',  
+    color: '#8BC34A',
   },
   levelBarContainer: {
     flex: 1,
@@ -211,7 +208,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   levelBarFill: {
-    width: '75%', 
+    width: '75%',
     height: '100%',
     backgroundColor: '#8BC34A',
     borderRadius: 10,

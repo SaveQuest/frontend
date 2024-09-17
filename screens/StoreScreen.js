@@ -50,9 +50,7 @@ const StoreScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Header home={true} />
-      </View>
+      <Header />
 
       <View style={styles.tabContainer}>
         <TabItem Icon={FontAwesome} iconName="smile-o" name="캐릭터" active={selectedTab === "character"} onPress={() => setSelectedTab('character')} />
@@ -77,13 +75,6 @@ const StoreScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
-    backgroundColor: '#f3f5f6',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-  },
-  headerContainer: {
-    marginTop: -27,
-    paddingHorizontal: 20,
     backgroundColor: '#f3f5f6',
   },
   tabContainer: {

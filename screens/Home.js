@@ -7,7 +7,7 @@ import ModalComponent from "../components/ModalComponents";
 import tasks from '../stores/tasks';
 
 const { width } = Dimensions.get('window');
-const CARD_WIDTH = width*0.9;
+const CARD_WIDTH = width * 0.9;
 const CARD_MARGIN = 0;
 const SNAP_INTERVAL = CARD_WIDTH + CARD_MARGIN;
 
@@ -50,7 +50,7 @@ export default function Home() {
       const progress = Math.min(100, Math.round((amountUsed / goal) * 100));
       return { ...task, progress };
     });
-    
+
     setSelectedTasks((prevTasks) => [...prevTasks, ...updatedTasks]);
     setModalVisible(false);
   };
@@ -61,9 +61,8 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Header home />
-      </View>
+      <Header />
+
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.welcomeMessageContainer}>
           <Text style={styles.welcomeMessage}>
@@ -103,7 +102,7 @@ export default function Home() {
               outputRange: [1, 0.3, 1],
               extrapolate: 'clamp',
             });
-            
+
             return <Animated.View key={index} style={[styles.indicator, { width: dotWidth, opacity: dotOpacity }]} />;
           })}
         </View>
@@ -145,11 +144,6 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f5f6',
-  },
-  headerContainer: {
-    paddingTop: 20,
-    paddingHorizontal: 20,
     backgroundColor: '#f3f5f6',
   },
   scrollView: {

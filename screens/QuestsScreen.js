@@ -1,6 +1,6 @@
 import React from "react";
 import { View, ScrollView, TouchableOpacity, Text, ImageBackground } from "react-native";
-import Header from "../components/Header";  
+import Header from "../components/Header";
 import SafeIcon from "../components/SafeIcon";
 import styles from "../styles/QuestsScreenStlyes";
 import RankBox from "../components/RankBox";
@@ -12,10 +12,8 @@ import Feather from 'react-native-vector-icons/Feather';
 const QuestsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Header home />
-      </View>
-      
+      <Header />
+
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.challenge}>
           <ImageBackground

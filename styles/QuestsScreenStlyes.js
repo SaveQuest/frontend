@@ -3,9 +3,6 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 6,
-    marginTop:14,
-    paddingHorizontal: 5,
   },
   scrollView: {
     flexGrow: 1,
@@ -22,13 +19,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 80,
     justifyContent: "center",
-    alignItems: "flex-start", 
+    alignItems: "flex-start",
     backgroundColor: "green",
-    paddingLeft: 16,  
+    paddingLeft: 16,
   },
   headerContainer: {
-    paddingHorizontal: 15,  
-    backgroundColor: '#f3f5f6',  
+    paddingHorizontal: 15,
+    backgroundColor: '#f3f5f6',
   },
   content: {
     width: "100%",
@@ -123,7 +120,7 @@ const styles = StyleSheet.create({
 
   rank: {
     marginTop: 30,
-    paddingHorizontal: 8,   
+    paddingHorizontal: 8,
   },
   rankTab: {
     width: '100%',
