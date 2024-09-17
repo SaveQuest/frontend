@@ -14,6 +14,7 @@ import StoreScreen from './screens/StoreScreen';
 import DetailRank from './components/DetailRank';
 import DetailChallenge from './components/DetailChallenge';
 import DetailBeforeQuest from './components/DetailBeforeQuest';
+import { useFonts } from 'expo-font';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -116,19 +117,16 @@ function RootNavigator() {
   );
 }
 
-function ScreenWithScroll({ children }) {
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1, paddingBottom: 150 }} 
-      >
-        {children}
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
 export default function App() {
+  const [loaded] = useFonts({
+    "Pretendard-Bold": require("./assets/fonts/Pretendard-Bold.otf"),
+    "Pretendard-Medium": require("./assets/fonts/Pretendard-Medium.otf"),
+    "Pretendard-Regular": require("./assets/fonts/Pretendard-Regular.otf"),
+    "WantedSans-Medium": require("./assets/fonts/WantedSans-Medium.otf"),
+  })
+
+  if(!loaded) return null
+
   return (
     <NavigationContainer>
       <RootNavigator />

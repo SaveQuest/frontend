@@ -162,11 +162,10 @@ const styles = StyleSheet.create({
   },
   welcomeMessage: {
     color: '#4D5764',
-    fontFamily: 'Wanted Sans',
+    fontFamily: 'WantedSans-Medium',
     fontSize: 22,
     fontStyle: 'normal',
     fontWeight: '500',
-    lineHeight: 'normal',
   },
   userName: {
     color: '#43b319',
