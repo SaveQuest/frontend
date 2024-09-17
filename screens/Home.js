@@ -13,8 +13,10 @@ const SNAP_INTERVAL = CARD_WIDTH + CARD_MARGIN;
 
 const CarouselItem = ({ item }) => (
   <View style={styles.carouselItem}>
-    <Text style={styles.carouselTitle}>{item.title}</Text>
-    <Text style={styles.carouselAmount}>{item.amount}</Text>
+    <View style={{ gap: 4 }}>
+      <Text style={styles.carouselTitle}>{item.title}</Text>
+      <Text style={styles.carouselAmount}>{item.amount}</Text>
+    </View>
     <Text style={styles.carouselPercentage}>{item.percentage}</Text>
   </View>
 );
@@ -107,7 +109,7 @@ export default function Home() {
           })}
         </View>
 
-        <Text style={styles.sectionTitle}>진행중인 도전과제</Text>
+        <Text style={styles.sectionTitle}>일일 도전과제</Text>
 
         <View style={[styles.tasks, { marginTop: selectedTasks.length > 0 ? 20 : 0 }]}>
           {selectedTasks.length > 0 ? (
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
   welcomeMessage: {
     color: '#4D5764',
     fontFamily: 'WantedSans-Medium',
-    fontSize: 22,
+    fontSize: 24,
     fontStyle: 'normal',
     fontWeight: '500',
   },
@@ -173,49 +175,41 @@ const styles = StyleSheet.create({
   },
   carouselItem: {
     width: CARD_WIDTH,
-    height: 100,
+    height: 72,
     backgroundColor: '#fff',
-    borderRadius: 15,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    paddingTop: 10,
+    borderRadius: 12,
+    padding: 15,
     marginHorizontal: CARD_MARGIN,
-    justifyContent: 'center',
-    position: 'relative',
-    borderWidth: 2,
-    borderColor: '#eeeeee',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderWidth: 1,
+    borderColor: '#efefef',
   },
   carouselTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 14,
     color: '#b4b9be',
-    marginBottom: 10,
+    fontFamily: "WantedSans-Medium"
   },
   carouselAmount: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: 18,
     color: '#43b319',
-    marginBottom: 5,
+    fontFamily: "WantedSans-SemiBold"
   },
   carouselPercentage: {
-    position: 'absolute',
-    top: 40,
-    right: 20,
     backgroundColor: '#e3fada',
     color: '#318711',
     paddingVertical: 5,
     paddingHorizontal: 10,
-    borderRadius: 10,
+    borderRadius: 20,
     fontSize: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    overflow: 'hidden',
+    fontFamily: "WantedSans-SemiBold"
   },
   sectionTitle: {
-    fontSize: 16,
-    fontFamily: 'Pretendard-Bold',
-    fontWeight: '700',
+    fontSize: 15,
+    fontFamily: "WantedSans-SemiBold",
     color: '#333',
+    marginTop: 28,
     marginBottom: 10,
   },
   tasks: {
@@ -245,7 +239,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 14,
     marginBottom: 20,
   },
   indicator: {
