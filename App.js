@@ -21,59 +21,64 @@ const Stack = createStackNavigator();
 
 function TabNavigator() {
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarActiveBackgroundColor: "#43b319",
-        tabBarItemStyle: {
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: 50,
-          margin: 6,
-        },
-        tabBarStyle: {
-          height: 70,
-          backgroundColor: "#FFF",
-          borderRadius: 40,
-          marginHorizontal: 13,
-          marginBottom: 10,
-        },
-        tabBarIcon: ({ focused }) => {
-          const color = focused ? "#FFF" : "#b6b6b6";
+    <View style={{ flex: 1, backgroundColor: '#f3f5f6' }}>
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarActiveBackgroundColor: "#43b319",
+          tabBarItemStyle: {
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 50,
+            margin: 6,
+          },
+          tabBarStyle: {
+            height: 70,
+            backgroundColor: "#FFF",
+            borderRadius: 40,
+            marginHorizontal: 13,
+            marginBottom: 10,
+            marginTop: 10, 
+            shadowColor: "transparent", 
+            elevation: 0, 
+          },
+          tabBarIcon: ({ focused }) => {
+            const color = focused ? "#FFF" : "#b6b6b6";
 
-          return (
-            <View style={{ gap: 4, alignItems: "center" }}>
-              <View>
-                {route.name === "Home" && <HomeIcon color={color} />}
-                {route.name === "Challenge" && <QuestIcon color={color} />}
-                {route.name === "Store" && <StoreIcon color={color} />}
-                {route.name === "Profile" && <ProfileIcon color={color} />}
+            return (
+              <View style={{ gap: 4, alignItems: "center" }}>
+                <View>
+                  {route.name === "Home" && <HomeIcon color={color} />}
+                  {route.name === "Challenge" && <QuestIcon color={color} />}
+                  {route.name === "Store" && <StoreIcon color={color} />}
+                  {route.name === "Profile" && <ProfileIcon color={color} />}
+                </View>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    color,
+                    fontFamily: "WantedSans-Medium",
+                  }}
+                >
+                  {route.name === "Home" && "홈"}
+                  {route.name === "Challenge" && "챌린지"}
+                  {route.name === "Store" && "상점"}
+                  {route.name === "Profile" && "내 정보"}
+                </Text>
               </View>
-              <Text
-                style={{
-                  fontSize: 13,
-                  color,
-                  fontFamily: "WantedSans-Medium",
-                }}
-              >
-                {route.name === "Home" && "홈"}
-                {route.name === "Challenge" && "챌린지"}
-                {route.name === "Store" && "상점"}
-                {route.name === "Profile" && "내 정보"}
-              </Text>
-            </View>
-          );
-        },
-        tabBarShowLabel: false
-      })}
-    >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Challenge" component={ChallengeScreen} />
-      <Tab.Screen name="Store" component={StoreScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-    </Tab.Navigator>
+            );
+          },
+          tabBarShowLabel: false,
+        })}
+      >
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Challenge" component={ChallengeScreen} />
+        <Tab.Screen name="Store" component={StoreScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
+      </Tab.Navigator>
+    </View>
   );
 }
 
@@ -96,9 +101,9 @@ export default function App() {
     "Pretendard-Regular": require("./assets/fonts/Pretendard-Regular.otf"),
     "WantedSans-Medium": require("./assets/fonts/WantedSans-Medium.otf"),
     "WantedSans-SemiBold": require("./assets/fonts/WantedSans-SemiBold.otf"),
-  })
+  });
 
-  if (!loaded) return null
+  if (!loaded) return null;
 
   return (
     <NavigationContainer>
