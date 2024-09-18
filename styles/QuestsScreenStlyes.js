@@ -3,6 +3,8 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 6,
+    paddingHorizontal: 5,
   },
   scrollView: {
     flexGrow: 1,
@@ -14,6 +16,7 @@ const styles = StyleSheet.create({
     borderRadius: 17.196,
     overflow: "hidden",
     marginBottom: 10,
+
   },
   header: {
     width: "100%",
@@ -24,6 +27,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
   headerContainer: {
+    paddingTop: 15,
     paddingHorizontal: 15,
     backgroundColor: '#f3f5f6',
   },
@@ -32,6 +36,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     padding: 12,
   },
+
+  border: {
+    borderWidth: 2,
+    borderColor: "#EFEFEF",
+    borderRadius: 10,
+    padding: 16,
+    height:"50%",
+  },
+
   challengeHead: {
     color: "#FFF",
     fontSize: 16,
@@ -44,18 +57,22 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    borderBottomWidth: 2.5,
-    borderBottomColor: "#D9D9D9",
     marginTop: 10,
     marginBottom: 10,
   },
+
+
   titleDate: {
-    fontSize: 14,
-    color: "#818181",
+    fontSize: 17,
+    color: "#4D5764",
+    fontWeight: 600,
+    fontFamily: "../assets/fonts/Pretendard-Thin.otf",
   },
+
+
   titleTitle: {
     color: "#1E1E1E",
-    fontSize: 17,
+    fontSize: 22,
     fontWeight: "bold",
     marginBottom: 10,
   },
@@ -63,7 +80,8 @@ const styles = StyleSheet.create({
   my: {
     marginTop: 10,
     marginBottom: 10,
-    flexDirection: "row",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   left: {
     flex: 1,
@@ -71,18 +89,23 @@ const styles = StyleSheet.create({
   },
   one: {
     color: "#575757",
-    fontSize: 14,
+    fontSize: 18,
   },
   two: {
-    color: "#000",
-    fontSize: 26,
-    fontWeight: "bold",
+    color: "#23282F",
+    fontSize: 22,
+    fontWeight: 600,
   },
 
   right: {
     flex: 1,
+    marginTop: 40,
   },
   myGame: {
+    display: "flex",
+    flexDirection: "row",
+    padding: 4,
+    alignItems: "baseline",
     gap: 4,
   },
   name: {
@@ -102,36 +125,49 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   gameName: {
-    fontSize: 15,
-    color: '#389348',
+    fontSize: 24,
+    color: '#43B319',
     fontWeight: 'bold',
   },
   box: {
-    backgroundColor: '#81C966',
+    backgroundColor: '#43B319',
     padding: 5,
-    width: 100,
+    width: 80,
     alignItems: 'center',
     borderRadius: 8,
   },
   myRank: {
-    color: 'white',
+    color: '#FFFFFF',
     fontWeight: "bold",
   },
 
   rank: {
+    width: "100%",
     marginTop: 30,
     paddingHorizontal: 8,
+    display: "flex",
+    justifyContent: "space-between",
   },
   rankTab: {
-    width: '100%',
+    width: "100%",
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 10,
   },
   rankTabText: {
-    fontWeight: 'bold',
-    fontSize: 18,
+    fontWeight: 600,
+    fontSize: 17,
   },
+  seeRankMore: {
+    fontWeight: 600,
+    fontSize: 15,
+  },
+  rankBoxFlex: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
   sectionTitle: {
     fontSize: 16,
     fontWeight: "700",

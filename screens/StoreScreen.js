@@ -1,73 +1,116 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity, SafeAreaView, Platform, StatusBar, FlatList } from 'react-native';
-import Header from '../components/Header';
+import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Platform, StatusBar } from 'react-native';
+import SafeIcon from '../components/SafeIcon'; 
+import NotificationIcon from '../components/NotificationIcon';
+import SettingsIcon from '../components/SettingsIcon';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import SafeIcon from '../components/SafeIcon';
-
-const TabItem = (
-  { Icon, iconName, name, onPress, active }
-) => {
-  return (
-    <TouchableOpacity
-      style={styles.tabButton}
-      onPress={onPress}
-    >
-      <Icon name={iconName} size={24} color={active ? '#4CAF50' : '#BDBDBD'} />
-      <Text style={active ? styles.tabTextActive : styles.tabText}>{name}</Text>
-    </TouchableOpacity>
-  )
-}
-
-const ProductItem = (
-  { name, point, onPress }
-) => {
-  return (
-    <View style={styles.productItemWrapper}>
-      <TouchableOpacity
-        style={styles.productItem}
-        onPress={onPress}
-      >
-        <View style={styles.productImageWrapper}>
-          <Image style={styles.productImage} resizeMode="contain" source={require("../assets/character.png")} />
-        </View>
-
-        <View style={styles.productDescContainer}>
-          <Text style={styles.productTitle} numberOfLines={2}>{name}</Text>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-            <SafeIcon />
-            <Text style={styles.productPrice}>1000</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </View>
-  )
-}
+import StoreItem from '../components/StoreItem'; // 상품 컴포넌트 가져오기
+import StoreItemDetail from '../components/StoreItemDetail'; // 상품 모달 컴포넌트 가져오기
 
 const StoreScreen = () => {
   const [selectedTab, setSelectedTab] = useState('character');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const products = [
+    { title: '빨간맛 캐릭터', price: '1000', type: 'character', description: '어쩌구 저쩌구' },
+    { title: '펫 1', price: '1500', type: 'pet', description: '어쩌구 저쩌구' },
+    { title: '펫 2', price: '2500', type: 'pet', description: '어쩌구 저쩌구' },
+    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
+  ];
+
+  const handleProductPress = (product) => {
+    setSelectedProduct(product);
+    setModalVisible(true);
+  };
+
+  const renderContent = () => {
+    return (
+      <View style={styles.grid}>
+        {products
+          .filter(item => item.type === selectedTab) // 선택된 탭에 맞는 상품 필터링
+          .map((item, index) => (
+            <StoreItem 
+              key={index} 
+              title={item.title} 
+              price={item.price} 
+              onPress={() => handleProductPress(item)} // 클릭 시 상품 정보 전달
+            />
+          ))}
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
-
-      <View style={styles.tabContainer}>
-        <TabItem Icon={FontAwesome} iconName="smile-o" name="캐릭터" active={selectedTab === "character"} onPress={() => setSelectedTab('character')} />
-        <TabItem Icon={MaterialIcons} iconName="pets" name="펫" active={selectedTab === "pet"} onPress={() => setSelectedTab('pet')} />
-        <TabItem Icon={Feather} iconName="home" name="배경" active={selectedTab === "background"} onPress={() => setSelectedTab('background')} />
-        <TabItem Icon={Feather} iconName="box" name="랜덤박스" active={selectedTab === "randombox"} onPress={() => setSelectedTab('randombox')} />
+      <View style={styles.header}>
+        <View style={styles.iconsContainer}>
+          <View style={styles.iconWithText}>
+            <SafeIcon />
+            <Text style={styles.iconText}>260</Text>
+          </View>
+          <View style={styles.iconWithText}>
+            <NotificationIcon />
+            <View style={styles.notificationBadge}>
+              <Text style={styles.notificationText}>2</Text>
+            </View>
+          </View>
+          <SettingsIcon />
+        </View>
       </View>
 
-      <ScrollView>
-        <View style={styles.productContainer}>
-          <ProductItem name="대전광역시의대전광역시의 구름대전광역시의 구름" />
-          <ProductItem name="달의 뒷편" />
+      <View style={styles.searchContainer}>
+        <TextInput style={styles.searchInput} placeholder="상품 검색" />
+        <TouchableOpacity style={styles.searchButton}>
+          <Text style={styles.searchButtonText}>검색</Text>
+        </TouchableOpacity>
+      </View>
 
-          <ProductItem name="달의 뒷편" />
-          <ProductItem name="달의 뒷편" />
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={styles.tabButton}
+          onPress={() => setSelectedTab('character')}
+        >
+          <FontAwesome name="smile-o" size={24} color={selectedTab === 'character' ? '#4CAF50' : '#BDBDBD'} />
+          <Text style={selectedTab === 'character' ? styles.tabTextActive : styles.tabText}>캐릭터</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.tabButton}
+          onPress={() => setSelectedTab('pet')}
+        >
+          <MaterialIcons name="pets" size={24} color={selectedTab === 'pet' ? '#4CAF50' : '#BDBDBD'} />
+          <Text style={selectedTab === 'pet' ? styles.tabTextActive : styles.tabText}>펫</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.tabButton}
+          onPress={() => setSelectedTab('background')}
+        >
+          <Feather name="home" size={24} color={selectedTab === 'background' ? '#4CAF50' : '#BDBDBD'} />
+          <Text style={selectedTab === 'background' ? styles.tabTextActive : styles.tabText}>배경</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.tabButton}
+          onPress={() => setSelectedTab('randombox')}
+        >
+          <Feather name="box" size={24} color={selectedTab === 'randombox' ? '#4CAF50' : '#BDBDBD'} />
+          <Text style={selectedTab === 'randombox' ? styles.tabTextActive : styles.tabText}>랜덤박스</Text>
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <View style={styles.storeContainer}>
+          {renderContent()}
         </View>
       </ScrollView>
+
+      {/* 상품 상세 모달 */}
+      <StoreItemDetail
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        product={selectedProduct}
+      />
     </SafeAreaView>
   );
 };
@@ -76,20 +119,84 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f5f6',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: Platform.OS === 'ios' ? 4 : 16,
+    paddingRight: 20,
+  },
+  iconsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconWithText: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 20,
+  },
+  iconText: {
+    marginLeft: 4,
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#5D5D5D',
+  },
+  notificationBadge: {
+    position: 'absolute',
+    right: -6,
+    top: -4,
+    backgroundColor: 'green',
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notificationText: {
+    color: '#FFF',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 20,
+    marginBottom: 10,
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    borderColor: '#BDBDBD',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+  },
+  searchButton: {
+    marginLeft: 10,
+    backgroundColor: '#4CAF50',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  searchButtonText: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
   tabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: '#FFF',
+    paddingVertical: 10,
     marginHorizontal: 20,
     borderRadius: 8,
-    marginTop: 18
   },
   tabButton: {
-    flex: 1,
     alignItems: 'center',
-    paddingVertical: 10
   },
   tabText: {
     color: '#BDBDBD',
@@ -101,46 +208,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 5,
   },
-  productContainer: {
+  scrollView: {
+    padding: 20,
+  },
+  storeContainer: {
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: "space-between",
-    alignItems: "flex-start",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 20,
   },
-  productItemWrapper: {
-    width: "50%",
-    padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '100%',
   },
-  productItem: {
-    width: "100%",
-    flexDirection: "column",
-  },
-  productImageWrapper: {
-    padding: 20,
-    backgroundColor: "white",
-    borderRadius: 12
-  },
-  productImage: {
-    width: "100%",
-    height: 100,
-  },
-  productDescContainer: {
-    marginTop: 8,
-    gap: 5
-  },
-  productTitle: {
-    fontFamily: "WantedSans-Medium",
-    fontSize: 18,
-  },
-  productPrice: {
-    fontFamily: "WantedSans-Medium",
-    fontSize: 18,
-    color: "#318711"
-  }
 });
 
 export default StoreScreen;

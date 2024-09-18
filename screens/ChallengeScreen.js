@@ -1,6 +1,6 @@
 import React from "react";
 import { View, ScrollView, TouchableOpacity, Text, ImageBackground } from "react-native";
-import Header from "../components/Header";
+import Head from "../components/Header";
 import SafeIcon from "../components/SafeIcon";
 import styles from "../styles/QuestsScreenStlyes";
 import RankBox from "../components/RankBox";
@@ -9,13 +9,38 @@ import Card from "../components/Card";
 import BeforeQuest from "../components/BeforeQuest";
 import Feather from 'react-native-vector-icons/Feather';
 
-const ChallengeScreen = ({ navigation }) => {
+const QuestsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Header />
+      <View style={[styles.headerContainer, { paddingLeft: 20 }]}>
+        <Head />
+      </View>
 
       <ScrollView contentContainerStyle={styles.scrollView}>
+        <Card>
+          <TouchableOpacity onPress={() => navigation.navigate("DetailChallenge")}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
+              >
+                <SafeIcon />
+                <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+                  챌린지 참여하기
+                </Text>
+              </View>
+              <Feather name="chevron-right" size={20} color="#000" />
+            </View>
+          </TouchableOpacity>
+        </Card>
+
         <View style={styles.challenge}>
+
           <ImageBackground
             source={require("../assets/LogoBackground.png")}
             style={styles.header}
@@ -23,39 +48,39 @@ const ChallengeScreen = ({ navigation }) => {
             <Text style={styles.challengeHead}>challenge</Text>
             <Text style={styles.challengeContext}>Save Quest</Text>
           </ImageBackground>
-
           <View style={styles.content}>
-            <View style={styles.title}>
-              <Text style={styles.titleDate}>6월 15일 토요일 까지</Text>
-              <Text style={styles.titleTitle}>
-                한달동안 평균 소비 금액 줄이기
-              </Text>
-            </View>
-            <View style={styles.my}>
-              <View style={styles.left}>
-                <View>
-                  <Text style={styles.one}>나의 한달 평균 소비 금액</Text>
-                  <Text style={styles.two}>₩54,000</Text>
-                </View>
-                <View>
-                  <Text style={styles.one}>지금까지 줄인 소비 금액</Text>
-                  <Text style={styles.two}>₩3,000</Text>
-                </View>
+            <View style={styles.border}>
+              <View style={styles.title}>
+                <Text style={styles.titleTitle}>
+                  한달동안 평균 소비 금액 줄이기
+                </Text>
+                <Text style={styles.titleDate}>6월 15일 까지</Text>
               </View>
+              <View style={styles.my}>
+                <View style={styles.left}>
+                  <View>
+                    <Text style={styles.one}>이전 달 소비금액</Text>
+                    <Text style={styles.two}>₩54,000</Text>
+                  </View>
+                  <View>
+                    <Text style={styles.one}>지금까지 줄인 소비 금액</Text>
+                    <Text style={styles.two}>₩3,000</Text>
+                  </View>
+                </View>
 
-              <View style={styles.right}>
-                <View style={styles.myGame}>
-                  <Text style={styles.name}>
-                    차호림
+                <View style={styles.right}>
+                  <View style={styles.myGame}>
+                    <Text style={styles.gameName}>절약의 신</Text>
+
                     <Text style={styles.level}>
                       <Text style={styles.levelLog}>Lv.</Text>998
                     </Text>
-                  </Text>
-
-                  <Text style={styles.gameName}>절약의 신</Text>
-                  <View style={styles.box}>
-                    <Text style={styles.myRank}>현재 순위 1위</Text>
                   </View>
+
+                  <View style={styles.box}>
+                    <Text style={styles.myRank}>현재 1위</Text>
+                  </View>
+
                 </View>
               </View>
             </View>
@@ -65,8 +90,11 @@ const ChallengeScreen = ({ navigation }) => {
                 style={styles.rankTab}
                 onPress={() => navigation.navigate("DetailRank")}
               >
-                <Text style={styles.rankTabText}>랭킹</Text>
-                <Feather name="chevron-right" size={24} color="#000" />
+                <Text style={styles.rankTabText}>순위</Text>
+                <View style={styles.rankBoxFlex}>
+                  <Text style={styles.seeRankMore}>자세히보기</Text>
+                  <Feather name="chevron-right" size={24} color="#000" />
+                </View>
               </TouchableOpacity>
               <RankBox
                 count={1}
@@ -93,27 +121,7 @@ const ChallengeScreen = ({ navigation }) => {
           </View>
         </View>
 
-        <Card>
-          <TouchableOpacity onPress={() => navigation.navigate("DetailChallenge")}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
-              >
-                <SafeIcon />
-                <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                  챌린지 참여하기
-                </Text>
-              </View>
-              <Feather name="chevron-right" size={20} color="#000" />
-            </View>
-          </TouchableOpacity>
-        </Card>
+
 
         <View>
           <Text style={styles.sectionTitle}>진행중인 도전과제</Text>
@@ -148,4 +156,4 @@ const ChallengeScreen = ({ navigation }) => {
   );
 };
 
-export default ChallengeScreen;
+export default QuestsScreen;
