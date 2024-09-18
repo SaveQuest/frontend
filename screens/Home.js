@@ -5,6 +5,7 @@ import QuestList from "../components/QuestList";
 import Header from "../components/Header";
 import ModalComponent from "../components/ModalComponents";
 import tasks from '../stores/tasks';
+import NotificationList from '../screens/NotificatinListScreen'; // NotificationList 컴포넌트 가져오기
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.8;
@@ -117,13 +118,6 @@ export default function Home() {
             </TouchableOpacity>
           )}
         </View>
-
-        <ModalComponent
-          visible={modalVisible}
-          onClose={() => setModalVisible(false)}
-          tasks={tasks}
-          onTasksSelected={handleTasksSelected}
-        />
       </ScrollView>
     </View>
   );

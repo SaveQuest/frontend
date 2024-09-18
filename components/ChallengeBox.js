@@ -1,50 +1,58 @@
+import React from "react"; // React import
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import PeopleIcon from "./PeopleIcon";
 import SafeIcon from "./SafeIcon";
+import ChallengeDetail from "../components/ChallengeDetail"; 
 
 export default function ChallengeBox({ title, date, people, coin, cost }) {
-  return (
-    <View style={styles.box}>
-      <View style={styles.title}>
-        <Text style={{ fontWeight: "bold", fontSize: 15 }}>{title}</Text>
-        <Text style={{ fontSize: 15 }}>~{date}</Text>
-      </View>
+  const [modalVisible, setModalVisible] = React.useState(false);
 
-      <View style={styles.content}>
-        <View style={styles.contentItems}>
-          <View style={styles.contentItem}>
-            <PeopleIcon />
-            <Text style={{ fontSize: 17, fontWeight: "bold" }}>{people}</Text>
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
+  return (
+    <View>
+      <View style={styles.box}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.date}>~ {date}</Text>
+
+        <View style={styles.content}>
+          <View style={styles.contentItems}>
+            <View style={styles.contentItem}>
+              <PeopleIcon />
+              <Text style={styles.itemText}>{people}</Text>
+            </View>
+            <View style={styles.contentItem}>
+              <SafeIcon />
+              <Text style={styles.itemText}>{coin}</Text>
+            </View>
           </View>
-          <View style={styles.contentItem}>
-            <SafeIcon />
-            <Text style={{ fontSize: 17, fontWeight: "bold" }}>{coin}</Text>
-          </View>
+          <Text style={styles.participationCount}>500</Text>
         </View>
-        <TouchableOpacity>
-          <View style={styles.StartButton}>
-            <Text style={{ fontSize: 14, fontWeight: "bold", color: "white" }}>
-              참가
-            </Text>
-            <View style={styles.StartButtonContext}>
-              <View
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 4,
-                  borderColor: "white",
-                }}
-              >
+
+        <TouchableOpacity onPress={handleOpenModal}>
+          <View style={styles.startButton}>
+            <Text style={styles.startButtonText}>참가</Text>
+            <View style={styles.startButtonContext}>
+              <View style={styles.iconContainer}>
                 <SafeIcon width="23" height="23" />
               </View>
-              <Text
-                style={{ fontSize: 13, fontWeight: "bold", color: "white" }}
-              >
-                -{cost}
-              </Text>
+              <Text style={styles.costText}>-{cost}</Text>
             </View>
           </View>
         </TouchableOpacity>
       </View>
+      
+      <ChallengeDetail
+        visible={modalVisible}
+        onClose={handleCloseModal}
+        title={title}
+      />
     </View>
   );
 }
@@ -55,27 +63,45 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 17,
     padding: 12,
-    gap: 13,
+    marginBottom: 10, // 박스 간의 간격
+    elevation: 2, // 그림자 효과
   },
   title: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "#333",
+  },
+  date: {
+    fontSize: 14,
+    color: "#888",
+    marginBottom: 10,
   },
   content: {
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  contentItem: {
-    flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    marginBottom: 10,
   },
   contentItems: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 20,
   },
-  StartButton: {
+  contentItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 20, // 간격 조정
+  },
+  itemText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: 5, // 아이콘과 텍스트 간격
+  },
+  participationCount: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#43b319",
+  },
+  startButton: {
     flexDirection: "row",
     alignItems: "center",
     width: 118,
@@ -83,11 +109,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#81C966",
     justifyContent: "center",
     borderRadius: 8,
-    gap: 18,
   },
-  StartButtonContext: {
+  startButtonText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "white",
+    marginRight: 5, // 텍스트와 아이콘 간격
+  },
+  startButtonContext: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
+  },
+  iconContainer: {
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: "white",
+    padding: 2,
+  },
+  costText: {
+    fontSize: 13,
+    fontWeight: "bold",
+    color: "white",
+    marginLeft: 5, // 아이콘과 텍스트 간격
   },
 });

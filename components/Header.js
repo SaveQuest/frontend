@@ -1,7 +1,8 @@
-import { Text, View, StyleSheet } from "react-native";
-import SafeIcon from "./SafeIcon";
-import NotificationIcon from "./NotificationIcon";
-import SettingsIcon from "./SettingsIcon";
+import React from 'react';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import SafeIcon from './SafeIcon';
+import NotificationIcon from './NotificationIcon';
+import SettingsIcon from './SettingsIcon';
 
 export default function Header({ home }) {
   return (
@@ -22,7 +23,7 @@ export default function Header({ home }) {
           <Text style={styles.iconText}>260</Text>
         </View>
         <View style={styles.iconWithText}>
-          <NotificationIcon />
+            <NotificationIcon />
           <View style={styles.notificationBadge}>
             <Text style={styles.notificationText}>2</Text>
           </View>
@@ -33,13 +34,15 @@ export default function Header({ home }) {
   );
 }
 
+
+
 const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 30,
     alignItems: "center",
-    marginBottom:12,
+    marginBottom: 12,
   },
   userName: {
     color: "#000",

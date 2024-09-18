@@ -2,53 +2,46 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
-import ArrowIcon from "./ArrowIcon";
 import RankBox from "./RankBox";
-import RankTopBox from "./RankTopBox";
 import DetailHeader from "./DetailHeader";
+import { Ionicons } from '@expo/vector-icons'; // 아이콘 사용
 
 export default function DetailRank({ navigation }) {
   return (
     <View style={styles.container}>
-      <DetailHeader navigation={navigation} title={'순위'} n={'MainPage'}/>
+      <DetailHeader navigation={navigation} title={'순위'} n={'MainPage'} />
 
-      <View style={styles.topRank}>
-        <RankTopBox
-          rank={2}
-          name={"차호림"}
-          content={"줄인 소비 금액"}
-          money={"3,000"}
-        />
-        <RankTopBox
-          style={{
-            bottom: 19,
-          }}
-          rank={1}
-          name={"차호림"}
-          content={"줄인 소비 금액"}
-          money={"3,000"}
-        />
-        <RankTopBox
-          rank={3}
-          name={"차호림"}
-          content={"줄인 소비 금액"}
-          money={"3,000"}
-        />
-      </View>
-
+      {/* 전체 순위 리스트 */}
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.anyRank}>
-          {Array.from({ length: 30 }, (_, index) => (
+          {[1, 2, 3].map((rank, index) => (
             <RankBox
               key={index}
+              count={rank}
+              name={`차호림`}
+              lv={998}
+              cName={"지금까지 줄인 소비 금액"}
+              money={"5,000"}
+              icon={
+                <Ionicons
+                  name={rank === 1 ? "md-crown" : rank === 2 ? "md-crown-outline" : "md-crown"}
+                  size={20}
+                  color={rank === 1 ? "#FFD700" : rank === 2 ? "#C0C0C0" : "#CD7F32"} // 금, 은, 동 색상
+                />
+              }
+            />
+          ))}
+
+          {Array.from({ length: 30 }, (_, index) => (
+            <RankBox
+              key={index + 3}
               count={index + 4}
               name={`차호림`}
               lv={998}
               cName={"지금까지 줄인 소비 금액"}
-              money={"3,000"}
+              money={"₩5,000"}
             />
           ))}
         </View>
@@ -65,23 +58,10 @@ const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 1,
     padding: 15,
-    paddingTop: 100,
-  },
-  topRank: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    borderColor: "#D9D9D9",
-    paddingBottom: 20,
-    backgroundColor: "#f0f0f0", 
-    position: 'absolute',   
-    top: 60,                
-    zIndex: 1,             
     paddingTop: 10,
-    paddingHorizontal: 15,  
   },
   anyRank: {
-    marginTop: 140, 
-    backgroundColor: "#f0f0f0" 
+    marginTop: 20,
+    backgroundColor: "#f0f0f0",
   },
 });

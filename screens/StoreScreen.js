@@ -6,21 +6,41 @@ import SettingsIcon from '../components/SettingsIcon';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
+import StoreItem from '../components/StoreItem'; // 상품 컴포넌트 가져오기
+import StoreItemDetail from '../components/StoreItemDetail'; // 상품 모달 컴포넌트 가져오기
 
 const StoreScreen = () => {
   const [selectedTab, setSelectedTab] = useState('character');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const products = [
+    { title: '빨간맛 캐릭터', price: '1000', type: 'character', description: '어쩌구 저쩌구' },
+    { title: '펫 1', price: '1500', type: 'pet', description: '어쩌구 저쩌구' },
+    { title: '펫 2', price: '2500', type: 'pet', description: '어쩌구 저쩌구' },
+    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
+  ];
+
+  const handleProductPress = (product) => {
+    setSelectedProduct(product);
+    setModalVisible(true);
+  };
 
   const renderContent = () => {
-    switch (selectedTab) {
-      case 'character':
-        return <Text style={styles.storeText}>캐릭터 항목</Text>;
-      case 'pet':
-        return <Text style={styles.storeText}>펫 항목</Text>;
-      case 'background':
-        return <Text style={styles.storeText}>배경 항목</Text>;
-      case 'randombox':
-        return <Text style={styles.storeText}>랜덤박스 항목</Text>;
-    }
+    return (
+      <View style={styles.grid}>
+        {products
+          .filter(item => item.type === selectedTab) // 선택된 탭에 맞는 상품 필터링
+          .map((item, index) => (
+            <StoreItem 
+              key={index} 
+              title={item.title} 
+              price={item.price} 
+              onPress={() => handleProductPress(item)} // 클릭 시 상품 정보 전달
+            />
+          ))}
+      </View>
+    );
   };
 
   return (
@@ -84,6 +104,13 @@ const StoreScreen = () => {
           {renderContent()}
         </View>
       </ScrollView>
+
+      {/* 상품 상세 모달 */}
+      <StoreItemDetail
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        product={selectedProduct}
+      />
     </SafeAreaView>
   );
 };
@@ -99,13 +126,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: 20,
-    marginTop: Platform.OS === 'ios' ? 4 : 16, 
+    marginTop: Platform.OS === 'ios' ? 4 : 16,
     paddingRight: 20,
-  },
-   headerContainer: {
-    paddingTop:100,
-    paddingHorizontal: 20,  
-    backgroundColor: '#f3f5f6',  
   },
   iconsContainer: {
     flexDirection: 'row',
@@ -141,7 +163,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 20, 
+    marginHorizontal: 20,
     marginBottom: 10,
   },
   searchInput: {
@@ -151,10 +173,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
-    paddingBottom: 20,
-    paddingTop: 20,
-    backgroundColor: '#FFF',
-    fontSize: 16, 
   },
   searchButton: {
     marginLeft: 10,
@@ -166,7 +184,7 @@ const styles = StyleSheet.create({
   searchButtonText: {
     color: '#FFF',
     fontWeight: 'bold',
-    fontSize: 16, 
+    fontSize: 16,
   },
   tabContainer: {
     flexDirection: 'row',
@@ -199,10 +217,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
-  storeText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '100%',
   },
 });
 
