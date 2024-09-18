@@ -5,7 +5,6 @@ import QuestList from "../components/QuestList";
 import Header from "../components/Header";
 import ModalComponent from "../components/ModalComponents";
 import tasks from '../stores/tasks';
-import NotificationList from '../screens/NotificatinListScreen'; // NotificationList 컴포넌트 가져오기
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.9;
@@ -14,10 +13,8 @@ const SNAP_INTERVAL = CARD_WIDTH + CARD_MARGIN;
 
 const CarouselItem = ({ item }) => (
   <View style={styles.carouselItem}>
-    <View style={{ gap: 4 }}>
-      <Text style={styles.carouselTitle}>{item.title}</Text>
-      <Text style={styles.carouselAmount}>{item.amount}</Text>
-    </View>
+    <Text style={styles.carouselTitle}>{item.title}</Text>
+    <Text style={styles.carouselAmount}>{item.amount}</Text>
     <Text style={styles.carouselPercentage}>{item.percentage}</Text>
   </View>
 );
@@ -82,7 +79,7 @@ export default function Home() {
           snapToInterval={CARD_WIDTH + CARD_MARGIN}
           decelerationRate="fast"
           contentContainerStyle={styles.carouselContainer}
-          style={styles.carousel}
+          style={[styles.carousel, { marginBottom: selectedTasks.length > 0 ? 0 : -300 }]}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { x: scrollX } } }],
             { useNativeDriver: false }
@@ -110,7 +107,7 @@ export default function Home() {
           })}
         </View>
 
-        <Text style={styles.sectionTitle}>일일 도전과제</Text>
+        <Text style={styles.sectionTitle}>진행중인 도전과제</Text>
 
         <View style={[styles.tasks, { marginTop: selectedTasks.length > 0 ? 20 : 0 }]}>
           {selectedTasks.length > 0 ? (
@@ -132,6 +129,13 @@ export default function Home() {
             </TouchableOpacity>
           )}
         </View>
+
+        <ModalComponent
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          tasks={tasks}
+          onTasksSelected={handleTasksSelected}
+        />
       </ScrollView>
     </View>
   );
@@ -153,7 +157,7 @@ const styles = StyleSheet.create({
   welcomeMessage: {
     color: '#4D5764',
     fontFamily: 'WantedSans-Medium',
-    fontSize: 24,
+    fontSize: 22,
     fontStyle: 'normal',
     fontWeight: '500',
   },
@@ -162,48 +166,56 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   carousel: {
-    flexGrow: 0
+    marginBottom: 20,
   },
   carouselContainer: {
     paddingHorizontal: CARD_MARGIN,
   },
   carouselItem: {
     width: CARD_WIDTH,
-    height: 72,
+    height: 100,
     backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 15,
+    borderRadius: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    paddingTop: 10,
     marginHorizontal: CARD_MARGIN,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderWidth: 1,
-    borderColor: '#efefef',
+    justifyContent: 'center',
+    position: 'relative',
+    borderWidth: 2,
+    borderColor: '#eeeeee',
   },
   carouselTitle: {
-    fontSize: 14,
+    fontSize: 18,
+    fontWeight: 'bold',
     color: '#b4b9be',
-    fontFamily: "WantedSans-Medium"
+    marginBottom: 10,
   },
   carouselAmount: {
-    fontSize: 18,
+    fontSize: 22,
+    fontWeight: 'bold',
     color: '#43b319',
-    fontFamily: "WantedSans-SemiBold"
+    marginBottom: 5,
   },
   carouselPercentage: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
     backgroundColor: '#e3fada',
     color: '#318711',
     paddingVertical: 5,
     paddingHorizontal: 10,
-    borderRadius: 20,
+    borderRadius: 10,
     fontSize: 14,
-    fontFamily: "WantedSans-SemiBold"
+    fontWeight: 'bold',
+    textAlign: 'center',
+    overflow: 'hidden',
   },
   sectionTitle: {
-    fontSize: 15,
-    fontFamily: "WantedSans-SemiBold",
+    fontSize: 16,
+    fontFamily: 'Pretendard-Bold',
+    fontWeight: '700',
     color: '#333',
-    marginTop: 28,
     marginBottom: 10,
   },
   tasks: {
@@ -233,7 +245,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 14,
+    marginTop: 10,
     marginBottom: 20,
   },
   indicator: {
