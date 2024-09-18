@@ -45,9 +45,8 @@ const StoreScreen = () => {
   };
 
   return (
-    <>
-      <Header />
     <SafeAreaView style={styles.container}>
+      <Header />
       
       <View style={styles.searchContainer}>
         <TextInput style={styles.searchInput} placeholder="상품 검색" />
@@ -99,7 +98,7 @@ const StoreScreen = () => {
         onClose={() => setModalVisible(false)}
         product={selectedProduct}
       />
-    </SafeAreaView></>
+    </SafeAreaView> 
   );
 };
 
@@ -107,7 +106,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f5f6',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    paddingTop: 6,
+    paddingHorizontal: 5,
   },
   header: {
     flexDirection: 'row',
