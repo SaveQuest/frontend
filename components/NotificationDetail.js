@@ -12,9 +12,8 @@ export default function NotificationDetail({ visible, onClose, notification }) {
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          {/* 아이콘 위치 */}
           <View style={styles.imagePlaceholder}>
-            <SafeIcon /> {/* 아이콘 컴포넌트 */}
+            <SafeIcon /> 
           </View>
           
           <Text style={styles.title}>{notification.title}</Text>

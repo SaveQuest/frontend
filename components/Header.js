@@ -1,11 +1,13 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity  } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import SafeIcon from "./SafeIcon";
 import NotificationIcon from "./NotificationIcon";
 import SettingsIcon from "./SettingsIcon";
+import { useNavigation } from '@react-navigation/native'; 
 
 export default function Header() {
+  const navigation = useNavigation();
   return (
     <View style={styles.header}>
       <View style={styles.svgContainer}>
@@ -28,7 +30,10 @@ export default function Header() {
           <Text style={styles.iconText}>260</Text>
         </View>
         <View style={styles.iconWithText}>
-          <NotificationIcon />
+        <TouchableOpacity onPress={() => navigation.navigate('NotificationList')}>
+  <NotificationIcon />
+</TouchableOpacity>
+
           <View style={styles.notificationBadge}>
             <Text style={styles.notificationText}>2</Text>
           </View>
@@ -38,7 +43,6 @@ export default function Header() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   header: {
     flexDirection: "row",

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import SafeIcon from '../components/SafeIcon'; // SafeIcon 컴포넌트 가져오기
-import NotificationDetail from '../components/NotificationDetail'; // NotificationDetail 컴포넌트 가져오기
+import SafeIcon from './SafeIcon'; // SafeIcon 컴포넌트 가져오기
+import NotificationDetail from './NotificationDetail'; // NotificationDetail 컴포넌트 가져오기
 
 const notifications = [
   { id: '1', title: '접속 보상', date: '2024. 07. 12', amount: 1000, content: '아직 사용하지 않으셨습니다.' },
@@ -25,8 +25,7 @@ export default function NotificationList() {
   const renderItem = ({ item }) => (
     <View style={styles.notificationItem} >
       <View style={styles.notificationContent}>
-        {/* 아이콘 위치 */}
-        <SafeIcon style={styles.icon} /> {/* SafeIcon 사용 */}
+        <SafeIcon style={styles.icon} /> 
         <Text style={styles.notificationTitle}>{item.title}</Text>
         <Text style={styles.notificationDate}>{item.date}</Text>
       </View>
