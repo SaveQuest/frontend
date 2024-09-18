@@ -5,23 +5,21 @@ export default function RankBox({ count,name,lv,cName,money }) {
     if (count === 1) return "#E9D063";
     if (count === 2) return "#D5D6D8";
     if (count === 3) return "#AC835B";
-    return "white";
+    return "#4D5764";
   };
   return (
     <View style={styles.Box}>
       <View style={styles.BoxLeft}>
-
         <Text style={[styles.rankCount, { color: getRankColor() }]}>
           {count}
         </Text>
-
       </View>
 
 
       <View style={styles.BoxRight}>
 
         <View style={styles.one}>
-          <Text style={{color:'black', fontWeight:'bold', fontSize:18}}>{name}</Text>
+          <Text style={{color:'black', fontWeight:'bold', fontSize:24}}>{name}</Text>
           <Text style={{color:'#55555E', fontSize:16,}}>
             Lv.<Text style={{fontWeight:'bold', fontSize:15}}>{lv}</Text>
           </Text>
@@ -31,11 +29,6 @@ export default function RankBox({ count,name,lv,cName,money }) {
           <Text style={{fontSize:14}}>{cName}</Text>
           <Text style={{fontSize:20, fontWeight:'bold'}}>₩{money}</Text>
         </View>
-
-        {/* <View style={styles.tree}>
-          <Text>지금까지 줄인 소비 금액</Text>
-          <Text>₩54,000</Text>
-        </View> */}
 
       </View>
     </View>
@@ -47,9 +40,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 75,
     borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#E4E4E4",
-    backgroundColor: "#282828",
+    borderBottomWidth: 1,
+    borderBottomColor: "#B4B9BE",
     flexDirection: "row",
     marginBottom:3
   },
@@ -60,7 +52,6 @@ const styles = StyleSheet.create({
   },
   BoxRight: {
     flex: 4,
-    backgroundColor: "white",
     borderTopLeftRadius: 7,
     borderBottomLeftRadius: 7,
     flexDirection:'row',
@@ -69,7 +60,8 @@ const styles = StyleSheet.create({
     padding:18
   },
   one:{
-
+    flexDirection: "row",
+    alignItems: "baseline",
   },
   two:{
 
@@ -79,7 +71,7 @@ const styles = StyleSheet.create({
   },
 
   rankCount: {
-    fontSize: 55,
+    fontSize: 40,
     fontWeight: "bold",
     margin: 0,
     padding: 0,

@@ -12,8 +12,8 @@ import Feather from 'react-native-vector-icons/Feather';
 const QuestsScreen = ({ navigation }) => {
   return (
     <>
-      <Head />
     <View style={styles.container}>
+      <Head />
 
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Card>

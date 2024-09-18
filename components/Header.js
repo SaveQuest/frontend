@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity  } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import SafeIcon from "./SafeIcon";
 import NotificationIcon from "./NotificationIcon";
@@ -30,10 +30,9 @@ export default function Header() {
           <Text style={styles.iconText}>260</Text>
         </View>
         <View style={styles.iconWithText}>
-        <TouchableOpacity onPress={() => navigation.navigate('NotificationList')}>
-  <NotificationIcon />
-</TouchableOpacity>
-
+          <TouchableOpacity onPress={() => navigation.navigate('NotificationList')}>
+            <NotificationIcon />
+          </TouchableOpacity>
           <View style={styles.notificationBadge}>
             <Text style={styles.notificationText}>2</Text>
           </View>

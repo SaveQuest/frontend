@@ -14,7 +14,7 @@ import StoreScreen from './screens/StoreScreen';
 import DetailRank from './components/DetailRank';
 import DetailChallenge from './components/DetailChallenge';
 import DetailBeforeQuest from './components/DetailBeforeQuest';
-import NotificationList from './components/NotificationListScreen'; 
+import NotificationList from './components/NotificationListScreen';
 import { useFonts } from 'expo-font';
 
 const Tab = createBottomTabNavigator();
@@ -44,8 +44,6 @@ function TabNavigator() {
             marginTop: 10, 
             shadowColor: "transparent", 
             elevation: 0, 
-            borderWidth: 2, 
-            borderColor: "#eeeeee", 
           },
           tabBarIcon: ({ focused }) => {
             const color = focused ? "#FFF" : "#b6b6b6";
@@ -93,7 +91,7 @@ function RootNavigator() {
       <Stack.Screen name="DetailChallenge" component={DetailChallenge} />
       <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
       <Stack.Screen name="StoreScreen" component={StoreScreen} />
-      <Stack.Screen name="NotificationList" component={NotificationList} />
+      <Stack.Screen name="NotificationList" component={NotificationList}/>
     </Stack.Navigator>
   );
 }

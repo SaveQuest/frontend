@@ -145,10 +145,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f5f6',
+    paddingTop: 6,
+    paddingHorizontal: 5,
   },
   scrollView: {
     flexGrow: 1,
-    padding: 20,
+    padding: 15,
     paddingBottom: 0,
   },
   welcomeMessageContainer: {

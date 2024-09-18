@@ -85,7 +85,8 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F5F6',
+    backgroundColor: '#F3F5F6', paddingTop: 6,
+    paddingHorizontal: 5,
   },
   scrollView: {
     flexGrow: 1,
