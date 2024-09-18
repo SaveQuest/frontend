@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginBottom: 10,
-    elevation: 3, // 그림자 효과
+    borderWidth:1,
+    borderColor:'#eeeeee',
     alignItems: 'center',
   },
   itemImage: {

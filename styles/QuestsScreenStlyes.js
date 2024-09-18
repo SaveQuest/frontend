@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   titleDate: {
     fontSize: 17,
     color: "#4D5764",
-    fontWeight: 600,
+    fontWeight: "600",
     fontFamily: "../assets/fonts/Pretendard-Thin.otf",
   },
 
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   two: {
     color: "#23282F",
     fontSize: 22,
-    fontWeight: 600,
+    fontWeight: "600",
   },
 
   right: {
@@ -155,11 +155,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   rankTabText: {
-    fontWeight: 600,
+    fontWeight: "600",
     fontSize: 17,
   },
   seeRankMore: {
-    fontWeight: 600,
+    fontWeight: "600",
     fontSize: 15,
   },
   rankBoxFlex: {

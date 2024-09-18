@@ -45,9 +45,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 5,
     paddingHorizontal: 0,
-    backgroundColor: "#fff",
     borderRadius: 15,
-    elevation: 3,
   },
   header: {
     flexDirection: "row",

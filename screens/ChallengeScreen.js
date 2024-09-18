@@ -11,10 +11,9 @@ import Feather from 'react-native-vector-icons/Feather';
 
 const QuestsScreen = ({ navigation }) => {
   return (
+    <>
+      <Head />
     <View style={styles.container}>
-      <View style={[styles.headerContainer, { paddingLeft: 20 }]}>
-        <Head />
-      </View>
 
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Card>
@@ -120,39 +119,8 @@ const QuestsScreen = ({ navigation }) => {
             </View>
           </View>
         </View>
-
-
-
-        <View>
-          <Text style={styles.sectionTitle}>진행중인 도전과제</Text>
-          <QuestList
-            title="편의점에서 총 5,000원 이하로 사용하기 [~6/12]"
-            amountUsed="₩1,000"
-            status="safe"
-            progress={20}
-            goal="5,000원"
-            iconColor="#81C966"
-          />
-          <QuestList
-            title="쇼핑몰에서 총 15,000원 이하로 사용하기 [~6/12]"
-            amountUsed="₩14,000"
-            status="warning"
-            progress={93}
-            goal="15,000원"
-            iconColor="#F7941D"
-          />
-          <QuestList
-            title="게임에서 총 50,000원 이하로 사용하기 [~6/12]"
-            amountUsed="₩999,999,999"
-            status="danger"
-            progress={100}
-            goal="50,000원"
-            iconColor="#FF4C4C"
-          />
-        </View>
-        <BeforeQuest navigation={navigation} />
       </ScrollView>
-    </View>
+    </View></>
   );
 };
 

@@ -6,6 +6,7 @@ import SettingsIcon from '../components/SettingsIcon';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
+import Header from "../components/Header";
 import StoreItem from '../components/StoreItem'; // 상품 컴포넌트 가져오기
 import StoreItemDetail from '../components/StoreItemDetail'; // 상품 모달 컴포넌트 가져오기
 
@@ -44,23 +45,10 @@ const StoreScreen = () => {
   };
 
   return (
+    <>
+      <Header />
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.iconsContainer}>
-          <View style={styles.iconWithText}>
-            <SafeIcon />
-            <Text style={styles.iconText}>260</Text>
-          </View>
-          <View style={styles.iconWithText}>
-            <NotificationIcon />
-            <View style={styles.notificationBadge}>
-              <Text style={styles.notificationText}>2</Text>
-            </View>
-          </View>
-          <SettingsIcon />
-        </View>
-      </View>
-
+      
       <View style={styles.searchContainer}>
         <TextInput style={styles.searchInput} placeholder="상품 검색" />
         <TouchableOpacity style={styles.searchButton}>
@@ -111,7 +99,7 @@ const StoreScreen = () => {
         onClose={() => setModalVisible(false)}
         product={selectedProduct}
       />
-    </SafeAreaView>
+    </SafeAreaView></>
   );
 };
 
