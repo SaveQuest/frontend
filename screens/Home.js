@@ -5,6 +5,7 @@ import QuestList from "../components/QuestList";
 import Header from "../components/Header";
 import ModalComponent from "../components/ModalComponents";
 import tasks from '../stores/tasks';
+import { useFonts } from 'expo-font';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.9;
@@ -27,6 +28,18 @@ export default function Home() {
     { id: '2', title: '성공한 도전과제', amount: '653개 성공', percentage: '+5%' },
     { id: '3', title: '절약한 평균금액', amount: '32만원 절약', percentage: '30% 달성' },
   ]);
+
+  const [loaded] = useFonts({
+    "Pretendard-Bold": require("../assets/fonts/Pretendard-Bold.otf"),
+    "Pretendard-Medium": require("../assets/fonts/Pretendard-Medium.otf"),
+    "Pretendard-Regular": require("../assets/fonts/Pretendard-Regular.otf"),
+    "WantedSans-Medium": require("../assets/fonts/WantedSans-Medium.otf"),
+    "WantedSans-SemiBold": require("../assets/fonts/WantedSans-SemiBold.otf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef();
@@ -158,7 +171,7 @@ const styles = StyleSheet.create({
   },
   welcomeMessage: {
     color: '#4D5764',
-    fontFamily: 'WantedSans-Medium',
+    fontFamily: 'WantedSans-Medium', // WantedSans 적용
     fontSize: 22,
     fontStyle: 'normal',
     fontWeight: '500',
@@ -189,13 +202,13 @@ const styles = StyleSheet.create({
   },
   carouselTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'Pretendard-Medium', // Pretendard-Medium 적용
     color: '#b4b9be',
     marginBottom: 10,
   },
   carouselAmount: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontFamily: 'Pretendard-Bold', // Pretendard-Bold 적용
     color: '#43b319',
     marginBottom: 5,
   },
@@ -209,13 +222,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 10,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'Pretendard-Regular', // Pretendard-Regular 적용
     textAlign: 'center',
     overflow: 'hidden',
   },
   sectionTitle: {
     fontSize: 16,
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'Pretendard-Bold', // Pretendard-Bold 적용
     fontWeight: '700',
     color: '#333',
     marginBottom: 10,
@@ -224,6 +237,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   selectTaskButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 17,
+    backgroundColor: '#fff',
+    marginTop: 20,
+    width: '100%',
+  },
+  selectTaskButton
+: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

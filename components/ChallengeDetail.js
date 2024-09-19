@@ -12,9 +12,17 @@ export default function ChallengeDetail({ visible, onClose, title }) {
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.date}>6월 15일 까지</Text>
+          <View style={styles.modalContentHeader}>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.date}>6월 15일 까지</Text>
+          </View>
 
+          <View style={styles.rankings}>
+            <RankBox count={1} name="차호림" lv={998} money="5,000" />
+            <RankBox count={2} name="차호림" lv={998} money="5,000" />
+            <RankBox count={3} name="차호림" lv={998} money="5,000" />
+          </View>
+          
           <View style={styles.participants}>
             <View style={styles.target}>
               <Text style={styles.participantLabel}>참가 인원:</Text>
@@ -24,12 +32,6 @@ export default function ChallengeDetail({ visible, onClose, title }) {
               <Text style={styles.coinLabel}>걸려있는 코인 수:</Text>
               <Text style={styles.coinCount}>29,000</Text>
             </View>
-          </View>
-
-          <View style={styles.rankings}>
-            <RankBox count={1} name="차호림" lv={998} money="5,000" />
-            <RankBox count={2} name="차호림" lv={998} money="5,000" />
-            <RankBox count={3} name="차호림" lv={998} money="5,000" />
           </View>
 
           <TouchableOpacity style={styles.joinButton}>
@@ -58,6 +60,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 20,
   },
+  modalContentHeader: {
+    borderWidth: 2,
+    borderColor: "#EFEFEF",
+    borderRadius: 15,
+    padding: 7,
+    display:"flex",
+    justifyContent:"center",
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -70,10 +80,9 @@ const styles = StyleSheet.create({
   },
   participants: {
     marginBottom: 20,
-    borderTopWidth: 1,
-    borderColor: '#ccc',
-    paddingTop: 10,
     marginTop: 10,
+    flexDirection:"row",
+    justifyContent:"space-around",
   },
   target: {
     display: "flex",
@@ -106,7 +115,7 @@ const styles = StyleSheet.create({
     marginLeft: 5, // 간격 조정
   },
   rankings: {
-    marginBottom: 20,
+    marginBottom: 10,
   },
   joinButton: {
     backgroundColor: '#81C966',
