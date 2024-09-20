@@ -38,10 +38,14 @@ export default function Home() {
         currentIndex.current = (currentIndex.current + 1) % carouselData.length;
         flatListRef.current.scrollToIndex({ index: currentIndex.current, animated: true });
       }
-    }, 5000);
+    }, 4000);
 
     return () => clearInterval(intervalId);
   }, [carouselData]);
+
+  useEffect(() => {
+    setModalVisible(true);
+  }, []);
 
   const handleTasksSelected = (newTasks) => {
     const updatedTasks = newTasks.map(task => {

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import SafeIcon from './SafeIcon'; // SafeIcon 컴포넌트 가져오기
-import NotificationDetail from './NotificationDetail'; // NotificationDetail 컴포넌트 가져오기
+import { Ionicons } from '@expo/vector-icons';
+import NotificationDetail from './NotificationDetail';
+import SafeIcon from './SafeIcon';
 
 const notifications = [
   { id: '1', title: '접속 보상', date: '2024. 07. 12', amount: 1000, content: '아직 사용하지 않으셨습니다.' },
   { id: '2', title: '공지사항', date: '2024. 07. 12', amount: 0, content: '새로운 업데이트가 있습니다.' },
 ];
 
-export default function NotificationList() {
+export default function NotificationList({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState(null);
 
@@ -23,29 +24,46 @@ export default function NotificationList() {
   };
 
   const renderItem = ({ item }) => (
-    <View style={styles.notificationItem} >
+    <View style={styles.notificationItem}>
       <View style={styles.notificationContent}>
-        <SafeIcon style={styles.icon} /> 
-        <Text style={styles.notificationTitle}>{item.title}</Text>
-        <Text style={styles.notificationDate}>{item.date}</Text>
+        <SafeIcon style={styles.icon} width="40" height="40" />
+        <View>
+          <Text style={styles.notificationTitle}>{item.title}</Text>
+          <Text style={styles.notificationDate}>{item.date}</Text>
+        </View>
       </View>
-      <View style={styles.amountContainer}>
-        {item.amount > 0 && <Text style={styles.amountText}>{item.amount}</Text>}
-        <TouchableOpacity style={styles.receiveButton} onPress={() => handleOpenModal(item)}>
-          <Text style={styles.receiveButtonText}>수령</Text>
-        </TouchableOpacity>
-      </View>
+      {item.amount > 0 && (
+        <View style={styles.rewardContainer}>
+          <View style={styles.rewardContent}>
+            <SafeIcon style={styles.smallIcon} width="20" height="20" />
+            <Text style={styles.amountText}>{item.amount}</Text>
+          </View>
+          <TouchableOpacity style={styles.receiveButton} onPress={() => console.log('수령')}>
+            <Text style={styles.receiveButtonText}>수령</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 
   return (
-    <View>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Ionicons name="chevron-back" size={30} color="black" />
+        </TouchableOpacity>
+        <View style={styles.headerTitleContainer}>
+          <Text style={styles.headerTitle}>알림</Text>
+        </View>
+      </View>
+
       <FlatList
         data={notifications}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.listContainer}
       />
+
       {selectedNotification && (
         <NotificationDetail
           visible={modalVisible}
@@ -58,57 +76,119 @@ export default function NotificationList() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 35,
+    backgroundColor: '#f3f5f6',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#f3f5f6',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f3f5f6',
+  },
+  headerTitleContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  headerTitle: {
+    color: '#000',
+    textAlign: 'center',
+    fontFamily: 'WantedSans-Medium',
+    fontSize: 20,
+    fontStyle: 'normal',
+    fontWeight: '500',
+    lineHeight: 27,
+    letterSpacing: -0.45,
+  },
+  backButton: {
+    position: 'absolute',
+    left: 10,
+    zIndex: 1,
+  },
   listContainer: {
     padding: 20,
   },
   notificationItem: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 15,
+    justifyContent: 'space-between',
+    padding: 12,
+    borderWidth:2,
+    borderColor : '#eeeeee',
     borderRadius: 10,
     backgroundColor: '#fff',
     marginBottom: 10,
-    elevation: 2,
   },
   notificationContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: "space-between",
-    width: "50%",
   },
   icon: {
-    width: 40, // 아이콘 너비
-    height: 40, // 아이콘 높이
-    marginRight: 10,
+    marginRight: 15,
   },
   notificationTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
+    color: '#000',
+    textAlign: 'left',
+    fontFamily: "WantedSans-Medium",
+    fontSize: 15,
+    fontWeight: '500',
+    lineHeight: 23,
+    letterSpacing: -0.375,
   },
   notificationDate: {
-    fontSize: 12,
-    color: '#888',
+    color: '#B4B9BE',
+    textAlign: 'left',
+    fontFamily: "WantedSans-Medium",
+    fontSize: 13,
+    fontStyle: 'normal',
+    fontWeight: '500',
+    lineHeight: 20,
+    letterSpacing: -0.325,
   },
-  amountContainer: {
+  rewardContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    padding: 10,
+    paddingBottom: 2,
+    paddingVertical:3,
+    borderRadius: 3,
+    borderColor: '#eeeeee'
+  },
+  rewardContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop:5,
+    marginBottom: 5,
+  },
+  smallIcon: {
+    marginBottom: 2,
   },
   amountText: {
+    color: '#43b319',
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#43b319',
-    marginRight: 10,
+    textAlign: 'center',
   },
   receiveButton: {
+    flex:1,
+    justifyContent:'center',
     backgroundColor: '#43b319',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
+    width:71,
+    height:48,
+    alignItems:'center',
+    borderRadius: 4,
+    marginLeft:5,
+    marginBottom:7
   },
   receiveButtonText: {
     color: '#fff',
     fontSize: 14,
+    fontWeight: '500',
+    fontFamily:"WantedSans-Medium",
   },
 });

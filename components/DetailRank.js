@@ -41,7 +41,7 @@ export default function DetailRank({ navigation }) {
               name={`차호림`}
               lv={998}
               cName={"지금까지 줄인 소비 금액"}
-              money={"₩5,000"}
+              money={"5,000"}
             />
           ))}
         </View>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flexGrow: 1,
-    padding: 15,
+    padding: 10,
     paddingTop: 10,
   },
   anyRank: {
