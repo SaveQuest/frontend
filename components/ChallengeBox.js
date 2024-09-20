@@ -18,8 +18,10 @@ export default function ChallengeBox({ title, date, people, coin, cost }) {
   return (
     <View>
       <View style={styles.box}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.date}>~ {date}</Text>
+        <View style={styles.boxHeader}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.date}>~ {date}</Text>
+        </View>
 
         <View style={styles.content}>
           <View style={styles.contentItems}>
@@ -32,9 +34,6 @@ export default function ChallengeBox({ title, date, people, coin, cost }) {
               <Text style={styles.itemText}>{coin}</Text>
             </View>
           </View>
-          <Text style={styles.participationCount}>500</Text>
-        </View>
-
         <TouchableOpacity onPress={handleOpenModal}>
           <View style={styles.startButton}>
             <Text style={styles.startButtonText}>참가</Text>
@@ -46,6 +45,8 @@ export default function ChallengeBox({ title, date, people, coin, cost }) {
             </View>
           </View>
         </TouchableOpacity>
+        </View>
+
       </View>
       
       <ChallengeDetail
@@ -62,9 +63,14 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "white",
     borderRadius: 17,
-    padding: 12,
+    padding: 7,
     marginBottom: 10, // 박스 간의 간격
     elevation: 2, // 그림자 효과
+  },
+  boxHeader:{
+    flexDirection:"row",
+    justifyContent: "space-between",
+    margin: 10,
   },
   title: {
     fontWeight: "bold",
@@ -72,9 +78,10 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   date: {
-    fontSize: 14,
-    color: "#888",
+    fontSize: 20,
+    color: "#000000",
     marginBottom: 10,
+    fontWeight: "bold",
   },
   content: {
     flexDirection: "row",
@@ -85,6 +92,7 @@ const styles = StyleSheet.create({
   contentItems: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
   },
   contentItem: {
     flexDirection: "row",

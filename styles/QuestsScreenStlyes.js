@@ -16,8 +16,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: 17.196,
     overflow: "hidden",
-    marginBottom: 10,
-
+    marginBottom: "auto",
   },
   header: {
     width: "100%",
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     borderColor: "#EFEFEF",
     borderRadius: 10,
     padding: 16,
-    height:"50%",
+    height:"auto",
   },
 
   challengeHead: {
