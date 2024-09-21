@@ -15,6 +15,7 @@ import DetailRank from './components/DetailRank';
 import DetailChallenge from './components/DetailChallenge';
 import DetailBeforeQuest from './components/DetailBeforeQuest';
 import NotificationList from './components/NotificationListScreen';
+import SettingsScreen from './components/SettingsScreen';
 import { useFonts } from 'expo-font';
 import MyRoom from './components/MyRoom';
 
@@ -94,6 +95,7 @@ function RootNavigator() {
       <Stack.Screen name="StoreScreen" component={StoreScreen} />
       <Stack.Screen name="NotificationList" component={NotificationList}/>
       <Stack.Screen name="MyRoom" component={MyRoom}/>
+      <Stack.Screen name="Setting" component={SettingsScreen}/>
     </Stack.Navigator>
   );
 }

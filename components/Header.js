@@ -37,7 +37,9 @@ export default function Header() {
             <Text style={styles.notificationText}>2</Text>
           </View>
         </View>
-        <SettingsIcon />
+        <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
+          <SettingsIcon />
+        </TouchableOpacity>
       </View>
     </View>
   );
