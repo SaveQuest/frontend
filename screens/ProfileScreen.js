@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import CameraIcon from '../components/CameraIcon';
 import ShareSection from '../Share/ShareSection ';
 import BeforeQuest from '../components/BeforeQuest';
+import MyroomIcon from '../components/MyroomIcon';
 
 const ProfileScreen = ({ navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -75,7 +76,13 @@ const ProfileScreen = ({ navigation }) => {
           </View>
         </View>
 
-        <ShareSection />
+        <TouchableOpacity style={styles.myRoom} navigation={navigation} onPress={()=>{navigation.navigate("MyRoom")}}>
+          <View style={{alignItems:'center', gap:5}}>
+            <MyroomIcon/>
+            <Text style={{color:'#43B319', fontSize:18}}>마이룸</Text>
+          </View> 
+        </TouchableOpacity>
+
         <BeforeQuest navigation={navigation} />
       </ScrollView>
     </View>
@@ -92,6 +99,16 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 20,
   },
+
+  myRoom:{
+    width:'100%',
+    padding:12,
+    backgroundColor:'white',
+    borderRadius:12,
+    alignItems:'center', 
+    justifyContent:'center'
+  },
+
   topSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',

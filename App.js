@@ -16,6 +16,7 @@ import DetailChallenge from './components/DetailChallenge';
 import DetailBeforeQuest from './components/DetailBeforeQuest';
 import NotificationList from './components/NotificationListScreen';
 import { useFonts } from 'expo-font';
+import MyRoom from './components/MyRoom';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -92,6 +93,7 @@ function RootNavigator() {
       <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
       <Stack.Screen name="StoreScreen" component={StoreScreen} />
       <Stack.Screen name="NotificationList" component={NotificationList}/>
+      <Stack.Screen name="MyRoom" component={MyRoom}/>
     </Stack.Navigator>
   );
 }
