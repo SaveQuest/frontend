@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -9,6 +9,11 @@ export default function SettingsScreen() {
 
   const toggleProfileVisibility = () => {
     setIsPublic(prevState => !prevState);
+  };
+
+  const openInstagram = () => {
+    const instagramUrl = 'https://www.instagram.com/savequest_official'; // 여기서 원하는 인스타그램 URL로 대체하세요
+    Linking.openURL(instagramUrl);
   };
 
   return (
@@ -55,7 +60,7 @@ export default function SettingsScreen() {
           <Text style={styles.sectionTitle}>고객센터</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.section}>
+        <TouchableOpacity style={styles.section} onPress={openInstagram}>
           <Text style={styles.sectionTitle}>공식 인스타그램</Text>
         </TouchableOpacity>
       </View>
