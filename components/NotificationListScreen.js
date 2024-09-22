@@ -39,7 +39,7 @@ export default function NotificationList({ navigation }) {
             <SafeIcon style={styles.smallIcon} width="20" height="20" />
             <Text style={styles.amountText}>{item.amount}</Text>
           </View>
-          <TouchableOpacity style={styles.receiveButton} onPress={() => console.log('수령')}>
+          <TouchableOpacity style={styles.receiveButton} onPress={() => alert("수령")}>
             <Text style={styles.receiveButtonText}>수령</Text>
           </TouchableOpacity>
         </View>
@@ -176,7 +176,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   receiveButton: {
-    flex:1,
     justifyContent:'center',
     backgroundColor: '#43b319',
     width:71,

@@ -12,8 +12,13 @@ export default function QuestList({
   return (
     <View style={styles.task}>
       <View style={styles.header}>
-        <SafeIcon />
-        <Text style={styles.points}>{progress}</Text> 
+        <View style={styles.pointContainer}>
+          <SafeIcon />
+          <Text style={styles.points}>{progress}</Text>
+        </View>
+        <View>
+          <Text style={styles.xp}>+25xp</Text>
+        </View>
       </View>
 
       <Text style={styles.title}>{title}</Text>
@@ -65,12 +70,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
+    justifyContent:"space-between",
+  },
+  pointContainer:{
+    flexDirection:"row",
+    alignItems: "center",
   },
   points: {
     marginLeft: 4,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
     color: "#43B319",
+  },
+  xp:{
+    color:"#43B319",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   title: {
     color: "#23282F",
