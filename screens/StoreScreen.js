@@ -20,6 +20,11 @@ const StoreScreen = () => {
     { title: '펫 1', price: '1500', type: 'pet', description: '어쩌구 저쩌구' },
     { title: '펫 2', price: '2500', type: 'pet', description: '어쩌구 저쩌구' },
     { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
+    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
+    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
+    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
+    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
+    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
   ];
 
   const handleProductPress = (product) => {
@@ -47,13 +52,6 @@ const StoreScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-      
-      <View style={styles.searchContainer}>
-        <TextInput style={styles.searchInput} placeholder="상품 검색" />
-        <TouchableOpacity style={styles.searchButton}>
-          <Text style={styles.searchButtonText}>검색</Text>
-        </TouchableOpacity>
-      </View>
 
       <View style={styles.tabContainer}>
         <TouchableOpacity

@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native
 import { Ionicons } from '@expo/vector-icons';
 import NotificationDetail from './NotificationDetail';
 import SafeIcon from './SafeIcon';
+import DetailHeader from './DetailHeader';
 
 const notifications = [
   { id: '1', title: '접속 보상', date: '2024. 07. 12', amount: 1000, content: '아직 사용하지 않으셨습니다.' },
@@ -48,14 +49,15 @@ export default function NotificationList({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Ionicons name="chevron-back" size={30} color="black" />
         </TouchableOpacity>
         <View style={styles.headerTitleContainer}>
           <Text style={styles.headerTitle}>알림</Text>
         </View>
-      </View>
+      </View> */}
+      <DetailHeader navigation={navigation} title={"알림"} n={"MainPage"} />
 
       <FlatList
         data={notifications}
@@ -78,7 +80,6 @@ export default function NotificationList({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 35,
     backgroundColor: '#f3f5f6',
   },
   header: {
