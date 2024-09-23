@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, FlatList, Dimensions, Animated } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import QuestList from "../components/QuestList";
+import QuestItem from "../components/QuestItem";
 import Header from "../components/Header";
 import ModalComponent from "../components/ModalComponents";
 import tasks from '../stores/tasks';
@@ -14,24 +14,29 @@ const CARD_WIDTH = width * 0.9;
 const CARD_MARGIN = 0;
 const SNAP_INTERVAL = CARD_WIDTH + CARD_MARGIN;
 
-const CarouselItem = ({ item }) => (
+const BasicCarouselItem = ({ item }) => (
   <View style={styles.carouselItem}>
     <View style={{ gap: 4 }}>
-      <Text style={styles.carouselTitle}>{item.title}</Text>
-      <Text style={styles.carouselAmount}>{item.amount}</Text>
+      <Text style={styles.carouselTitle}>{item.content.topRowText}</Text>
+      <Text style={styles.carouselAmount}>{item.content.bottomRowText}</Text>
     </View>
-    <Text style={styles.carouselPercentage}>{item.percentage}</Text>
+  </View>
+);
+
+const PercentCarouselItem = ({ item }) => (
+  <View style={styles.carouselItem}>
+    <View style={{ gap: 4 }}>
+      <Text style={styles.carouselTitle}>{item.content.topRowText}</Text>
+      <Text style={styles.carouselAmount}>{item.content.bottomRowColorText} {item.content.bottomRowText}</Text>
+    </View>
+    <Text style={styles.carouselPercentage}>{item.right.text}</Text>
   </View>
 );
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTasks, setSelectedTasks] = useState([]);
-  const [carouselData, setCarouselData] = useState([
-    { id: '1', title: '이번달 SaveQuest로', amount: '13만원 아꼈어요', percentage: '+12%' },
-    { id: '2', title: '성공한 도전과제', amount: '653개 성공', percentage: '+5%' },
-    { id: '3', title: '절약한 평균금액', amount: '32만원 절약', percentage: '30% 달성' },
-  ]);
+
 
   const [loaded] = useFonts({
     "Pretendard-Bold": require("../assets/fonts/Pretendard-Bold.otf"),
@@ -50,15 +55,17 @@ export default function Home() {
   const currentIndex = useRef(0);
 
   useEffect(() => {
+    if (!dstHome) return
+
     const intervalId = setInterval(() => {
       if (flatListRef.current) {
-        currentIndex.current = (currentIndex.current + 1) % carouselData.length;
+        currentIndex.current = (currentIndex.current + 1) % dstHome.element.length;
         flatListRef.current.scrollToIndex({ index: currentIndex.current, animated: true });
       }
     }, 4000);
 
     return () => clearInterval(intervalId);
-  }, [carouselData]);
+  }, [dstHome]);
 
   const handleTasksSelected = (newTasks) => {
     const updatedTasks = newTasks.map(task => {
@@ -76,8 +83,57 @@ export default function Home() {
     setModalVisible(true);
   };
 
-  const [dstHeader, setDstHeader] = useState(null)
-  const [dstHome, setDstHome] = useState(null)
+  const [dstHeader, setDstHeader] = useState({
+    "name": "주현명",
+    "points": 0,
+    "notificationCount": 0
+  })
+
+  const [dstHome, setDstHome] = useState({
+    "id": "userId",
+    "element": [
+      {
+        "type": "CAROUSEL_BASIC_CARD",
+        "content": {
+          "topRowText": "SaveQuest 이벤트",
+          "bottomRowText": "홈 화면에서 친추 초대하기"
+        },
+        "right": {
+          "imageUri": "https://sqstatic.ychan.me/character/default0.png?key=wy6hk6y1sx3gcjvkmdhef"
+        },
+        "style": {},
+        "handler": {
+          "type": "APP_SCHEME",
+          "uri": "savequest://screen/quest"
+        }
+      },
+      {
+        "type": "CAROUSEL_PERCENT_CARD",
+        "content": {
+          "topRowText": "이번달 SaveQuest로",
+          "bottomRowColorText": "13만원",
+          "bottomRowText": "아꼈어요"
+        },
+        "right": {
+          "text": "+12*"
+        },
+        "style": {
+          "bottomRowColorText": {
+            "color": "Primary/300"
+          },
+          "rightText": {
+            "color": "Primary/400",
+            "backgroundColor": "Primary/100"
+          }
+        },
+        "handler": {
+          "type": "WEBLINK",
+          "uri": "https://ychan.me"
+        }
+      }
+    ]
+
+  })
 
   useEffect(() => {
     requester.getDSTHeader().then(res => setDstHeader(res))
@@ -106,9 +162,17 @@ export default function Home() {
         {
           dstHome ? <>
             <FlatList
-              data={carouselData}
-              renderItem={({ item }) => <CarouselItem item={item} />}
-              keyExtractor={item => item.id}
+              data={dstHome.element}
+              renderItem={({ item }) => {
+                return <>
+                  {
+                    item.type === "CAROUSEL_BASIC_CARD" ? <BasicCarouselItem item={item} />
+                      : item.type === "CAROUSEL_PERCENT_CARD" ? <PercentCarouselItem item={item} />
+                        : <></>
+                  }
+                </>
+              }}
+              keyExtractor={(item, idx) => item.type + "_" + idx}
               horizontal
               showsHorizontalScrollIndicator={false}
               snapToInterval={CARD_WIDTH + CARD_MARGIN}
@@ -122,7 +186,7 @@ export default function Home() {
               ref={flatListRef}
             />
             <View style={styles.indicatorContainer}>
-              {carouselData.map((_, index) => {
+              {dstHome.element.map((_, index) => {
                 const inputRange = [(index - 1) * (CARD_WIDTH + CARD_MARGIN * 2), index * (CARD_WIDTH + CARD_MARGIN * 2), (index + 1) * (CARD_WIDTH + CARD_MARGIN * 2)];
 
                 const dotWidth = scrollX.interpolate({
@@ -152,7 +216,7 @@ export default function Home() {
         <View style={[styles.tasks, { marginTop: 10 }]}>
           {selectedTasks.length > 0 ? (
             selectedTasks.map((task, index) => (
-              <QuestList
+              <QuestItem
                 key={index}
                 title={task.title}
                 amountUsed={task.amountUsed}
