@@ -1,7 +1,6 @@
-// ProductModal.js
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
-import SafeIcon from '../components/SafeIcon'; // 가격 아이콘
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable } from 'react-native';
+import SafeIcon from '../components/SafeIcon'; 
 
 const StoreItemDetail = ({ visible, onClose, product }) => {
   return (
@@ -11,7 +10,7 @@ const StoreItemDetail = ({ visible, onClose, product }) => {
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={styles.modalOverlay}>
+      <Pressable style={styles.modalOverlay} onPress={onClose}>
         <View style={styles.modalContent}>
           {product && (
             <>
@@ -25,13 +24,10 @@ const StoreItemDetail = ({ visible, onClose, product }) => {
               <TouchableOpacity style={styles.purchaseButton}>
                 <Text style={styles.purchaseButtonText}>구매</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={onClose}>
-                <Text style={styles.closeButton}>닫기</Text>
-              </TouchableOpacity>
             </>
           )}
         </View>
-      </View>
+      </Pressable>
     </Modal>
   );
 };
@@ -58,7 +54,7 @@ const styles = StyleSheet.create({
   modalImage: {
     width: '100%',
     height: 150,
-    backgroundColor: '#E0E0E0', // 임시로 흰 박스
+    backgroundColor: '#E0E0E0', 
     borderRadius: 8,
     marginBottom: 10,
   },
@@ -84,19 +80,13 @@ const styles = StyleSheet.create({
   purchaseButton: {
     backgroundColor: '#4CAF50',
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 120,
     borderRadius: 8,
     marginBottom: 10,
   },
   purchaseButtonText: {
     color: '#FFF',
     fontWeight: 'bold',
-  },
-  closeButton: {
-    color: '#4CAF50',
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 10,
   },
 });
 

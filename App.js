@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text, View } from 'react-native';
+import { Text, View, Animated } from 'react-native';
 import Home from './screens/Home';
 import QuestIcon from './components/QuestIcon';
 import HomeIcon from './components/HomeIcon';
@@ -19,7 +19,6 @@ import SettingsScreen from './components/SettingsScreen';
 import { useFonts } from 'expo-font';
 import MyRoom from './components/MyRoom';
 import { useUserStore } from './stores/userStore';
-import CardAuthentication from './screens/CardAuth';
 import VerificationScreen from './screens/VerificationScreen';
 
 const Tab = createBottomTabNavigator();
@@ -52,28 +51,37 @@ function TabNavigator() {
           },
           tabBarIcon: ({ focused }) => {
             const color = focused ? "#FFF" : "#b6b6b6";
+            const scale = new Animated.Value(focused ? 1 : 1);
+
+            Animated.spring(scale, {
+              toValue: focused ? 1.2 : 1,
+              friction: 3,
+              useNativeDriver: true,
+            }).start();
 
             return (
-              <View style={{ gap: 4, alignItems: "center" }}>
-                <View>
-                  {route.name === "Home" && <HomeIcon color={color} />}
-                  {route.name === "Challenge" && <QuestIcon color={color} />}
-                  {route.name === "Store" && <StoreIcon color={color} />}
-                  {route.name === "Profile" && <ProfileIcon color={color} />}
+              <Animated.View style={{ transform: [{ scale }] }}>
+                <View style={{ gap: 4, alignItems: "center" }}>
+                  <View>
+                    {route.name === "Home" && <HomeIcon color={color} />}
+                    {route.name === "Challenge" && <QuestIcon color={color} />}
+                    {route.name === "Store" && <StoreIcon color={color} />}
+                    {route.name === "Profile" && <ProfileIcon color={color} />}
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      color,
+                      fontFamily: "WantedSans-Medium",
+                    }}
+                  >
+                    {route.name === "Home" && "홈"}
+                    {route.name === "Challenge" && "챌린지"}
+                    {route.name === "Store" && "상점"}
+                    {route.name === "Profile" && "내 정보"}
+                  </Text>
                 </View>
-                <Text
-                  style={{
-                    fontSize: 13,
-                    color,
-                    fontFamily: "WantedSans-Medium",
-                  }}
-                >
-                  {route.name === "Home" && "홈"}
-                  {route.name === "Challenge" && "챌린지"}
-                  {route.name === "Store" && "상점"}
-                  {route.name === "Profile" && "내 정보"}
-                </Text>
-              </View>
+              </Animated.View>
             );
           },
           tabBarShowLabel: false,
@@ -92,8 +100,8 @@ function RootNavigator() {
   const userData = useUserStore((s) => s.data)
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false, }}>
-      {userData ?
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {userData ? (
         <>
           <Stack.Screen name="MainPage" component={TabNavigator} />
           <Stack.Screen name="DetailRank" component={DetailRank} />
@@ -104,11 +112,10 @@ function RootNavigator() {
           <Stack.Screen name="MyRoom" component={MyRoom} />
           <Stack.Screen name="Setting" component={SettingsScreen} />
         </>
-        : <>
-          <Stack.Screen name="Login" component={VerificationScreen} />
-        </>}
+      ) : (
+        <Stack.Screen name="Login" component={VerificationScreen} />
+      )}
     </Stack.Navigator>
-
   );
 }
 

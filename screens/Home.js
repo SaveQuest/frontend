@@ -96,7 +96,7 @@ export default function Home() {
         "type": "CAROUSEL_BASIC_CARD",
         "content": {
           "topRowText": "SaveQuest 이벤트",
-          "bottomRowText": "홈 화면에서 친추 초대하기"
+          "bottomRowText": "홈 화면에서 친구 초대하기"
         },
         "right": {
           "imageUri": "https://sqstatic.ychan.me/character/default0.png?key=wy6hk6y1sx3gcjvkmdhef"

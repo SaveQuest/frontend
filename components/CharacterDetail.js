@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Modal, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { View, Modal, Text, TouchableOpacity, Image, StyleSheet, Pressable } from "react-native";
 
 const CharacterDetail = ({ visible, onClose, product, onSelect }) => {
   return (
@@ -9,7 +9,7 @@ const CharacterDetail = ({ visible, onClose, product, onSelect }) => {
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={styles.modalOverlay}>
+      <Pressable style={styles.modalOverlay} onPress={onClose}>
         <View style={styles.modalContent}>
           {product && (
             <>
@@ -19,24 +19,19 @@ const CharacterDetail = ({ visible, onClose, product, onSelect }) => {
                 {product.description || "캐릭터 설명이 없습니다."}
               </Text>
 
-              {/* 선택 버튼을 눌렀을 때 부모의 onSelect 함수 호출 */}
               <TouchableOpacity
                 style={styles.purchaseButton}
                 onPress={() => {
-                  onSelect(product); // 부모 컴포넌트로 선택한 캐릭터 전달
-                  onClose(); // 모달 닫기
+                  onSelect(product); 
+                  onClose();
                 }}
               >
-                <Text style={styles.purchaseButtonText}>선택</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                <Text style={styles.closeButtonText}>닫기</Text>
+                <Text style={styles.purchaseButtonText}>장착</Text>
               </TouchableOpacity>
             </>
           )}
         </View>
-      </View>
+      </Pressable>
     </Modal>
   );
 };
@@ -62,10 +57,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modalImage: {
-    width: 120,   // 이미지의 가로 크기 조정
-    height: 120,  // 이미지의 세로 크기 조정
+    width: 120,
+    height: 120,  
     marginBottom: 20,
-    resizeMode: 'contain',  // 이미지가 짤리지 않도록 contain으로 설정
+    resizeMode: 'contain', 
   },
   modalDescription: {
     fontSize: 16,
@@ -74,24 +69,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   purchaseButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#43b319",
     paddingVertical: 10,
-    paddingHorizontal: 30,
+    paddingHorizontal: 110,
     borderRadius: 5,
     marginBottom: 10,
   },
   purchaseButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  closeButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderRadius: 5,
-    backgroundColor: "#d9534f",
-  },
-  closeButtonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",

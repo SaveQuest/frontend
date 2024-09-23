@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import CoinIcon from './SafeIcon';  
 import tasks from '../stores/tasks';
 
 const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
   const [selectedTaskIndexes, setSelectedTaskIndexes] = useState([]);
+  const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const filledTasks = [...tasks];
   while (filledTasks.length < 5) {
@@ -18,6 +19,19 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
       setSelectedTaskIndexes(selectedTaskIndexes.filter(i => i !== index));
     } else if (selectedTaskIndexes.length < 3) {
       setSelectedTaskIndexes([...selectedTaskIndexes, index]);
+
+      Animated.sequence([
+        Animated.timing(scaleAnim, {
+          toValue: 1.1,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+        Animated.timing(scaleAnim, {
+          toValue: 1,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+      ]).start();
     }
   };
 
@@ -42,7 +56,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
 
   return (
     <Modal
-      animationType="slide"
+      animationType="none"
       transparent={true}
       visible={visible}
       onRequestClose={onClose}
@@ -61,24 +75,19 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
             {filledTasks.map((task, index) => (
               <TouchableOpacity
                 key={index}
-                style={[
-                  styles.taskItem,
-                  selectedTaskIndexes.includes(index) ? styles.taskItemSelected : null,
-                ]}
+                style={[styles.taskItem, selectedTaskIndexes.includes(index) ? styles.taskItemSelected : null]}
                 onPress={() => handleTaskSelect(index)}
               >
-                <Text style={[
-                  styles.taskText, 
-                  selectedTaskIndexes.includes(index) ? styles.taskTextSelected : null,
-                ]}>
-                  {task.title}
-                </Text>
+                <Animated.View style={{ transform: [{ scale: selectedTaskIndexes.includes(index) ? scaleAnim : 1 }] }}>
+                  <Text style={[styles.taskText, selectedTaskIndexes.includes(index) ? styles.taskTextSelected : null]}>
+                    {task.title}
+                  </Text>
+                </Animated.View>
                 <View style={styles.taskPointsContainer}>
                   <Text style={styles.plustext}>+</Text><CoinIcon size={20} /> 
-                  <Text style={[
-                    styles.taskPoints, 
-                    selectedTaskIndexes.includes(index) ? styles.taskPointsSelected : null,
-                  ]}>{task.progress}</Text>  
+                  <Text style={[styles.taskPoints, selectedTaskIndexes.includes(index) ? styles.taskPointsSelected : null]}>
+                    {task.progress}
+                  </Text>  
                 </View>
               </TouchableOpacity>
             ))}
