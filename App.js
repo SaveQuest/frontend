@@ -18,6 +18,9 @@ import NotificationList from './components/NotificationListScreen';
 import SettingsScreen from './components/SettingsScreen';
 import { useFonts } from 'expo-font';
 import MyRoom from './components/MyRoom';
+import { useUserStore } from './stores/userStore';
+import CardAuthentication from './screens/CardAuth';
+import VerificationScreen from './screens/VerificationScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -43,9 +46,9 @@ function TabNavigator() {
             borderRadius: 40,
             marginHorizontal: 13,
             marginBottom: 10,
-            marginTop: 10, 
-            shadowColor: "transparent", 
-            elevation: 0, 
+            marginTop: 10,
+            shadowColor: "transparent",
+            elevation: 0,
           },
           tabBarIcon: ({ focused }) => {
             const color = focused ? "#FFF" : "#b6b6b6";
@@ -86,17 +89,26 @@ function TabNavigator() {
 }
 
 function RootNavigator() {
+  const userData = useUserStore((s) => s.data)
+
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="MainPage" component={TabNavigator} />
-      <Stack.Screen name="DetailRank" component={DetailRank} />
-      <Stack.Screen name="DetailChallenge" component={DetailChallenge} />
-      <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
-      <Stack.Screen name="StoreScreen" component={StoreScreen} />
-      <Stack.Screen name="NotificationList" component={NotificationList}/>
-      <Stack.Screen name="MyRoom" component={MyRoom}/>
-      <Stack.Screen name="Setting" component={SettingsScreen}/>
+    <Stack.Navigator screenOptions={{ headerShown: false, }}>
+      {userData ?
+        <>
+          <Stack.Screen name="MainPage" component={TabNavigator} />
+          <Stack.Screen name="DetailRank" component={DetailRank} />
+          <Stack.Screen name="DetailChallenge" component={DetailChallenge} />
+          <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
+          <Stack.Screen name="StoreScreen" component={StoreScreen} />
+          <Stack.Screen name="NotificationList" component={NotificationList} />
+          <Stack.Screen name="MyRoom" component={MyRoom} />
+          <Stack.Screen name="Setting" component={SettingsScreen} />
+        </>
+        : <>
+          <Stack.Screen name="Login" component={VerificationScreen} />
+        </>}
     </Stack.Navigator>
+
   );
 }
 
