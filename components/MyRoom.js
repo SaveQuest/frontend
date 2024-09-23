@@ -77,7 +77,6 @@ export default function MyRoom({ navigation }) {
 
   const handleTitleSelect = (index) => {
     setSelectedTitleIndex(index);
-    // 탭 전환을 없앰, selectedTab을 변경하지 않음
   };
 
   return (
@@ -175,7 +174,7 @@ export default function MyRoom({ navigation }) {
                 <TouchableOpacity 
                   key={index} 
                   style={[styles.titleBox, { backgroundColor: selectedTitleIndex === index ? "#4CAF50" : "#DCF5E9" }]}
-                  onPress={() => handleTitleSelect(index)} // 칭호 선택 시 호출
+                  onPress={() => handleTitleSelect(index)} 
                 >
                   <Text style={[styles.titleBoxText, { color: selectedTitleIndex === index ? "#FFF" : "#87AD8E" }]}>{title}</Text>
                 </TouchableOpacity>
@@ -200,7 +199,7 @@ const styles = StyleSheet.create({
   petWrapper: {
     position: 'absolute',
     bottom: 15, 
-    right: 60, 
+    right: 90, 
   },
   petImage: {
     width: 60, 
