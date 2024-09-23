@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import DetailHeader from "./DetailHeader";
-import QuestList from "./QuestList";
+import QuestItem from "./QuestItem";
 
 export default function DetailBeforeQuest({ navigation }) {
   return (
@@ -13,7 +13,7 @@ export default function DetailBeforeQuest({ navigation }) {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View>
           <Text style={{color:'#55555E',fontSize:17,marginBottom:9}}>2024 6 10</Text>
-            <QuestList
+            <QuestItem
               title="게임에서 총 50,000원 이하로 사용하기 [~6/12]"
               amountUsed="₩999,999,999"
               status="success"
