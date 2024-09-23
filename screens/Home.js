@@ -60,10 +60,6 @@ export default function Home() {
     return () => clearInterval(intervalId);
   }, [carouselData]);
 
-  useEffect(() => {
-    setModalVisible(true);
-  }, []);
-
   const handleTasksSelected = (newTasks) => {
     const updatedTasks = newTasks.map(task => {
       const amountUsed = parseInt(task.amountUsed.replace(/[₩,]/g, ''), 10);
