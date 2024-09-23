@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
-import SafeIcon from "../components/SafeIcon";
+import SafeIcon from "./SafeIcon";
 
-export default function QuestList({
+export default function QuestItem({
   title,
   amountUsed,
   progress,
@@ -29,7 +29,7 @@ export default function QuestList({
           <Text style={styles.amount}>{`${amountUsed.toLocaleString()}`}</Text>
         </View>
 
-        <View style={styles.amountSection}>
+        <View style={[styles.amountSection, { alignItems: "flex-end" }]}>
           <Text style={styles.label}>목표 금액</Text>
           <Text style={styles.amount}>{`₩${goal.toLocaleString()}`}</Text>
         </View>
@@ -46,8 +46,8 @@ export default function QuestList({
                   progress >= 100
                     ? "#f52d2d"
                     : progress >= 50
-                    ? "#ff7b00"
-                    : "#43b319",
+                      ? "#ff7b00"
+                      : "#43b319",
               },
             ]}
           />
@@ -61,19 +61,18 @@ const styles = StyleSheet.create({
   task: {
     backgroundColor: "#FFF",
     borderRadius: 12,
-    padding: 15,
-    marginBottom: 10,
+    padding: 20,
     borderWidth: 1,
     borderColor: "#E5E7EB",
+    marginBottom: 10
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
-    justifyContent:"space-between",
+    justifyContent: "space-between",
   },
-  pointContainer:{
-    flexDirection:"row",
+  pointContainer: {
+    flexDirection: "row",
     alignItems: "center",
   },
   points: {
@@ -82,8 +81,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#43B319",
   },
-  xp:{
-    color:"#43B319",
+  xp: {
+    color: "#43B319",
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -92,32 +91,33 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     letterSpacing: -0.45,
-    marginBottom: 15,
+    marginTop: 12,
   },
   amountContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
   },
   amountSection: {
     alignItems: "flex-start",
+    marginTop: 15,
   },
   label: {
     color: "#4D5764",
-    fontSize: 15,
+    fontSize: 13,
     fontWeight: "500",
     lineHeight: 20,
     letterSpacing: -0.325,
   },
   amount: {
     color: "#23282F",
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "600",
     lineHeight: 23,
     letterSpacing: -0.375,
   },
   progressBarContainer: {
     alignItems: "center",
+    marginTop: 12
   },
   progressBar: {
     width: "100%",

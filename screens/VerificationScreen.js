@@ -1,13 +1,17 @@
 import React, { useState, useRef } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, TextInput, TouchableOpacity, Modal, FlatList, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import BackIcon from '../components/BackIcon';
 import { MaterialIcons } from '@expo/vector-icons';
-import styles from '../styles/VerificationScreenStyles'; 
+import styles from '../styles/VerificationScreenStyles';
+import { requester } from '../lib/api';
+import { useUserStore } from '../stores/userStore';
 
 export default function VerificationScreen() {
   const [isFocused, setIsFocused] = useState(false);
-  const [idNumber, setIdNumber] = useState('');
+  const [name, setName] = useState("")
+  const [idNumberPart1, setIdNumber] = useState('');
   const [idNumberPart2, setIdNumberPart2] = useState('');
   const [selectedCarrier, setSelectedCarrier] = useState('통신사 선택');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -50,7 +54,7 @@ export default function VerificationScreen() {
       for (let i = 0; i < total; i++) {
         circles.push(
           <Text key={i} style={styles.circleText}>
-            {idNumber[i] || ''}
+            {idNumberPart1[i] || ''}
           </Text>
         );
       }
@@ -73,7 +77,17 @@ export default function VerificationScreen() {
     return circles;
   };
 
-  const isFormComplete = idNumber.length === 6 && idNumberPart2.length === 1 && phoneNumber.length > 0;
+  const setUserData = useUserStore((s) => s.setUserData);
+  const onPressSubmit = () => {
+    console.log(name, idNumberPart1, idNumberPart2, phoneNumber, selectedCarrier);
+    setUserData(1);
+    (async () => {
+      await AsyncStorage.setItem("ID_NUM", idNumberPart1 + idNumberPart2)
+      await requester.requestCode("+82" + phoneNumber)
+    })();
+  }
+
+  const isFormComplete = /^\d{6}$/.test(idNumberPart1) && /^\d{1}$/.test(idNumberPart2) && /^010\d{8}$/.test(phoneNumber) && selectedCarrier !== "통신사 선택" && name.length > 0;
 
   return (
     <KeyboardAvoidingView
@@ -85,9 +99,9 @@ export default function VerificationScreen() {
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
               <View style={styles.headerContainer}>
-                <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+                {navigation.canGoBack() && <TouchableOpacity style={styles.backButton} onPress={handleBack}>
                   <BackIcon />
-                </TouchableOpacity>
+                </TouchableOpacity>}
                 <Text style={styles.title}>본인인증</Text>
               </View>
 
@@ -104,6 +118,8 @@ export default function VerificationScreen() {
                   placeholderTextColor="#ccc"
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
+                  value={name}
+                  onChangeText={(txt) => setName(txt)}
                 />
               </View>
 
@@ -111,7 +127,7 @@ export default function VerificationScreen() {
                 <Text style={[styles.inputLabel, isIdFocused && { color: '#389348' }]}>주민등록번호</Text>
                 <View style={styles.idInputContainer}>
                   <TouchableOpacity onPress={() => firstInputRef.current.focus()} style={styles.circleContainer}>
-                    {renderCircles(idNumber.length, 6, true)}
+                    {renderCircles(idNumberPart1.length, 6, true)}
                   </TouchableOpacity>
                   <Text style={styles.dash}>-</Text>
                   <TouchableOpacity onPress={() => secondInputRef.current.focus()} style={styles.circleContainer}>
@@ -125,7 +141,7 @@ export default function VerificationScreen() {
                 <TextInput
                   ref={firstInputRef}
                   style={styles.visibleInput}
-                  value={idNumber}
+                  value={idNumberPart1}
                   keyboardType="numeric"
                   maxLength={6}
                   onChangeText={handleLeftInputChange}
@@ -180,7 +196,7 @@ export default function VerificationScreen() {
               styles.submitButton,
               isFormComplete ? styles.submitButtonActive : styles.submitButtonInactive,
             ]}
-            onPress={() => navigation.navigate('Main')}
+            onPress={onPressSubmit}
             disabled={!isFormComplete}
           >
             <Text

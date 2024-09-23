@@ -4,9 +4,9 @@ import Svg, { Path } from "react-native-svg";
 import SafeIcon from "./SafeIcon";
 import NotificationIcon from "./NotificationIcon";
 import SettingsIcon from "./SettingsIcon";
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
 
-export default function Header() {
+export default function Header({ point, notificationCnt }) {
   const navigation = useNavigation();
   return (
     <View style={styles.header}>
@@ -27,14 +27,14 @@ export default function Header() {
       <View style={styles.iconsContainer}>
         <View style={styles.iconWithText}>
           <SafeIcon />
-          <Text style={styles.iconText}>260</Text>
+          <Text style={styles.iconText}>{point ?? 0}</Text>
         </View>
         <View style={styles.iconWithText}>
           <TouchableOpacity onPress={() => navigation.navigate('NotificationList')}>
             <NotificationIcon />
           </TouchableOpacity>
           <View style={styles.notificationBadge}>
-            <Text style={styles.notificationText}>2</Text>
+            <Text style={styles.notificationText}>{notificationCnt ?? 0}</Text>
           </View>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
