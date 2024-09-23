@@ -12,7 +12,7 @@ export default function SettingsScreen() {
   };
 
   const openInstagram = () => {
-    const instagramUrl = 'https://www.instagram.com/savequest_official'; // 여기서 원하는 인스타그램 URL로 대체하세요
+    const instagramUrl = 'https://www.instagram.com/savequest_official'; 
     Linking.openURL(instagramUrl);
   };
 

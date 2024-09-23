@@ -59,11 +59,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
+    textAlign: "center",
   },
   modalImage: {
-    width: 100,
-    height: 100,
+    width: 120,   // 이미지의 가로 크기 조정
+    height: 120,  // 이미지의 세로 크기 조정
     marginBottom: 20,
+    resizeMode: 'contain',  // 이미지가 짤리지 않도록 contain으로 설정
   },
   modalDescription: {
     fontSize: 16,
