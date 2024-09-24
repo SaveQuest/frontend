@@ -74,6 +74,36 @@ const MOCK_DATA = {
             { "id": "59195", "name": "편의점에서 총 5,000원 이하로 사용하기", "reward": "500" },
             { "id": "59196", "name": "편의점에서 총 5,000원 이하로 사용하기", "reward": "500" },
         ]
+    },
+    DST_QUEST_PAGE: {
+        "id": "userId",
+        "element": {
+            "questInfo": {
+                "type": "QUEST_INFO_CARD",
+                "content": {
+                    "topRowText": "한달동안 평균 소비 금액 줄이기",
+                    "bottomRowText": "6월 15일 까지"
+                },
+                "bottom": {
+                    "type": "LIST_ROW",
+                    "content": [
+                        {
+                            "type": "QUEST_DATA_CARD",
+                            "content": {
+                                "topRowText": "나의 한달 평균 소비 금액",
+                                "bottomRowText": "₩45,500"
+                            }
+                        }, {
+                            "type": "QUEST_DATA_CARD",
+                            "content": {
+                                "topRowText": "지금까지 줄인 소비금액",
+                                "bottomRowText": "₩5,000"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
     }
 }
 

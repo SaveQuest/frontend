@@ -12,7 +12,7 @@ import ChallengeScreen from './screens/ChallengeScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import StoreScreen from './screens/StoreScreen';
 import DetailRank from './components/DetailRank';
-import ChallengeJoinScreen from './screens/DetailChallenge';
+import ChallengeJoinScreen from './screens/ChallengeJoinScreen';
 import DetailBeforeQuest from './components/DetailBeforeQuest';
 import NotificationList from './components/NotificationListScreen';
 import SettingsScreen from './screens/SettingsScreen';
@@ -105,7 +105,7 @@ function RootNavigator() {
         <>
           <Stack.Screen name="MainPage" component={TabNavigator} />
           <Stack.Screen name="DetailRank" component={DetailRank} />
-          <Stack.Screen name="DetailChallenge" component={ChallengeJoinScreen} />
+          <Stack.Screen name="ChallengeJoinScreen" component={ChallengeJoinScreen} />
           <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
           <Stack.Screen name="StoreScreen" component={StoreScreen} />
           <Stack.Screen name="NotificationList" component={NotificationList} />

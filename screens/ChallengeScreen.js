@@ -7,54 +7,11 @@ import RankItem from "../components/RankItem";
 import Card from "../components/Card";
 import Feather from 'react-native-vector-icons/Feather';
 import { requester } from "../lib/api";
+import { useApi } from "../hooks/useApi";
+import Skeleton from "react-native-reanimated-skeleton";
 
 const ChallengeScreen = ({ navigation }) => {
-  const [dstChallenge, setDstChallenge] = useState({
-    "id": "userId",
-    "element": {
-      "questInfo": {
-        "type": "QUEST_INFO_CARD",
-        "content": {
-          "topRowText": "한달동안 평균 소비 금액 줄이기",
-          "bottomRowText": "6월 15일 까지"
-        },
-        "bottom": {
-          "type": "LIST_ROW",
-          "content": [
-            {
-              "type": "QUEST_DATA_CARD",
-              "content": {
-                "topRowText": "나의 한달 평균 소비 금액",
-                "bottomRowText": "₩45,500"
-              }
-            }, {
-              "type": "QUEST_DATA_CARD",
-              "content": {
-                "topRowText": "지금까지 줄인 소비금액",
-                "bottomRowText": "₩5,000"
-              }
-            }, {
-              "type": "RANK_BADGE",
-              "content": {
-                "topRowRightText": "차호림",
-                "topRowLeftText": "Lv.998",
-                "bottomRowLeftText": "절약의 신",
-                "bottomRowRightText": "현재 1등"
-              },
-              "left": {
-                "type": "PROFILE_IMAGE",
-                "uri": "https://sqstatic.ychan.me/profile/01nfna5.png?key=19rna2"
-              }
-            }
-          ]
-        }
-      }
-    }
-  })
-
-  useEffect(() => {
-    // requester.fetchDSTChallenge().then((res) => setDstChallenge(res))
-  }, [])
+  const { state: dstChallenge } = useApi(requester.fetchDSTChallenge, "DST_QUEST_PAGE")
 
   return (
     <>
@@ -63,7 +20,7 @@ const ChallengeScreen = ({ navigation }) => {
 
         <ScrollView contentContainerStyle={styles.scrollView}>
           <Card>
-            <TouchableOpacity onPress={() => navigation.navigate("DetailChallenge")}>
+            <TouchableOpacity onPress={() => navigation.navigate("ChallengeJoinScreen")}>
               <View
                 style={{
                   flexDirection: "row",
@@ -84,7 +41,7 @@ const ChallengeScreen = ({ navigation }) => {
             </TouchableOpacity>
           </Card>
 
-          <View style={styles.challenge}>
+          {dstChallenge ? <View style={styles.challenge}>
             <ImageBackground
               source={require("../assets/LogoBackground.png")}
               style={styles.header}
@@ -107,7 +64,7 @@ const ChallengeScreen = ({ navigation }) => {
                     {
                       dstChallenge.element.questInfo.bottom.content.map(e => {
                         if (e.type === "QUEST_DATA_CARD") {
-                          return <View key={e.type+e.content.topRowText}>
+                          return <View key={e.type + e.content.topRowText}>
                             <Text style={styles.one}>{e.content.topRowText}</Text>
                             <Text style={styles.two}>{e.content.bottomRowText}</Text>
                           </View>
@@ -155,7 +112,10 @@ const ChallengeScreen = ({ navigation }) => {
                 />
               </View>
             </View>
-          </View>
+          </View> : <>
+            <Skeleton layout={[{ id: "aaq", width: "100%", height: 100 }]} containerStyle={styles.challenge} />
+          </>}
+
         </ScrollView>
       </View></>
   );

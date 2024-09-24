@@ -18,9 +18,9 @@ export default function ChallengeDetail({ visible, onClose, title }) {
           </View>
 
           <View style={styles.rankings}>
-            <RankItem count={1} name="차호림" lv={998} money={5000} />
-            <RankItem count={2} name="차호림" lv={998} money={5000} />
-            <RankItem count={3} name="차호림" lv={998} money={5000} />
+            <RankItem count={1} name="차호림" lv={998} cName="지금까지 줄인 소비 금액" money={5000} />
+            <RankItem count={2} name="차호림" lv={998} cName="지금까지 줄인 소비 금액" money={5000} />
+            <RankItem count={3} name="차호림" lv={998} cName="지금까지 줄인 소비 금액" money={5000} />
           </View>
           
           <View style={styles.participants}>
