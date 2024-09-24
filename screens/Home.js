@@ -35,8 +35,6 @@ const PercentCarouselItem = ({ item }) => (
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedTasks, setSelectedTasks] = useState([]);
-
 
   const [loaded] = useFonts({
     "Pretendard-Bold": require("../assets/fonts/Pretendard-Bold.otf"),
@@ -85,8 +83,8 @@ export default function Home() {
 
   const [dstHeader, setDstHeader] = useState({
     "name": "주현명",
-    "points": 0,
-    "notificationCount": 0
+    "points": 10,
+    "notificationCount": 10
   })
 
   const [dstHome, setDstHome] = useState({
@@ -135,7 +133,35 @@ export default function Home() {
 
   })
 
+  const [dstQuest, setDstQuest] = useState()
+
   useEffect(() => {
+    setTimeout(() => {
+      setDstQuest({
+        "id": "userId",
+        "element": [
+          {
+            "type": "QUEST_INFO_CARD",
+            "top": {
+              "topRowText": "500",
+              "bottomRowText": "이름을 입력하세요"
+            },
+            "right": {
+              "topRowText": "오늘 사용한 금액",
+              "bottomRowText": "3,000"
+            },
+            "left": {
+              "topRowText": "한도 금액",
+              "bottomRowText": "5,000"
+            },
+            "bottom": {
+              "percent": 55,
+              "color": "Primary/300"
+            }
+          }
+        ]
+      })
+    }, 1000)
     requester.getDSTHeader().then(res => setDstHeader(res))
     requester.getDSTHome().then(res => setDstHome(res))
   }, [])
@@ -212,27 +238,32 @@ export default function Home() {
         }
 
         <Text style={styles.sectionTitle}>주간 도전과제</Text>
+        {dstQuest ? <>
+          <View style={[styles.tasks, { marginTop: 10 }]}>
+            {dstQuest.element.length > 0 ? (
+              dstQuest.element.map((task, index) => (
+                <QuestItem
+                  key={index}
+                  points={task.top.topRowText}
+                  title={task.top.bottomRowText}
+                  amountUsed={task.right.bottomRowText}
+                  status={0}
+                  progress={task.bottom.percent}
+                  goal={task.left.bottomRowText}
+                  iconColor={0}
+                />
+              ))
+            ) : (
+              <TouchableOpacity style={styles.selectTaskButton} onPress={handleOpenModal}>
+                <Text style={styles.selectTaskButtonText}>오늘의 도전과제 선택</Text>
+                <Ionicons name="chevron-forward" size={20} color="#333" style={styles.arrowIcon} />
+              </TouchableOpacity>
+            )}
+          </View>
+        </> : <>
+          <Skeleton layout={[{ id: "zz", width: "100%", height: 10 }]} />
+        </>}
 
-        <View style={[styles.tasks, { marginTop: 10 }]}>
-          {selectedTasks.length > 0 ? (
-            selectedTasks.map((task, index) => (
-              <QuestItem
-                key={index}
-                title={task.title}
-                amountUsed={task.amountUsed}
-                status={task.status}
-                progress={task.progress}
-                goal={task.goal}
-                iconColor={task.iconColor}
-              />
-            ))
-          ) : (
-            <TouchableOpacity style={styles.selectTaskButton} onPress={handleOpenModal}>
-              <Text style={styles.selectTaskButtonText}>오늘의 도전과제 선택</Text>
-              <Ionicons name="chevron-forward" size={20} color="#333" style={styles.arrowIcon} />
-            </TouchableOpacity>
-          )}
-        </View>
 
         <ModalComponent
           visible={modalVisible}
