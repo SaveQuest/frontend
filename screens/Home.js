@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import QuestItem from "../components/QuestItem";
 import Header from "../components/Header";
 import ModalComponent from "../components/ModalComponents";
-import tasks from '../stores/tasks';
 import { useFonts } from 'expo-font';
 import { requester } from "../lib/api";
 import Skeleton from "react-native-reanimated-skeleton";
@@ -140,25 +139,25 @@ export default function Home() {
       setDstQuest({
         "id": "userId",
         "element": [
-          {
-            "type": "QUEST_INFO_CARD",
-            "top": {
-              "topRowText": "500",
-              "bottomRowText": "이름을 입력하세요"
-            },
-            "right": {
-              "topRowText": "오늘 사용한 금액",
-              "bottomRowText": "3,000"
-            },
-            "left": {
-              "topRowText": "한도 금액",
-              "bottomRowText": "5,000"
-            },
-            "bottom": {
-              "percent": 55,
-              "color": "Primary/300"
-            }
-          }
+          // {
+          //   "type": "QUEST_INFO_CARD",
+          //   "top": {
+          //     "topRowText": "500",
+          //     "bottomRowText": "이름을 입력하세요"
+          //   },
+          //   "right": {
+          //     "topRowText": "오늘 사용한 금액",
+          //     "bottomRowText": "3,000"
+          //   },
+          //   "left": {
+          //     "topRowText": "한도 금액",
+          //     "bottomRowText": "5,000"
+          //   },
+          //   "bottom": {
+          //     "percent": 55,
+          //     "color": "Primary/300"
+          //   }
+          // }
         ]
       })
     }, 1000)
@@ -268,7 +267,6 @@ export default function Home() {
         <ModalComponent
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
-          tasks={tasks}
           onTasksSelected={handleTasksSelected}
         />
       </ScrollView >

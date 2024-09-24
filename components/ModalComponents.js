@@ -1,24 +1,29 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import CoinIcon from './SafeIcon';  
-import tasks from '../stores/tasks';
+import CoinIcon from './SafeIcon';
+import { requester } from '../lib/api';
 
 const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
-  const [selectedTaskIndexes, setSelectedTaskIndexes] = useState([]);
+  const [data, setData] = useState()
+  useEffect(() => {
+    requester.fetchWeeklyQuest().then(res => setData(res))
+    setTimeout(() => setData({
+      "quest": [
+        { "id": "59195", "name": "편의점에서 총 5,000원 이하로 사용하기", "reward": "500" },
+        { "id": "59196", "name": "편의점에서 총 5,000원 이하로 사용하기", "reward": "500" },
+      ]
+    }), 500)
+  }, [])
+
+  const [selectedTaskIdList, setSelectedTaskList] = useState([]);
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
-  const filledTasks = [...tasks];
-  while (filledTasks.length < 5) {
-    filledTasks.push(...tasks);
-  }
-  filledTasks.length = 5;
-
-  const handleTaskSelect = (index) => {
-    if (selectedTaskIndexes.includes(index)) {
-      setSelectedTaskIndexes(selectedTaskIndexes.filter(i => i !== index));
-    } else if (selectedTaskIndexes.length < 3) {
-      setSelectedTaskIndexes([...selectedTaskIndexes, index]);
+  const handleTaskSelect = (id) => {
+    if (selectedTaskIdList.includes(id)) {
+      setSelectedTaskList((prev) => prev.filter(i => i !== id));
+    } else if (selectedTaskIdList.length < 3) {
+      setSelectedTaskList((prev) => [...prev, id]);
 
       Animated.sequence([
         Animated.timing(scaleAnim, {
@@ -36,22 +41,14 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
   };
 
   const handleDone = () => {
-    if (selectedTaskIndexes.length !== 3) {
+    if (selectedTaskIdList.length !== 3) {
       Alert.alert("도전과제 선택", "3개의 도전과제를 선택해주세요.");
       return;
     }
 
-    const selectedTasks = selectedTaskIndexes.map(index => {
-      const task = tasks[index];
-      const amountUsed = parseInt(task.amountUsed.replace(/[₩,]/g, ''), 10);
-      const goal = parseInt(task.goal.replace(/[₩,]/g, ''), 10);
-      const progress = Math.min(100, Math.round((amountUsed / goal) * 100)); 
-      
-      return { ...task, progress };  
-    });
-
-    onTasksSelected(selectedTasks);  
-    onClose();
+    requester.selectWeeklyQuest(selectedTaskIdList).then(
+      () => onClose()
+    )
   };
 
   return (
@@ -61,7 +58,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={styles.modalOverlay}>
+      {data && <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
             <Text style={styles.chaText}>차호림님</Text>
@@ -72,25 +69,27 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
           <Text style={styles.titleText}>오늘의 도전과제 선택</Text>
 
           <ScrollView contentContainerStyle={styles.taskList}>
-            {filledTasks.map((task, index) => (
-              <TouchableOpacity
+            {data.quest.map((task, index) => {
+              const selected = selectedTaskIdList.includes(task.id);
+
+              return <TouchableOpacity
                 key={index}
-                style={[styles.taskItem, selectedTaskIndexes.includes(index) ? styles.taskItemSelected : null]}
-                onPress={() => handleTaskSelect(index)}
+                style={[styles.taskItem, selected ? styles.taskItemSelected : null]}
+                onPress={() => handleTaskSelect(task.id)}
               >
-                <Animated.View style={{ transform: [{ scale: selectedTaskIndexes.includes(index) ? scaleAnim : 1 }] }}>
-                  <Text style={[styles.taskText, selectedTaskIndexes.includes(index) ? styles.taskTextSelected : null]}>
-                    {task.title}
+                <Animated.View style={{ transform: [{ scale: selected ? scaleAnim : 1 }] }}>
+                  <Text style={[styles.taskText, selected ? styles.taskTextSelected : null]}>
+                    {task.name}
                   </Text>
                 </Animated.View>
                 <View style={styles.taskPointsContainer}>
-                  <Text style={styles.plustext}>+</Text><CoinIcon size={20} /> 
-                  <Text style={[styles.taskPoints, selectedTaskIndexes.includes(index) ? styles.taskPointsSelected : null]}>
-                    {task.progress}
-                  </Text>  
+                  <Text style={styles.plustext}>+</Text><CoinIcon size={20} />
+                  <Text style={[styles.taskPoints, selected ? styles.taskPointsSelected : null]}>
+                    {task.reward}
+                  </Text>
                 </View>
               </TouchableOpacity>
-            ))}
+            })}
           </ScrollView>
 
           <TouchableOpacity style={styles.doneButton} onPress={handleDone}>
@@ -98,6 +97,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
           </TouchableOpacity>
         </View>
       </View>
+      }
     </Modal>
   );
 };
@@ -122,15 +122,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
-  chaText:{
-    fontSize:25,
-    fontWeight:'bold',
+  chaText: {
+    fontSize: 25,
+    fontWeight: 'bold',
   },
   titleText: {
     fontSize: 18,
     color: '#81C966',
     marginBottom: 20,
-    fontWeight:'bold',
+    fontWeight: 'bold',
   },
   taskList: {
     width: '100%',
@@ -165,10 +165,10 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   plustext: {
-    fontSize: 20, 
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#000000',
-    marginRight:5,
+    marginRight: 5,
   },
   taskPoints: {
     marginLeft: 5,
