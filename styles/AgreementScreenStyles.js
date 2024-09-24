@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     right: 0,
     textAlign: 'center',
     fontSize: 20,
-    fontFamily: 'Pretendard-Regular',
+    fontFamily: 'WantedSans-Regular',
   },
   title: {
     fontSize: 28,
@@ -24,11 +24,11 @@ export const styles = StyleSheet.create({
     marginTop: 105,
     textAlign: 'left',
     alignSelf: 'flex-start',
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
   },
   highlight: {
     color: '#389348',
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
   },
   allCheckboxContainer: {
     flexDirection: 'row',
@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
     color: '#555',
     marginLeft: 8,
     fontWeight: '15',
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
   },
   noticeTitle: {
     fontSize: 20,
@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
     alignSelf: 'flex-start',
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
     textAlign: 'left',
   },
   notice: {
@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 30,
     textAlign: 'left',
-    fontFamily: 'Pretendard-Regular',
+    fontFamily: 'WantedSans-Regular',
     alignSelf: 'flex-start',
   },
   checkboxContainer: {
@@ -90,7 +90,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     color: '#333',
     marginLeft: 10,
-    fontFamily: 'Pretendard-Regular',
+    fontFamily: 'WantedSans-Regular',
     flexWrap: 'wrap',
     maxWidth: '72%',
   },
@@ -110,7 +110,7 @@ export const styles = StyleSheet.create({
   submitButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
     textAlign: 'center',
   },
   submitButtonTextActive: {

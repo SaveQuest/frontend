@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontFamily: 'Pretendard-Regular',
+    fontFamily: 'WantedSans-Regular',
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'left',
     alignSelf: 'flex-start',
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
   },
   inputContainer: {
     marginBottom: 20,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   submitButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
     textAlign: 'center',
   },
   submitButtonTextActive: {
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   },
   modalItemText: {
     fontSize: 16,
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
   },
 });
 

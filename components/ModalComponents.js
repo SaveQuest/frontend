@@ -61,12 +61,12 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
       {data && <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
-            <Text style={styles.chaText}>차호림님</Text>
+            <Text style={{ fontFamily: "WantedSans-SemiBold", fontSize: 24 }}>주간 도전과제 선택</Text>
             <TouchableOpacity onPress={onClose}>
               <Ionicons name="close" size={24} color="#888" />
             </TouchableOpacity>
           </View>
-          <Text style={styles.titleText}>오늘의 도전과제 선택</Text>
+          <Text style={{ marginTop: 0 }}></Text>
 
           <ScrollView contentContainerStyle={styles.taskList}>
             {data.quest.map((task, index) => {

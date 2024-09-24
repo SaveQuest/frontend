@@ -35,18 +35,6 @@ const PercentCarouselItem = ({ item }) => (
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [loaded] = useFonts({
-    "Pretendard-Bold": require("../assets/fonts/Pretendard-Bold.otf"),
-    "Pretendard-Medium": require("../assets/fonts/Pretendard-Medium.otf"),
-    "Pretendard-Regular": require("../assets/fonts/Pretendard-Regular.otf"),
-    "WantedSans-Medium": require("../assets/fonts/WantedSans-Medium.otf"),
-    "WantedSans-SemiBold": require("../assets/fonts/WantedSans-SemiBold.otf"),
-  });
-
-  if (!loaded) {
-    return null;
-  }
-
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef();
   const currentIndex = useRef(0);
@@ -254,7 +242,7 @@ export default function Home() {
               ))
             ) : (
               <TouchableOpacity style={styles.selectTaskButton} onPress={handleOpenModal}>
-                <Text style={styles.selectTaskButtonText}>오늘의 도전과제 선택</Text>
+                <Text style={styles.selectTaskButtonText}>주간 도전과제 선택</Text>
                 <Ionicons name="chevron-forward" size={20} color="#333" style={styles.arrowIcon} />
               </TouchableOpacity>
             )}

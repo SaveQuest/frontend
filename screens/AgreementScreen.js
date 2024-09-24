@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import * as Font from 'expo-font';
 import { styles } from '../styles/AgreementScreenStyles';  
 
 export default function AgreementScreen({ navigation, setAgreed }) {
@@ -14,23 +13,6 @@ export default function AgreementScreen({ navigation, setAgreed }) {
     identity: false,
     marketing: false,
   });
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-
-  useEffect(() => {
-    const loadFonts = async () => {
-      await Font.loadAsync({
-        'Pretendard-Regular': require('../assets/fonts/Pretendard-Regular.otf'),
-        'Pretendard-Bold': require('../assets/fonts/Pretendard-Bold.otf'),
-      });
-      setFontsLoaded(true);
-    };
-
-    loadFonts();
-  }, []);
-
-  if (!fontsLoaded) {
-    return null;
-  }
 
   const toggleAll = () => {
     const newValue = !allChecked;

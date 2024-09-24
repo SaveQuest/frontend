@@ -121,11 +121,10 @@ function RootNavigator() {
 
 export default function App() {
   const [loaded] = useFonts({
-    "Pretendard-Bold": require("./assets/fonts/Pretendard-Bold.otf"),
-    "Pretendard-Medium": require("./assets/fonts/Pretendard-Medium.otf"),
-    "Pretendard-Regular": require("./assets/fonts/Pretendard-Regular.otf"),
+    "WantedSans-Regular": require("./assets/fonts/WantedSans-Regular.otf"),
     "WantedSans-Medium": require("./assets/fonts/WantedSans-Medium.otf"),
     "WantedSans-SemiBold": require("./assets/fonts/WantedSans-SemiBold.otf"),
+    "WantedSans-Bold": require("./assets/fonts/WantedSans-Bold.otf"),
   });
 
   if (!loaded) return null;
