@@ -75,7 +75,7 @@ const MOCK_DATA = {
             { "id": "59196", "name": "편의점에서 총 5,000원 이하로 사용하기", "reward": "500" },
         ]
     },
-    DST_QUEST_PAGE: {
+    DST_CHALLENGE_PAGE: {
         "id": "userId",
         "element": {
             "questInfo": {
@@ -104,6 +104,42 @@ const MOCK_DATA = {
                 }
             }
         }
+    },
+    DST_CHALLENGE_JOIN_HDR: {
+        "id": "userId",
+        "element": [
+            {
+                "name": "진행중인 챌린지 수",
+                "value": "21"
+            },
+            {
+                "name": "챌린지 플레이어",
+                "value": "42,310"
+            },
+            {
+                "name": "얻을 수 있는 포인트",
+                "value": " +5,600"
+            }
+        ]
+    },
+    PUB_CHALLENGE: { "challenges": [{ "id": "1234", "name": "한달동안 평균 소비 금액 줄이기", "people": 100, "totalReward": 900, "entryFee": 100, "endsAt": "2021-08-01T00:00:00.000Z", joined: true }] },
+    STORE_PRDS: {
+        "products": [
+            {
+                "id": "1234",
+                "name": "상품",
+                "price": 1000,
+                "image": "https://sqstatic.ychan.me/dstCarouselImage/70a3ceae-d5dc-463e-a98b-48d6243a6a80.png?key=qq3ruhu537pk9lyv3wfgx",
+            }
+        ]
+    },
+    PRD_DETAIL: {
+        "id": "1234",
+        "name": "상품",
+        "price": 1000,
+        "image": "https://sqstatic.ychan.me/dstCarouselImage/70a3ceae-d5dc-463e-a98b-48d6243a6a80.png?key=qq3ruhu537pk9lyv3wfgx",
+        "description": "상품 설명",
+        "isPurchasable": true,
     }
 }
 
@@ -111,6 +147,7 @@ export const useApi = (reqFunc, mockKey = undefined) => {
     const [state, setState] = useState(null);
 
     const loadData = () => {
+        console.log("load", reqFunc, mockKey)
         if (MOCK_DATA[mockKey]) {
             timer = setTimeout(() => {
                 setState(MOCK_DATA[mockKey])

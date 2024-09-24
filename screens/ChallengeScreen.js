@@ -11,8 +11,7 @@ import { useApi } from "../hooks/useApi";
 import Skeleton from "react-native-reanimated-skeleton";
 
 const ChallengeScreen = ({ navigation }) => {
-  const { state: dstChallenge } = useApi(requester.fetchDSTChallenge, "DST_QUEST_PAGE")
-
+  const { state: dstChallenge } = useApi(requester.fetchDSTChallenge, "DST_CHALLENGE_PAGE")
   return (
     <>
       <View style={styles.container}>

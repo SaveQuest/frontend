@@ -7,8 +7,18 @@ import {
 } from "react-native";
 import ArrowIcon from "../components/ArrowIcon";
 import ChallengeBox from "../components/ChallengeBox";
+import { useApi } from "../hooks/useApi";
+import { requester } from "../lib/api";
+
+const getDateTxt = (d) => {
+  const dd = new Date(d)
+  return `${dd.getMonth()}.${dd.getDay()}`
+}
 
 export default function ChallengeJoinScreen({ navigation }) {
+  const { state: pubChallenge } = useApi(requester.fetchPublicChallenge, "PUB_CHALLENGE")
+  const { state: challengeHdr } = useApi(requester.fetchDSTChallengeHeader, "DST_CHALLENGE_JOIN_HDR")
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -22,34 +32,28 @@ export default function ChallengeJoinScreen({ navigation }) {
             </TouchableOpacity>
           </View>
           <View style={styles.title}>
-            <View style={{ alignItems: "center", marginBottom:17 }}>
-              <Text style={{ fontSize: 18, color: "white", fontWeight:'bold', opacity: 0.8 }}>
+            <View style={{ alignItems: "center", marginBottom: 17 }}>
+              <Text style={{ fontSize: 18, color: "white", fontWeight: 'bold' }}>
                 챌린지
               </Text>
             </View>
 
             <View style={styles.process}>
-              <View>
-                <Text style={{ fontSize: 15, color: "white" }}>진행중인 챌린지 수</Text>
-                <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>21</Text>
-              </View>
-              <View>
-                <Text style={{ fontSize: 15, color: "white" }}>챌린지 플레이어</Text>
-                <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>21</Text>
-              </View>
-              <View>
-                <Text style={{ fontSize: 15, color: "white" }}>얻을 수 있는 코인 수</Text>
-                <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>21</Text>
-              </View>
+              {challengeHdr && challengeHdr.element.map(e => {
+                return <View key={e.name}>
+                  <Text style={{ fontSize: 15, color: "white" }}>{e.name}</Text>
+                  <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>{e.value}</Text>
+                </View>
+              })}
             </View>
           </View>
         </ImageBackground>
       </View>
-      
+
       <View style={styles.contents}>
-        <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100} />
-        <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100} />
-        <ChallengeBox title={"한달동안 평균 소비 금액 줄이기"} date={'6.15'} people={290} coin={29000} cost={100} />
+        {pubChallenge && pubChallenge.challenges.map(e => {
+          return <ChallengeBox key={"PUB_CHALLENGE_" + e.id} title={e.name} date={getDateTxt(e.endsAt)} people={e.people} coin={e.totalReward} cost={e.entryFee} />
+        })}
       </View>
     </View>
   );
@@ -61,7 +65,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   headerContainer: {
-    marginHorizontal: -5, 
+    marginHorizontal: -5,
   },
   header: {
     flexDirection: "row",
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: 151,
     width: "100%",
-    paddingTop: 15,
+    paddingTop: 35,
     padding: 12,
   },
   process: {

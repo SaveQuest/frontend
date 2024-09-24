@@ -2,7 +2,8 @@ import React from "react"; // React import
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import PeopleIcon from "./PeopleIcon";
 import SafeIcon from "./SafeIcon";
-import ChallengeDetail from "../components/ChallengeDetail"; 
+import ChallengeDetail from "../components/ChallengeDetail";
+import { numberWithCommas } from "../utils";
 
 export default function ChallengeBox({ title, date, people, coin, cost }) {
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -27,28 +28,28 @@ export default function ChallengeBox({ title, date, people, coin, cost }) {
           <View style={styles.contentItems}>
             <View style={styles.contentItem}>
               <PeopleIcon />
-              <Text style={styles.itemText}>{people}</Text>
+              <Text style={styles.itemText}>{numberWithCommas(people)}</Text>
             </View>
             <View style={styles.contentItem}>
               <SafeIcon />
-              <Text style={styles.itemText}>{coin}</Text>
+              <Text style={styles.itemText}>{numberWithCommas(coin)}</Text>
             </View>
           </View>
-        <TouchableOpacity onPress={handleOpenModal}>
-          <View style={styles.startButton}>
-            <Text style={styles.startButtonText}>참가</Text>
-            <View style={styles.startButtonContext}>
-              <View style={styles.iconContainer}>
-                <SafeIcon width="23" height="23" />
+          <TouchableOpacity onPress={handleOpenModal}>
+            <View style={styles.startButton}>
+              <Text style={styles.startButtonText}>참가</Text>
+              <View style={styles.startButtonContext}>
+                <View style={styles.iconContainer}>
+                  <SafeIcon width="18" height="18" />
+                </View>
+                <Text style={styles.costText}>-{numberWithCommas(cost)}</Text>
               </View>
-              <Text style={styles.costText}>-{cost}</Text>
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
         </View>
 
       </View>
-      
+
       <ChallengeDetail
         visible={modalVisible}
         onClose={handleCloseModal}
@@ -67,8 +68,8 @@ const styles = StyleSheet.create({
     marginBottom: 10, // 박스 간의 간격
     elevation: 2, // 그림자 효과
   },
-  boxHeader:{
-    flexDirection:"row",
+  boxHeader: {
+    flexDirection: "row",
     justifyContent: "space-between",
     margin: 10,
   },
