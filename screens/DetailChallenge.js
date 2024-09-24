@@ -5,11 +5,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import ArrowIcon from "./ArrowIcon";
-import ChallengeBox from "./ChallengeBox";
+import ArrowIcon from "../components/ArrowIcon";
+import ChallengeBox from "../components/ChallengeBox";
 
-export default function DetailChallenge({ navigation }) {
-
+export default function ChallengeJoinScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>

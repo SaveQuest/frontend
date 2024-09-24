@@ -3,18 +3,10 @@ import { Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Ani
 import { Ionicons } from '@expo/vector-icons';
 import CoinIcon from './SafeIcon';
 import { requester } from '../lib/api';
+import { useApi } from '../hooks/useApi';
 
 const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
-  const [data, setData] = useState()
-  useEffect(() => {
-    requester.fetchWeeklyQuest().then(res => setData(res))
-    setTimeout(() => setData({
-      "quest": [
-        { "id": "59195", "name": "편의점에서 총 5,000원 이하로 사용하기", "reward": "500" },
-        { "id": "59196", "name": "편의점에서 총 5,000원 이하로 사용하기", "reward": "500" },
-      ]
-    }), 500)
-  }, [])
+  const { state: questData } = useApi(requester.fetchWeeklyQuest, "DST_QUEST_MODAL")
 
   const [selectedTaskIdList, setSelectedTaskList] = useState([]);
   const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -58,7 +50,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
       visible={visible}
       onRequestClose={onClose}
     >
-      {data && <View style={styles.modalOverlay}>
+      {questData && <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
             <Text style={{ fontFamily: "WantedSans-SemiBold", fontSize: 24 }}>주간 도전과제 선택</Text>
@@ -69,7 +61,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
           <Text style={{ marginTop: 0 }}></Text>
 
           <ScrollView contentContainerStyle={styles.taskList}>
-            {data.quest.map((task, index) => {
+            {questData.quest.map((task, index) => {
               const selected = selectedTaskIdList.includes(task.id);
 
               return <TouchableOpacity

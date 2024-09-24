@@ -7,6 +7,8 @@ import ModalComponent from "../components/ModalComponents";
 import { useFonts } from 'expo-font';
 import { requester } from "../lib/api";
 import Skeleton from "react-native-reanimated-skeleton";
+import { useUserStore } from "../stores/userStore";
+import { useApi } from "../hooks/useApi";
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.9;
@@ -39,6 +41,13 @@ export default function Home() {
   const flatListRef = useRef();
   const currentIndex = useRef(0);
 
+  const userData = useUserStore((s) => s.data)
+  const refreshUserData = useUserStore((s) => s.refreshUserData)
+
+  useEffect(() => {
+    refreshUserData()
+  }, [])
+
   useEffect(() => {
     if (!dstHome) return
 
@@ -68,109 +77,19 @@ export default function Home() {
     setModalVisible(true);
   };
 
-  const [dstHeader, setDstHeader] = useState({
-    "name": "주현명",
-    "points": 10,
-    "notificationCount": 10
-  })
-
-  const [dstHome, setDstHome] = useState({
-    "id": "userId",
-    "element": [
-      {
-        "type": "CAROUSEL_BASIC_CARD",
-        "content": {
-          "topRowText": "SaveQuest 이벤트",
-          "bottomRowText": "홈 화면에서 친구 초대하기"
-        },
-        "right": {
-          "imageUri": "https://sqstatic.ychan.me/character/default0.png?key=wy6hk6y1sx3gcjvkmdhef"
-        },
-        "style": {},
-        "handler": {
-          "type": "APP_SCHEME",
-          "uri": "savequest://screen/quest"
-        }
-      },
-      {
-        "type": "CAROUSEL_PERCENT_CARD",
-        "content": {
-          "topRowText": "이번달 SaveQuest로",
-          "bottomRowColorText": "13만원",
-          "bottomRowText": "아꼈어요"
-        },
-        "right": {
-          "text": "+12*"
-        },
-        "style": {
-          "bottomRowColorText": {
-            "color": "Primary/300"
-          },
-          "rightText": {
-            "color": "Primary/400",
-            "backgroundColor": "Primary/100"
-          }
-        },
-        "handler": {
-          "type": "WEBLINK",
-          "uri": "https://ychan.me"
-        }
-      }
-    ]
-
-  })
-
-  const [dstQuest, setDstQuest] = useState()
-
-  useEffect(() => {
-    setTimeout(() => {
-      setDstQuest({
-        "id": "userId",
-        "element": [
-          // {
-          //   "type": "QUEST_INFO_CARD",
-          //   "top": {
-          //     "topRowText": "500",
-          //     "bottomRowText": "이름을 입력하세요"
-          //   },
-          //   "right": {
-          //     "topRowText": "오늘 사용한 금액",
-          //     "bottomRowText": "3,000"
-          //   },
-          //   "left": {
-          //     "topRowText": "한도 금액",
-          //     "bottomRowText": "5,000"
-          //   },
-          //   "bottom": {
-          //     "percent": 55,
-          //     "color": "Primary/300"
-          //   }
-          // }
-        ]
-      })
-    }, 1000)
-    requester.getDSTHeader().then(res => setDstHeader(res))
-    requester.getDSTHome().then(res => setDstHome(res))
-  }, [])
+  const { state: dstHome, refresh: refreshDstHome } = useApi(requester.getDSTQuest, "DST_HOME")
+  const { state: dstQuest, refresh: refreshDstQuest } = useApi(requester.getDSTQuest, "DST_QUEST")
 
   return (
     <View style={styles.container}>
-      <Header point={dstHeader?.point} notificationCnt={dstHeader?.notificationCount} />
+      <Header />
 
       <ScrollView contentContainerStyle={styles.scrollView}>
-        {
-          dstHeader ? <>
-            <View style={styles.welcomeMessageContainer}>
-              <Text style={styles.welcomeMessage}>
-                <Text style={styles.userName}>{dstHeader.name}</Text>님 화창한 날{'\n'}SaveQuest로 절약해보세요!
-              </Text>
-            </View>
-          </> : <>
-            <Skeleton layout={[
-              { key: "someId", width: "100%", height: 64 },
-            ]} isLoading={true} containerStyle={styles.welcomeMessageContainer} />
-          </>
-        }
+        <View style={styles.welcomeMessageContainer}>
+          <Text style={styles.welcomeMessage}>
+            <Text style={styles.userName}>{userData.name}</Text>님 화창한 날{'\n'}SaveQuest로 절약해보세요!
+          </Text>
+        </View>
 
         {
           dstHome ? <>
@@ -248,7 +167,7 @@ export default function Home() {
             )}
           </View>
         </> : <>
-          <Skeleton layout={[{ id: "zz", width: "100%", height: 10 }]} />
+          <Skeleton layout={[{ id: "zz", width: "100%", height: 72 }]} containerStyle={[styles.tasks, { marginTop: 10 }]} />
         </>}
 
 
