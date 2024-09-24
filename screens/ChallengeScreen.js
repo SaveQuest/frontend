@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView, TouchableOpacity, Text, ImageBackground } from "react-native";
 import Head from "../components/Header";
 import SafeIcon from "../components/SafeIcon";
@@ -6,8 +6,56 @@ import styles from "../styles/QuestsScreenStlyes";
 import RankItem from "../components/RankItem";
 import Card from "../components/Card";
 import Feather from 'react-native-vector-icons/Feather';
+import { requester } from "../lib/api";
 
 const ChallengeScreen = ({ navigation }) => {
+  const [dstChallenge, setDstChallenge] = useState({
+    "id": "userId",
+    "element": {
+      "questInfo": {
+        "type": "QUEST_INFO_CARD",
+        "content": {
+          "topRowText": "한달동안 평균 소비 금액 줄이기",
+          "bottomRowText": "6월 15일 까지"
+        },
+        "bottom": {
+          "type": "LIST_ROW",
+          "content": [
+            {
+              "type": "QUEST_DATA_CARD",
+              "content": {
+                "topRowText": "나의 한달 평균 소비 금액",
+                "bottomRowText": "₩45,500"
+              }
+            }, {
+              "type": "QUEST_DATA_CARD",
+              "content": {
+                "topRowText": "지금까지 줄인 소비금액",
+                "bottomRowText": "₩5,000"
+              }
+            }, {
+              "type": "RANK_BADGE",
+              "content": {
+                "topRowRightText": "차호림",
+                "topRowLeftText": "Lv.998",
+                "bottomRowLeftText": "절약의 신",
+                "bottomRowRightText": "현재 1등"
+              },
+              "left": {
+                "type": "PROFILE_IMAGE",
+                "uri": "https://sqstatic.ychan.me/profile/01nfna5.png?key=19rna2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  })
+
+  useEffect(() => {
+    // requester.fetchDSTChallenge().then((res) => setDstChallenge(res))
+  }, [])
+
   return (
     <>
       <View style={styles.container}>
@@ -37,7 +85,6 @@ const ChallengeScreen = ({ navigation }) => {
           </Card>
 
           <View style={styles.challenge}>
-
             <ImageBackground
               source={require("../assets/LogoBackground.png")}
               style={styles.header}
@@ -51,20 +98,22 @@ const ChallengeScreen = ({ navigation }) => {
               }, styles.border]}>
                 <View style={styles.title}>
                   <Text style={styles.titleTitle}>
-                    한달동안 평균 소비 금액 줄이기
+                    {dstChallenge.element.questInfo.content.topRowText}
                   </Text>
-                  <Text style={styles.titleDate}>6월 15일 까지</Text>
+                  <Text style={styles.titleDate}>{dstChallenge.element.questInfo.content.bottomRowText}</Text>
                 </View>
                 <View style={styles.my}>
                   <View style={styles.left}>
-                    <View>
-                      <Text style={styles.one}>나의 한달 평균 소비 금액</Text>
-                      <Text style={styles.two}>₩54,000</Text>
-                    </View>
-                    <View>
-                      <Text style={styles.one}>지금까지 줄인 소비 금액</Text>
-                      <Text style={styles.two}>₩3,000</Text>
-                    </View>
+                    {
+                      dstChallenge.element.questInfo.bottom.content.map(e => {
+                        if (e.type === "QUEST_DATA_CARD") {
+                          return <View key={e.type+e.content.topRowText}>
+                            <Text style={styles.one}>{e.content.topRowText}</Text>
+                            <Text style={styles.two}>{e.content.bottomRowText}</Text>
+                          </View>
+                        }
+                      })
+                    }
                   </View>
                 </View>
               </View>
