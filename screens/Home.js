@@ -211,7 +211,7 @@ export default function Home() {
           </>
         }
 
-        <Text style={styles.sectionTitle}>일일 도전과제</Text>
+        <Text style={styles.sectionTitle}>주간 도전과제</Text>
 
         <View style={[styles.tasks, { marginTop: 10 }]}>
           {selectedTasks.length > 0 ? (
