@@ -189,6 +189,21 @@ const MOCK_DATA = {
                 }
             }
         ]
+    },
+    PROFILE: {
+        "name": "주현명",
+        "level": 998,
+        "tag": "절약의 신",
+        "profileImage": "https://sqstatic.ychan.me/character/default0.png?key=wy6hk6y1sx3gcjvkmdhef",
+        "element": [
+            { "name": "지금까지 줄인 소비금액", "value": "99,000" },
+            { "name": "성공한 도전과제", "value": "321개" }
+        ],
+        "questLog": {
+            "totalEarned": 1000,
+            "totalCompleted": 100,
+            "totalFailed": 10,
+        }
     }
 }
 

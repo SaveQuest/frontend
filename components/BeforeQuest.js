@@ -2,41 +2,44 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Card from "./Card";
 import Feather from 'react-native-vector-icons/Feather';
 import SafeIcon from "./SafeIcon";
+import { numberWithCommas } from "../utils";
 
-export default function BeforeQuest({ navigation }) {
+export default function BeforeQuest({ totalEarned,
+  totalCompleted,
+  totalFailed }) {
   return (
     <Card>
-      <TouchableOpacity onPress={() => navigation.navigate("DetailBeforeQuest")}>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>이전 도전과제</Text>
-            <Feather name="chevron-right" size={20} color="#000" />
+      {/* <TouchableOpacity onPress={() => navigation.navigate("DetailBeforeQuest")}> */}
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>이전 도전과제</Text>
+          {/* <Feather name="chevron-right" size={20} color="#000" /> */}
+        </View>
+
+        <View style={styles.contents}>
+          <View style={styles.coinContainer}>
+            <SafeIcon width="50" height="50" />
+            <View style={styles.coinInfo}>
+              <Text style={styles.label}>획득한 코인</Text>
+              <Text style={styles.coinValue}>{numberWithCommas(totalEarned)} 코인</Text>
+            </View>
           </View>
 
-          <View style={styles.contents}>
-            <View style={styles.coinContainer}>
-              <SafeIcon width="50" height="50" />  
-              <View style={styles.coinInfo}>
-                <Text style={styles.label}>획득한 코인</Text>
-                <Text style={styles.coinValue}>4,600 코인</Text>
-              </View>
+          <View style={styles.verticalLine} />
+
+          <View style={styles.resultContainer}>
+            <View style={styles.result}>
+              <Text style={styles.label}>성공</Text>
+              <Text style={[styles.value, { color: "#389348" }]}>{numberWithCommas(totalCompleted)}</Text>
             </View>
-
-            <View style={styles.verticalLine} />
-
-            <View style={styles.resultContainer}>
-              <View style={styles.result}>
-                <Text style={styles.label}>성공</Text>
-                <Text style={[styles.value, { color: "#389348" }]}>321</Text>
-              </View>
-              <View style={styles.result}>
-                <Text style={styles.label}>실패</Text>
-                <Text style={[styles.value, { color: "#EC2424" }]}>11</Text>
-              </View>
+            <View style={styles.result}>
+              <Text style={styles.label}>실패</Text>
+              <Text style={[styles.value, { color: "#EC2424" }]}>{numberWithCommas(totalFailed)}</Text>
             </View>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
+      {/* </TouchableOpacity> */}
     </Card>
   );
 }
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#333", 
+    color: "#333",
   },
   contents: {
     flexDirection: "row",
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
   coinValue: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#43B319",  
+    color: "#43B319",
   },
   verticalLine: {
     width: 1,
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: "#777777",  
+    color: "#777777",
   },
   value: {
     fontSize: 17,

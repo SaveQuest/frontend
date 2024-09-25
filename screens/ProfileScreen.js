@@ -6,9 +6,14 @@ import CameraIcon from '../components/CameraIcon';
 import ShareSection from '../Share/ShareSection ';
 import BeforeQuest from '../components/BeforeQuest';
 import MyroomIcon from '../components/MyroomIcon';
+import { useApi } from '../hooks/useApi';
+import { requester } from '../lib/api';
+import { useUserStore } from '../stores/userStore';
+import Skeleton from 'react-native-reanimated-skeleton';
 
 const ProfileScreen = ({ navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const { state: profileData } = useApi(requester.fetchProfile, "PROFILE")
 
   const handleCameraIconPress = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -30,6 +35,8 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
+  const userData = useUserStore(s => s.data)
+
   return (
     <View style={styles.container}>
       <Header />
@@ -37,11 +44,19 @@ const ProfileScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.topSection}>
           <View style={styles.profileTextContainer}>
-            <Text style={styles.profileName}>차호림</Text>
-            <View style={styles.subtitleContainer}>
-              <Text style={styles.profileSubtitle}>절약의 신</Text>
-            </View>
+            <Text style={styles.profileName}>{userData.name}</Text>
+
+            {
+              profileData ? <>
+                <View style={styles.subtitleContainer}>
+                  <Text style={styles.profileSubtitle}>{profileData.tag}</Text>
+                </View>
+              </> : <>
+                <Skeleton layout={[{ id: "zq", width: "100%", height: 72 }]} containerStyle={{}} />
+              </>
+            }
           </View>
+
           <View style={styles.profileImageContainer}>
             {selectedImage ? (
               <Image source={{ uri: selectedImage }} style={styles.profileImage} />
@@ -54,38 +69,53 @@ const ProfileScreen = ({ navigation }) => {
           </View>
         </View>
 
-        <View style={styles.moneyInfoRow}>
-          <Text style={styles.moneyLabelRow}>지금까지 줄인 소비 금액</Text>
-          <Text style={styles.moneyAmountRow}>₩99,000</Text>
-        </View>
-
-        <View style={styles.challengeInfoRow}>
-          <Text style={styles.challengeLabel}>성공한 도전과제</Text>
-          <Text style={styles.challengeAmount}>321개</Text>
-        </View>
+        {
+          profileData ? <>
+            {profileData.element.map(e => {
+              return <View style={styles.moneyInfoRow} key={e.name}>
+                <Text style={styles.moneyLabelRow}>{e.name}</Text>
+                <Text style={styles.moneyAmountRow}>{e.value}</Text>
+              </View>
+            })}
+          </> : <>
+            <Skeleton layout={[{ id: "zq", width: "100%", height: 100 }]} containerStyle={styles.moneyInfoRow} />
+          </>
+        }
 
         <View style={styles.separator} />
+        {
+          profileData ? <>
+            <View style={styles.levelBarSection}>
+              <View style={styles.levelTextContainer}>
+                <Text style={styles.levelLabelText}>Lv.</Text>
+                <Text style={styles.levelNumberText}>{profileData.level}</Text>
+              </View>
+              <View style={styles.levelBarContainer}>
+                <View style={styles.levelBarFill} />
+              </View>
+            </View>
+          </> : <>
+            <Skeleton layout={[{ id: "zq", width: "100%", height: 42 }]} containerStyle={styles.moneyInfoRow} />
+          </>
+        }
 
-        <View style={styles.levelBarSection}>
-          <View style={styles.levelTextContainer}>
-            <Text style={styles.levelLabelText}>Lv.</Text>
-            <Text style={styles.levelNumberText}>998</Text>
-          </View>
-          <View style={styles.levelBarContainer}>
-            <View style={styles.levelBarFill} />
-          </View>
-        </View>
 
-        <TouchableOpacity style={styles.myRoom} navigation={navigation} onPress={()=>{navigation.navigate("MyRoom")}}>
-          <View style={{alignItems:'center', gap:5}}>
-            <MyroomIcon/>
-            <Text style={{color:'#43B319', fontSize:18}}>마이룸</Text>
-          </View> 
+        <TouchableOpacity style={styles.myRoom} navigation={navigation} onPress={() => { navigation.navigate("MyRoom") }}>
+          <View style={{ alignItems: 'center', gap: 5 }}>
+            <MyroomIcon />
+            <Text style={{ color: '#43B319', fontSize: 18 }}>마이룸</Text>
+          </View>
         </TouchableOpacity>
 
-        <BeforeQuest navigation={navigation} />
+        {
+          profileData ? <>
+            <BeforeQuest {...profileData.questLog} />
+          </> : <>
+            <Skeleton layout={[{ id: "zq", width: "100%", height: 100 }]} containerStyle={styles.moneyInfoRow} />
+          </>
+        }
       </ScrollView>
-    </View>
+    </View >
   );
 };
 
@@ -100,13 +130,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
-  myRoom:{
-    width:'100%',
-    padding:12,
-    backgroundColor:'white',
-    borderRadius:12,
-    alignItems:'center', 
-    justifyContent:'center'
+  myRoom: {
+    width: '100%',
+    padding: 12,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   topSection: {
