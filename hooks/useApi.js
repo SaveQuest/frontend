@@ -194,6 +194,7 @@ const MOCK_DATA = {
         "name": "주현명",
         "level": 998,
         "tag": "절약의 신",
+        "isProfilePublic": true,
         "profileImage": "https://sqstatic.ychan.me/character/default0.png?key=wy6hk6y1sx3gcjvkmdhef",
         "element": [
             { "name": "지금까지 줄인 소비금액", "value": "99,000" },
