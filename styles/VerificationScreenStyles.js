@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'left',
     alignSelf: 'flex-start',
-    fontFamily: 'WantedSans-Bold',
+    fontFamily: 'WantedSans-SemiBold',
   },
   inputContainer: {
     marginBottom: 20,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   submitButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily: 'WantedSans-Bold',
+    fontFamily: 'WantedSans-Regular',
     textAlign: 'center',
   },
   submitButtonTextActive: {
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   },
   modalItemText: {
     fontSize: 16,
-    fontFamily: 'WantedSans-Bold',
+    fontFamily: 'WantedSans-Regular',
   },
 });
 

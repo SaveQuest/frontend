@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/AgreementScreenStyles';  
+import { useNavigation } from '@react-navigation/native';
 
-export default function AgreementScreen({ navigation, setAgreed }) {
+export default function AgreementScreen({ setAgreed }) {
   const [allChecked, setAllChecked] = useState(false);
   const [terms, setTerms] = useState({
     service: false,
@@ -13,6 +14,8 @@ export default function AgreementScreen({ navigation, setAgreed }) {
     identity: false,
     marketing: false,
   });
+
+  const navigation = useNavigation(); 
 
   const toggleAll = () => {
     const newValue = !allChecked;
@@ -35,10 +38,10 @@ export default function AgreementScreen({ navigation, setAgreed }) {
 
   const handleNext = () => {
     if (terms.service && terms.privacy && terms.openBanking && terms.thirdParty && terms.identity) {
-      setAgreed(true);
-      navigation.navigate('Verification'); 
+      setAgreed(true); 
+      navigation.navigate('Verification');
     } else {
-      Alert.alert('필수 항목에 모두 동의해 주세요.'); 
+      Alert.alert('필수 항목에 모두 동의해 주세요.');
     }
   };
 
@@ -149,7 +152,7 @@ export default function AgreementScreen({ navigation, setAgreed }) {
             ? styles.submitButtonActive
             : styles.submitButtonInactive
         ]}
-        onPress={handleNext}
+        onPress={handleNext} 
         disabled={!terms.service || !terms.privacy || !terms.openBanking || !terms.thirdParty || !terms.identity}
       >
         <Text style={[

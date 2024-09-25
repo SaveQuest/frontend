@@ -1,5 +1,5 @@
-import { create } from 'zustand'
-import { requester } from '../lib/api'
+import { create } from 'zustand';
+import { requester } from '../lib/api';
 
 export const useUserStore = create((set) => ({
   data: {
@@ -7,15 +7,18 @@ export const useUserStore = create((set) => ({
     points: 12,
     notiCnt: 3,
   },
+  setUserData: (userData) => set({ data: userData }),
   refreshUserData: async () => {
     requester.getDSTHeader()
       .then((res) =>
         set((prev) => ({
-          name: res.name,
-          points: res.points,
-          notiCnt: res.notificationCount,
+          data: {
+            name: res.name,
+            points: res.points,
+            notiCnt: res.notificationCount,
+          },
           token: prev.token
         })))
-      .catch(e => console.error(e))
-  }
-}))
+      .catch(e => console.error(e));
+  },
+}));

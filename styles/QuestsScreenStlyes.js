@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#4D5764",
     fontWeight: "600",
-    fontFamily: "../assets/fonts/Pretendard-Thin.otf",
+    fontFamily: "WantedSans-Regular",
   },
 
 
@@ -82,12 +82,12 @@ const styles = StyleSheet.create({
   },
   one: {
     color: "#575757",
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: "WantedSans-Medium"
   },
   two: {
     color: "#23282F",
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: "600",
     fontFamily: "WantedSans-SemiBold"
   },

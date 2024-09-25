@@ -5,12 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 import BackIcon from '../components/BackIcon';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from '../styles/VerificationScreenStyles';
-import { requester } from '../lib/api';
-import { useUserStore } from '../stores/userStore';
+import {useUserStore} from '../stores/userStore';
 
 export default function VerificationScreen() {
   const [isFocused, setIsFocused] = useState(false);
-  const [name, setName] = useState("")
+  const [name, setName] = useState("");
   const [idNumberPart1, setIdNumber] = useState('');
   const [idNumberPart2, setIdNumberPart2] = useState('');
   const [selectedCarrier, setSelectedCarrier] = useState('통신사 선택');
@@ -77,15 +76,18 @@ export default function VerificationScreen() {
     return circles;
   };
 
-  const setUserData = useUserStore((s) => s.setUserData);
+  const setUserData = useUserStore((state) => state.setUserData);
   const onPressSubmit = () => {
     console.log(name, idNumberPart1, idNumberPart2, phoneNumber, selectedCarrier);
-    setUserData(1);
+    setUserData({ name, idNumber: idNumberPart1 + idNumberPart2, phoneNumber, carrier: selectedCarrier }); 
+    
     (async () => {
-      await AsyncStorage.setItem("ID_NUM", idNumberPart1 + idNumberPart2)
-      await requester.requestCode("+82" + phoneNumber)
+      await AsyncStorage.setItem("ID_NUM", idNumberPart1 + idNumberPart2);
+      await requester.requestCode("+82" + phoneNumber);
     })();
-  }
+
+    navigation.navigate('Main'); 
+  };
 
   const isFormComplete = /^\d{6}$/.test(idNumberPart1) && /^\d{1}$/.test(idNumberPart2) && /^010\d{8}$/.test(phoneNumber) && selectedCarrier !== "통신사 선택" && name.length > 0;
 
