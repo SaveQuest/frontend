@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Animated, TextInput, TouchableOpacity, StyleSheet } from 'react-native'; 
 import { NavigationContainer } from '@react-navigation/native';
-import { Text, View, Animated } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './screens/Home';
@@ -16,9 +16,11 @@ import AgreementScreen from './screens/AgreementScreen';
 import DetailRank from './components/DetailRank';
 import ChallengeJoinScreen from './screens/ChallengeJoinScreen';
 import DetailBeforeQuest from './components/DetailBeforeQuest';
-import NotificationList from './components/NotificationListScreen';
+import NotificationScreen from './screens/NotificationScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import MyRoom from './components/MyRoom';
+import MyRoomScreen from './screens/MyRoomScreen'; 
+import AuthCodeScreen from './screens/AuthCodeScreen';
+import SplashScreen from './screens/SplashScreen'; 
 import { useFonts } from 'expo-font';
 
 const Tab = createBottomTabNavigator();
@@ -104,20 +106,24 @@ export default function App() {
     "WantedSans-Bold": require("./assets/fonts/WantedSans-Bold.otf"),
   });
 
+  if (!loaded) return null; 
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Splash" component={SplashScreen} /> 
         <Stack.Screen name="Agreement">
           {(props) => <AgreementScreen {...props} setAgreed={setAgreed} />}
         </Stack.Screen>
         <Stack.Screen name="Verification" component={VerificationScreen} />
-        {agreed && <Stack.Screen name="Main" component={TabNavigator} />}
+        <Stack.Screen name="AuthCode" component={AuthCodeScreen}/>
+        <Stack.Screen name="Main" component={TabNavigator} /> 
         <Stack.Screen name="DetailRank" component={DetailRank} />
         <Stack.Screen name="ChallengeJoinScreen" component={ChallengeJoinScreen} />
         <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
         <Stack.Screen name="StoreScreen" component={StoreScreen} />
-        <Stack.Screen name="NotificationList" component={NotificationList} />
-        <Stack.Screen name="MyRoom" component={MyRoom} />
+        <Stack.Screen name="NotificationList" component={NotificationScreen} />
+        <Stack.Screen name="MyRoom" component={MyRoomScreen} />
         <Stack.Screen name="Setting" component={SettingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>

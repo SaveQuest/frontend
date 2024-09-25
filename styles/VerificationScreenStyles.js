@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     color: '#000',
     paddingHorizontal: 0,
+    fontFamily: 'WantedSans-Regular',
   },
   phoneInputContainer: {
     marginBottom: 30,
@@ -129,6 +130,7 @@ const styles = StyleSheet.create({
     color: '#000',
     textAlign: 'left',
     marginRight: 4,
+    fontFamily: 'WantedSans-Regular',
   },
   phoneInput: {
     flex: 1,
@@ -137,6 +139,7 @@ const styles = StyleSheet.create({
     color: '#000',
     borderBottomWidth: 0,
     paddingHorizontal: 0,
+    fontFamily: 'WantedSans-Regular',
   },
   button: {
     backgroundColor: '#333',
@@ -148,6 +151,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: 'WantedSans-Regular',
   },
   submitButton: {
     position: 'absolute', 
@@ -195,6 +199,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 15,
+    fontFamily: 'WantedSans-Bold',
   },
   modalItem: {
     paddingVertical: 25,

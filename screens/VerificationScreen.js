@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import BackIcon from '../components/BackIcon';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from '../styles/VerificationScreenStyles';
-import {useUserStore} from '../stores/userStore';
+import { useUserStore } from '../stores/userStore';
 
 export default function VerificationScreen() {
   const [isFocused, setIsFocused] = useState(false);
@@ -21,6 +21,7 @@ export default function VerificationScreen() {
 
   const firstInputRef = useRef(null);
   const secondInputRef = useRef(null);
+  const scrollViewRef = useRef(null);
 
   const carriers = ['SKT', 'KT', 'LG U+', 'SKT(알뜰폰)', 'KT(알뜰폰)', 'LG U+(알뜰폰)'];
 
@@ -79,14 +80,14 @@ export default function VerificationScreen() {
   const setUserData = useUserStore((state) => state.setUserData);
   const onPressSubmit = () => {
     console.log(name, idNumberPart1, idNumberPart2, phoneNumber, selectedCarrier);
-    setUserData({ name, idNumber: idNumberPart1 + idNumberPart2, phoneNumber, carrier: selectedCarrier }); 
-    
+    setUserData({ name, idNumber: idNumberPart1 + idNumberPart2, phoneNumber, carrier: selectedCarrier });
+
     (async () => {
       await AsyncStorage.setItem("ID_NUM", idNumberPart1 + idNumberPart2);
       await requester.requestCode("+82" + phoneNumber);
     })();
 
-    navigation.navigate('Main'); 
+    navigation.navigate('AuthCode');
   };
 
   const isFormComplete = /^\d{6}$/.test(idNumberPart1) && /^\d{1}$/.test(idNumberPart2) && /^010\d{8}$/.test(phoneNumber) && selectedCarrier !== "통신사 선택" && name.length > 0;
@@ -98,18 +99,23 @@ export default function VerificationScreen() {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1 }}>
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            ref={scrollViewRef}
+          >
             <View style={styles.container}>
               <View style={styles.headerContainer}>
-                {navigation.canGoBack() && <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-                  <BackIcon />
-                </TouchableOpacity>}
+                {navigation.canGoBack() && (
+                  <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+                    <BackIcon />
+                  </TouchableOpacity>
+                )}
                 <Text style={styles.title}>본인인증</Text>
               </View>
 
               <Text style={styles.subtitle}>
                 SaveQuest 이용을 위해{'\n'}
-                <Text style={{ color: '#389348' }}>본인확인</Text>을 해주세요
+                <Text style={{ color: '#389348' }}>로그인</Text>을 해주세요
               </Text>
 
               <View style={styles.inputContainer}>
@@ -146,9 +152,9 @@ export default function VerificationScreen() {
                   value={idNumberPart1}
                   keyboardType="numeric"
                   maxLength={6}
-                  onChangeText={handleLeftInputChange}
                   onFocus={() => setIsIdFocused(true)}
                   onBlur={() => setIsIdFocused(false)}
+                  onChangeText={handleLeftInputChange}
                   placeholder="주민등록번호"
                 />
                 <TextInput
@@ -157,9 +163,9 @@ export default function VerificationScreen() {
                   value={idNumberPart2}
                   keyboardType="numeric"
                   maxLength={1}
-                  onChangeText={handleRightInputChange}
                   onFocus={() => setIsIdFocused(true)}
                   onBlur={() => setIsIdFocused(false)}
+                  onChangeText={handleRightInputChange}
                   secureTextEntry={false}
                 />
               </View>
@@ -182,9 +188,9 @@ export default function VerificationScreen() {
                       placeholder="휴대폰번호 입력"
                       keyboardType="numeric"
                       value={phoneNumber}
-                      onChangeText={setPhoneNumber}
                       onFocus={() => setIsPhoneFocused(true)}
                       onBlur={() => setIsPhoneFocused(false)}
+                      onChangeText={setPhoneNumber}
                     />
                   </View>
                 </View>

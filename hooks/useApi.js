@@ -140,6 +140,71 @@ const MOCK_DATA = {
         "image": "https://sqstatic.ychan.me/dstCarouselImage/70a3ceae-d5dc-463e-a98b-48d6243a6a80.png?key=qq3ruhu537pk9lyv3wfgx",
         "description": "상품 설명",
         "isPurchasable": true,
+    },
+    USER_INV: {
+        "inventory": [
+            {
+                "id": "1234",
+                "name": "아이템",
+                "imageUrl": "https://sqstatic.ychan.me/inventory/5gna1.jpg?key=fn1k661",
+                "isEquipped": true,
+            }
+        ]
+    },
+    USER_EQUIPPED_DATA: {
+
+    },
+    DST_NOTI: {
+        "id": "userId",
+        "element": [
+            {
+                "type": "NOTIFICATION_CARD",
+                "id": "591nfa01",
+                "content": {
+                    "leftRowTopText": "접속 보상",
+                    "leftRowBottomText": "2021-08-01T00:00:00.000Z",
+                    "descriptionText": "어쩌구저쩌구어쩌구저쩌구"
+                },
+                "right": {
+                    "type": "NOTIFICATION_INTERACT_COLLECT",
+                    "content": {
+                        "rewardAmountText": "1000"
+                    }
+                },
+                "handler": {
+                    "type": "REQUEST",
+                    "uri": "/user/collect",
+                    "data": {
+                        "id": "491nd91jfma01lla"
+                    }
+                }
+            },
+            {
+                "type": "NOTIFICATION_CARD",
+                "id": "591nfaaf01",
+                "content": {
+                    "leftRowTopText": "공지사항",
+                    "leftRowBottomText": "2021-08-01T00:00:00.000Z",
+                    "descriptionText": "어쩌구저쩌구어쩌구저쩌구"
+                }
+            }
+        ]
+    },
+    PROFILE: {
+        "name": "주현명",
+        "level": 998,
+        "tag": "절약의 신",
+        "isProfilePublic": true,
+        "profileImage": "https://sqstatic.ychan.me/character/default0.png?key=wy6hk6y1sx3gcjvkmdhef",
+        "element": [
+            { "name": "지금까지 줄인 소비금액", "value": "99,000" },
+            { "name": "성공한 도전과제", "value": "321개" }
+        ],
+        "questLog": {
+            "totalEarned": 1000,
+            "totalCompleted": 100,
+            "totalFailed": 10,
+        }
     }
 }
 

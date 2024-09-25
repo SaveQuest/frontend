@@ -1,0 +1,3 @@
+[submodule "vendor/sq-rn-scraping"]
+	path = vendor/sq-rn-scraping
+	url = https://github.com/SaveQuest/sq-rn-scraping

@@ -8,11 +8,11 @@ import {
   Image,
   Modal,
 } from "react-native";
-import DetailHeader from "./DetailHeader";
+import DetailHeader from "../components/DetailHeader";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
-import CharacterDetail from "./CharacterDetail";
+import CharacterDetail from "../components/MyRoomItemModal";
 
 export default function MyRoom({ navigation }) {
   const [selectedTab, setSelectedTab] = useState("character");
@@ -77,11 +77,12 @@ export default function MyRoom({ navigation }) {
 
   const handleTitleSelect = (index) => {
     setSelectedTitleIndex(index);
+    // 탭 전환을 없앰, selectedTab을 변경하지 않음
   };
 
   return (
     <View style={styles.container}>
-      <DetailHeader navigation={navigation} title={"마이룸"} n={"MainPage"} />
+      <DetailHeader navigation={navigation} title={"마이룸"} n={"Main"} />
       <View style={{ flex: 1, paddingHorizontal: 20 }}>
         <View style={{ alignItems: "center", justifyContent: "center", flexDirection: "row", position: 'relative' }}>
           <Image
@@ -174,7 +175,7 @@ export default function MyRoom({ navigation }) {
                 <TouchableOpacity 
                   key={index} 
                   style={[styles.titleBox, { backgroundColor: selectedTitleIndex === index ? "#4CAF50" : "#DCF5E9" }]}
-                  onPress={() => handleTitleSelect(index)} 
+                  onPress={() => handleTitleSelect(index)} // 칭호 선택 시 호출
                 >
                   <Text style={[styles.titleBoxText, { color: selectedTitleIndex === index ? "#FFF" : "#87AD8E" }]}>{title}</Text>
                 </TouchableOpacity>
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
   petWrapper: {
     position: 'absolute',
     bottom: 15, 
-    right: 90, 
+    right: 60, 
   },
   petImage: {
     width: 60, 
