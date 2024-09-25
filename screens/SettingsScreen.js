@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useApi } from '../hooks/useApi';
 import { requester } from '../lib/api';
+import { useUserStore } from '../stores/userStore';
 
 const NameModal = ({ visible, onClose, onSubmit }) => {
   const [txt, setTxt] = useState("")
@@ -83,6 +84,8 @@ const NameModal = ({ visible, onClose, onSubmit }) => {
 }
 
 export default function SettingsScreen() {
+  const refreshUserData = useUserStore(s => s.refreshUserData)
+
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -97,7 +100,7 @@ export default function SettingsScreen() {
       name: txt,
       isProfilePublic: userProfile.isProfilePublic
     }).then(res => {
-      refreshProfile()
+      refresh()
     })
   }
 
@@ -106,9 +109,14 @@ export default function SettingsScreen() {
       name: userProfile.name,
       isProfilePublic: !userProfile.isProfilePublic
     }).then(res => {
-      refreshProfile()
+      refresh()
     })
   };
+
+  const refresh = () => {
+    refreshProfile()
+    refreshUserData()
+  }
 
   const openInstagram = () => {
     const instagramUrl = 'https://www.instagram.com/savequest_official';
