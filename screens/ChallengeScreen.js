@@ -54,14 +54,14 @@ const ChallengeScreen = ({ navigation }) => {
               }, styles.border]}>
                 <View style={styles.title}>
                   <Text style={styles.titleTitle}>
-                    {dstChallenge.element.questInfo.content.topRowText}
+                    {dstChallenge.questInfo.content.topRowText}
                   </Text>
-                  <Text style={styles.titleDate}>{dstChallenge.element.questInfo.content.bottomRowText}</Text>
+                  <Text style={styles.titleDate}>{dstChallenge.questInfo.content.bottomRowText}</Text>
                 </View>
                 <View style={styles.my}>
                   <View style={styles.left}>
                     {
-                      dstChallenge.element.questInfo.bottom.content.map(e => {
+                      dstChallenge.questInfo.bottom.content.map(e => {
                         if (e.type === "QUEST_DATA_CARD") {
                           return <View key={e.type + e.content.topRowText}>
                             <Text style={styles.one}>{e.content.topRowText}</Text>
@@ -80,7 +80,7 @@ const ChallengeScreen = ({ navigation }) => {
               }, styles.border]}>
                 <TouchableOpacity
                   style={styles.rankTab}
-                  onPress={() => navigation.navigate("DetailRank")}
+                  onPress={() => navigation.navigate("DetailRank", { id: dstChallenge.id })}
                 >
                   <Text style={styles.rankTabText}>순위</Text>
                   <View style={styles.rankBoxFlex}>
@@ -88,27 +88,17 @@ const ChallengeScreen = ({ navigation }) => {
                     <Feather name="chevron-right" size={24} color="#000" />
                   </View>
                 </TouchableOpacity>
-                <RankItem
-                  count={1}
-                  name={"차호림"}
-                  lv={998}
-                  cName={"지금까지 줄인 소비 금액"}
-                  money={3000}
-                />
-                <RankItem
-                  count={2}
-                  name={"한유찬"}
-                  lv={998}
-                  cName={"지금까지 줄인 소비 금액"}
-                  money={3000}
-                />
-                <RankItem
-                  count={3}
-                  name={"신이현"}
-                  lv={998}
-                  cName={"지금까지 줄인 소비 금액"}
-                  money={3000}
-                />
+                {
+                  dstChallenge.questInfo.ranking.map((e, idx) => <RankItem
+                    key={idx}
+                    count={idx + 1}
+                    name={e.name}
+                    lv={e.level}
+                    cName={"지금까지 줄인 소비 금액"}
+                    money={e.totalSavedUsage}
+                  />)
+                }
+
               </View>
             </View>
           </View> : <>

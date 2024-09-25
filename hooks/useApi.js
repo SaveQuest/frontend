@@ -76,32 +76,35 @@ const MOCK_DATA = {
         ]
     },
     DST_CHALLENGE_PAGE: {
-        "id": "userId",
-        "element": {
-            "questInfo": {
-                "type": "QUEST_INFO_CARD",
-                "content": {
-                    "topRowText": "한달동안 평균 소비 금액 줄이기",
-                    "bottomRowText": "6월 15일 까지"
-                },
-                "bottom": {
-                    "type": "LIST_ROW",
-                    "content": [
-                        {
-                            "type": "QUEST_DATA_CARD",
-                            "content": {
-                                "topRowText": "나의 한달 평균 소비 금액",
-                                "bottomRowText": "₩45,500"
-                            }
-                        }, {
-                            "type": "QUEST_DATA_CARD",
-                            "content": {
-                                "topRowText": "지금까지 줄인 소비금액",
-                                "bottomRowText": "₩5,000"
-                            }
+        "id": "challengeId",
+        "questInfo": {
+            "type": "QUEST_INFO_CARD",
+            "content": {
+                "topRowText": "한달동안 평균 소비 금액 줄이기",
+                "bottomRowText": "6월 15일 까지"
+            },
+            "ranking": [
+                { "name": "차호림", "level": 998, "totalSavedUsage": 5000 },
+                { "name": "차호림", "level": 998, "totalSavedUsage": 5000 },
+                { "name": "차호림", "level": 998, "totalSavedUsage": 5000 }
+            ],
+            "bottom": {
+                "type": "LIST_ROW",
+                "content": [
+                    {
+                        "type": "QUEST_DATA_CARD",
+                        "content": {
+                            "topRowText": "나의 한달 평균 소비 금액",
+                            "bottomRowText": "₩45,500"
                         }
-                    ]
-                }
+                    }, {
+                        "type": "QUEST_DATA_CARD",
+                        "content": {
+                            "topRowText": "지금까지 줄인 소비금액",
+                            "bottomRowText": "₩5,000"
+                        }
+                    }
+                ]
             }
         }
     },
@@ -205,6 +208,22 @@ const MOCK_DATA = {
             "totalCompleted": 100,
             "totalFailed": 10,
         }
+    },
+    CHALL_DETAIL: {
+        "id": "1234",
+        "endsAt": "2021-08-01T00:00:00.000Z",
+        "ranking": [
+            {
+                "rank": 1, "name": "주현명", "level": "998", "element": [
+                    {
+                        "name": "지금까지 줄은 소비 금액",
+                        "value": "5,500",
+                    }
+                ]
+            }
+        ],
+        "people": 100,
+        "totalReward": 900,
     }
 }
 

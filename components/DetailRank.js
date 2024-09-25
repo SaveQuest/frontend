@@ -1,47 +1,40 @@
 import {
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
 import RankItem from "./RankItem";
 import DetailHeader from "./DetailHeader";
-import { Ionicons } from '@expo/vector-icons'; // 아이콘 사용
+import { Ionicons } from '@expo/vector-icons'
+import { useApi } from "../hooks/useApi.js"
+import { requester } from "../lib/api";
 
-export default function DetailRank({ navigation }) {
+export default function DetailRank({ route, navigation }) {
+  const { id } = route.params
+  const { state: challData } = useApi(() => { if (id) return requester.fetchChallengeDetail(id) }, "CHALL_DETAIL")
+
+  if (!id) {
+    navigation.goBack()
+    return <></>
+  }
+
+
   return (
+
     <View style={styles.container}>
       <DetailHeader navigation={navigation} title={'순위'} n={'MainPage'} />
 
       {/* 전체 순위 리스트 */}
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.anyRank}>
-          {[1, 2, 3].map((rank, index) => (
+          {challData && challData.ranking.map((rank, index) => (
             <RankItem
               key={index}
-              count={rank}
-              name={`차호림`}
-              lv={998}
-              cName={"지금까지 줄인 소비 금액"}
-              money={5000}
-              icon={
-                <Ionicons
-                  name={rank === 1 ? "md-crown" : rank === 2 ? "md-crown-outline" : "md-crown"}
-                  size={20}
-                  color={rank === 1 ? "#FFD700" : rank === 2 ? "#C0C0C0" : "#CD7F32"} // 금, 은, 동 색상
-                />
-              }
-            />
-          ))}
-
-          {Array.from({ length: 30 }, (_, index) => (
-            <RankItem
-              key={index + 3}
-              count={index + 4}
-              name={`차호림`}
-              lv={998}
-              cName={"지금까지 줄인 소비 금액"}
-              money={5000}
+              count={rank.rank}
+              name={rank.name}
+              lv={rank.level}
+              cName={rank.element[0].name}
+              money={rank.element[0].value}
             />
           ))}
         </View>
