@@ -14,7 +14,7 @@ import StoreScreen from './screens/StoreScreen';
 import DetailRank from './components/DetailRank';
 import ChallengeJoinScreen from './screens/ChallengeJoinScreen';
 import DetailBeforeQuest from './components/DetailBeforeQuest';
-import NotificationList from './components/NotificationListScreen';
+import NotificationScreen from './screens/NotificationScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { useFonts } from 'expo-font';
 import MyRoomScreen from './screens/MyRoomScreen';
@@ -108,7 +108,7 @@ function RootNavigator() {
           <Stack.Screen name="ChallengeJoinScreen" component={ChallengeJoinScreen} />
           <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
           <Stack.Screen name="StoreScreen" component={StoreScreen} />
-          <Stack.Screen name="NotificationList" component={NotificationList} />
+          <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
           <Stack.Screen name="MyRoom" component={MyRoomScreen} />
           <Stack.Screen name="Setting" component={SettingsScreen} />
         </>

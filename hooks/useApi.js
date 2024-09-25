@@ -152,7 +152,43 @@ const MOCK_DATA = {
         ]
     },
     USER_EQUIPPED_DATA: {
-        
+
+    },
+    DST_NOTI: {
+        "id": "userId",
+        "element": [
+            {
+                "type": "NOTIFICATION_CARD",
+                "id": "591nfa01",
+                "content": {
+                    "leftRowTopText": "접속 보상",
+                    "leftRowBottomText": "2021-08-01T00:00:00.000Z",
+                    "descriptionText": "어쩌구저쩌구어쩌구저쩌구"
+                },
+                "right": {
+                    "type": "NOTIFICATION_INTERACT_COLLECT",
+                    "content": {
+                        "rewardAmountText": "1000"
+                    }
+                },
+                "handler": {
+                    "type": "REQUEST",
+                    "uri": "/user/collect",
+                    "data": {
+                        "id": "491nd91jfma01lla"
+                    }
+                }
+            },
+            {
+                "type": "NOTIFICATION_CARD",
+                "id": "591nfaaf01",
+                "content": {
+                    "leftRowTopText": "공지사항",
+                    "leftRowBottomText": "2021-08-01T00:00:00.000Z",
+                    "descriptionText": "어쩌구저쩌구어쩌구저쩌구"
+                }
+            }
+        ]
     }
 }
 

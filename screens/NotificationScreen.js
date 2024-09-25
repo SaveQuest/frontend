@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import NotificationDetail from './NotificationDetail';
-import SafeIcon from './SafeIcon';
-import DetailHeader from './DetailHeader';
+import NotificationDetail from '../components/NotificationDetail';
+import SafeIcon from '../components/SafeIcon';
+import DetailHeader from '../components/DetailHeader';
+import { useApi } from '../hooks/useApi';
+import { requester } from '../lib/api';
 
-const notifications = [
-  { id: '1', title: '접속 보상', date: '2024. 07. 12', amount: 1000, content: '아직 사용하지 않으셨습니다.' },
-  { id: '2', title: '공지사항', date: '2024. 07. 12', amount: 0, content: '새로운 업데이트가 있습니다.' },
-];
-
-export default function NotificationList({ navigation }) {
+export default function NotificationScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState(null);
+
+  const { state: dstNotification } = useApi(requester.getDSTNotification, "DST_NOTI")
 
   const handleOpenModal = (item) => {
     setSelectedNotification(item);
@@ -24,22 +23,30 @@ export default function NotificationList({ navigation }) {
     setSelectedNotification(null);
   };
 
+  const dateToTxt = (d) => {
+    const dd = new Date(d)
+    return `${dd.getFullYear()}. ${dd.getMonth() + 1}. ${dd.getDay() + 1}`
+  }
+
   const renderItem = ({ item }) => (
     <View style={styles.notificationItem}>
       <View style={styles.notificationContent}>
         <SafeIcon style={styles.icon} width="40" height="40" />
         <View>
-          <Text style={styles.notificationTitle}>{item.title}</Text>
-          <Text style={styles.notificationDate}>{item.date}</Text>
+          <Text style={styles.notificationTitle}>{item.content.leftRowTopText}</Text>
+          <Text style={styles.notificationDate}>{dateToTxt(item.content.leftRowBottomText)}</Text>
         </View>
       </View>
-      {item.amount > 0 && (
+      {item.right && (
         <View style={styles.rewardContainer}>
           <View style={styles.rewardContent}>
             <SafeIcon style={styles.smallIcon} width="20" height="20" />
-            <Text style={styles.amountText}>{item.amount}</Text>
+            <Text style={styles.amountText}>{item.right.content.rewardAmountText}</Text>
           </View>
-          <TouchableOpacity style={styles.receiveButton} onPress={() => alert("수령")}>
+          <TouchableOpacity style={styles.receiveButton} onPress={() => {
+            if (!item.handler) return
+            requester.requestNotificationHandler(item.handler.uri, item.handler.data.id).then(res => Alert.alert("수령", res.message))
+          }}>
             <Text style={styles.receiveButtonText}>수령</Text>
           </TouchableOpacity>
         </View>
@@ -49,22 +56,14 @@ export default function NotificationList({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back" size={30} color="black" />
-        </TouchableOpacity>
-        <View style={styles.headerTitleContainer}>
-          <Text style={styles.headerTitle}>알림</Text>
-        </View>
-      </View> */}
       <DetailHeader navigation={navigation} title={"알림"} n={"MainPage"} />
 
-      <FlatList
-        data={notifications}
+      {dstNotification && <FlatList
+        data={dstNotification.element}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.listContainer}
-      />
+      />}
 
       {selectedNotification && (
         <NotificationDetail
@@ -117,8 +116,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 12,
-    borderWidth:2,
-    borderColor : '#eeeeee',
+    borderWidth: 2,
+    borderColor: '#eeeeee',
     borderRadius: 10,
     backgroundColor: '#fff',
     marginBottom: 10,
@@ -156,14 +155,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     padding: 10,
     paddingBottom: 2,
-    paddingVertical:3,
+    paddingVertical: 3,
     borderRadius: 3,
     borderColor: '#eeeeee'
   },
   rewardContent: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:5,
+    marginTop: 5,
     marginBottom: 5,
   },
   smallIcon: {
@@ -176,19 +175,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   receiveButton: {
-    justifyContent:'center',
+    justifyContent: 'center',
     backgroundColor: '#43b319',
-    width:71,
-    height:48,
-    alignItems:'center',
+    width: 71,
+    height: 48,
+    alignItems: 'center',
     borderRadius: 4,
-    marginLeft:5,
-    marginBottom:7
+    marginLeft: 5,
+    marginBottom: 7
   },
   receiveButtonText: {
     color: '#fff',
     fontSize: 14,
     fontWeight: '500',
-    fontFamily:"WantedSans-Medium",
+    fontFamily: "WantedSans-Medium",
   },
 });

@@ -33,7 +33,7 @@ export default function Header() {
           <Text style={styles.iconText}>{points ?? 0}</Text>
         </View>
         <View style={styles.iconWithText}>
-          <TouchableOpacity onPress={() => navigation.navigate('NotificationList')}>
+          <TouchableOpacity onPress={() => navigation.navigate('NotificationScreen')}>
             <NotificationIcon />
           </TouchableOpacity>
           <View style={styles.notificationBadge}>
