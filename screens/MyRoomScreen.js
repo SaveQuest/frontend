@@ -8,76 +8,42 @@ import {
   Image,
   Modal,
 } from "react-native";
-import DetailHeader from "./DetailHeader";
+import DetailHeader from "../components/DetailHeader";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
-import CharacterDetail from "./CharacterDetail";
+import MyRoomItemModal from "../components/MyRoomItemModal";
+import { useApi } from "../hooks/useApi";
+import { requester } from "../lib/api";
 
-export default function MyRoom({ navigation }) {
+export default function MyRoomScreen({ navigation }) {
   const [selectedTab, setSelectedTab] = useState("character");
   const [selectedTitleIndex, setSelectedTitleIndex] = useState(6);
-  const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [characterImage, setCharacterImage] = useState(require("../assets/character/black.png"));
-  const [selectedPet, setSelectedPet] = useState(null);
   const [petImage, setPetImage] = useState(null);
+
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState()
 
-  const titles = [
-    "절약 초보자",
-    "절약 중급자",
-    "절약 상급자",
-    "절약의 천재",
-    "절약의 왕",
-    "절약의 전설",
-    "절약의 신",
-  ];
+  const { state: userInvenData, refresh } = useApi(requester.fetchInventory, "USER_INV")
+  const { state: userEquippedData } = useApi(() => 0, "USER_EQUIPPED_DATA")
 
-  const characters = [
-    { name: "빨간머리 캐릭터", image: require("../assets/character/red.png") },
-    { name: "초록머리 캐릭터", image: require("../assets/character/green.png") },
-    { name: "파란머리 캐릭터", image: require("../assets/character/blue.png") },
-    { name: "검은머리 캐릭터", image: require("../assets/character/black.png") },
-    { name: "보라머리 캐릭터", image: require("../assets/character/purple.png") },
-    { name: "노란머리 캐릭터", image: require("../assets/character/yellow.png") },
-  ];
+  const handleItemSelect = (item) => {
+    setSelectedItem(item)
+    setModalVisible(true)
+  }
 
-  const pets = [
-    { name: "고양이", image: require("../assets/pet/cat.png") },
-    { name: "강아지", image: require("../assets/pet/dog.png") },
-    { name: "햄스터", image: require("../assets/pet/ham.png") },
-    { name: "판다", image: require("../assets/pet/panda.png") },
-  ];
-
-  const handleCharacterPress = (character) => {
-    setSelectedCharacter(character);
-    setModalVisible(true);
-  };
-
-  const handleCharacterSelect = (character) => {
-    setCharacterImage(character.image);
-    setModalVisible(false);
-  };
-
-  const handlePetPress = (pet) => {
-    setSelectedPet(pet);
-    setModalVisible(true);
-  };
-
-  const handlePetSelect = (pet) => {
-    setPetImage(pet.image);
-    setModalVisible(false);
-  };
+  const handleModalEquipItem = () => {
+    if (!selectedItem) return
+    requester.equipInventoryItem(selectedItem.id).then(() => { setModalVisible(false); refresh() })
+  }
 
   const handleCloseModal = () => {
     setModalVisible(false);
-    setSelectedCharacter(null);
-    setSelectedPet(null);
   };
 
-  const handleTitleSelect = (index) => {
-    setSelectedTitleIndex(index);
-    // 탭 전환을 없앰, selectedTab을 변경하지 않음
+  const handleTitleSelect = (item) => {
+    requester.equipInventoryItem(item.id).then(() => setModalVisible(false))
   };
 
   return (
@@ -92,7 +58,7 @@ export default function MyRoom({ navigation }) {
           {petImage && (
             <View style={styles.petWrapper}>
               <Image
-                style={styles.petImage} 
+                style={styles.petImage}
                 source={petImage}
                 resizeMode="contain"
               />
@@ -108,7 +74,7 @@ export default function MyRoom({ navigation }) {
           </View>
         </View>
         <View style={{ alignSelf: "center", paddingHorizontal: 12, paddingVertical: 3, backgroundColor: "#DCF5E9", borderRadius: 8, marginTop: 5 }}>
-          <Text style={{ color: "#87AD8E", fontSize: 16, fontWeight: 700, textAlign: "center" }}>{titles[selectedTitleIndex]}</Text>
+          {/* <Text style={{ color: "#87AD8E", fontSize: 16, fontWeight: 700, textAlign: "center" }}>{titles[selectedTitleIndex]}</Text> */}
         </View>
 
         <View style={styles.items}>
@@ -121,9 +87,9 @@ export default function MyRoom({ navigation }) {
               <MaterialIcons name="pets" size={24} color={selectedTab === "pet" ? "#4CAF50" : "#BDBDBD"} />
               <Text style={selectedTab === "pet" ? styles.tabTextActive : styles.tabText}>펫</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.tabButton} onPress={() => setSelectedTab("background")}>
-            <Feather name="award" size={24} color={selectedTab === "background" ? "#4CAF50" : "#BDBDBD"} />
-              <Text style={selectedTab === "background" ? styles.tabTextActive : styles.tabText}>칭호</Text>
+            <TouchableOpacity style={styles.tabButton} onPress={() => setSelectedTab("tag")}>
+              <Feather name="award" size={24} color={selectedTab === "tag" ? "#4CAF50" : "#BDBDBD"} />
+              <Text style={selectedTab === "tag" ? styles.tabTextActive : styles.tabText}>칭호</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.tabButton} onPress={() => setSelectedTab("randombox")}>
               <Feather name="box" size={24} color={selectedTab === "randombox" ? "#4CAF50" : "#BDBDBD"} />
@@ -131,57 +97,40 @@ export default function MyRoom({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          {selectedTab === "character" && (
-            <ScrollView contentContainerStyle={styles.characterList}>
-              {characters.map((character, index) => (
-                <TouchableOpacity key={index} style={styles.characterItem} onPress={() => handleCharacterPress(character)}>
-                  <Image source={character.image} style={styles.characterItemImage} />
-                  <Text style={styles.characterItemLabel}>{character.name}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          )}
 
-          {selectedTab === "pet" && (
-            <ScrollView contentContainerStyle={styles.characterList}>
-              {pets.map((pet, index) => (
-                <TouchableOpacity key={index} style={styles.characterItem} onPress={() => handlePetPress(pet)}>
-                  <View style={styles.petItemWrapper}>
-                    <Image source={pet.image} style={styles.petItemImage} resizeMode="contain" />
-                  </View>
-                  <Text style={styles.characterItemLabel}>{pet.name}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          )}
 
-          <Modal
-            transparent={true}
-            animationType="slide"
-            visible={modalVisible}
-            onRequestClose={handleCloseModal}
-          >
-            <CharacterDetail
-              visible={true}
-              onClose={handleCloseModal}
-              product={selectedCharacter || selectedPet}
-              onSelect={selectedCharacter ? handleCharacterSelect : handlePetSelect}
-            />
-          </Modal>
+          {selectedTab !== "tag" && userInvenData && <ScrollView contentContainerStyle={styles.characterList}>
+            {userInvenData.inventory.map((item, index) => (
+              <TouchableOpacity key={index} style={styles.characterItem} onPress={() => handleItemSelect(item)}>
+                <View style={styles.petItemWrapper}>
+                  <Image source={{ uri: item.image }} style={styles.petItemImage} resizeMode="contain" />
+                </View>
+                <Text style={styles.characterItemLabel}>{item.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          }
 
-          {selectedTab === "background" && (
+          {selectedTab === "tag" && userInvenData && (
             <ScrollView style={styles.titleList}>
-              {titles.map((title, index) => (
-                <TouchableOpacity 
-                  key={index} 
+              {userInvenData.inventory.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
                   style={[styles.titleBox, { backgroundColor: selectedTitleIndex === index ? "#4CAF50" : "#DCF5E9" }]}
-                  onPress={() => handleTitleSelect(index)} // 칭호 선택 시 호출
+                  onPress={() => handleTitleSelect(item)} // 칭호 선택 시 호출
                 >
-                  <Text style={[styles.titleBoxText, { color: selectedTitleIndex === index ? "#FFF" : "#87AD8E" }]}>{title}</Text>
+                  <Text style={[styles.titleBoxText, { color: selectedTitleIndex === index ? "#FFF" : "#87AD8E" }]}>{item.name}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
           )}
+
+          <MyRoomItemModal
+            visible={modalVisible}
+            onClose={handleCloseModal}
+            product={selectedItem}
+            onSelect={handleModalEquipItem}
+          />
         </View>
       </View>
     </View>
@@ -199,12 +148,12 @@ const styles = StyleSheet.create({
   },
   petWrapper: {
     position: 'absolute',
-    bottom: 15, 
-    right: 60, 
+    bottom: 15,
+    right: 60,
   },
   petImage: {
-    width: 60, 
-    height: 60, 
+    width: 60,
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
   },

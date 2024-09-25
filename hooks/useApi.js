@@ -140,6 +140,19 @@ const MOCK_DATA = {
         "image": "https://sqstatic.ychan.me/dstCarouselImage/70a3ceae-d5dc-463e-a98b-48d6243a6a80.png?key=qq3ruhu537pk9lyv3wfgx",
         "description": "상품 설명",
         "isPurchasable": true,
+    },
+    USER_INV: {
+        "inventory": [
+            {
+                "id": "1234",
+                "name": "아이템",
+                "imageUrl": "https://sqstatic.ychan.me/inventory/5gna1.jpg?key=fn1k661",
+                "isEquipped": true,
+            }
+        ]
+    },
+    USER_EQUIPPED_DATA: {
+        
     }
 }
 

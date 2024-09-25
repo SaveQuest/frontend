@@ -17,7 +17,7 @@ import DetailBeforeQuest from './components/DetailBeforeQuest';
 import NotificationList from './components/NotificationListScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { useFonts } from 'expo-font';
-import MyRoom from './components/MyRoom';
+import MyRoomScreen from './screens/MyRoomScreen';
 import { useUserStore } from './stores/userStore';
 import VerificationScreen from './screens/VerificationScreen';
 
@@ -109,7 +109,7 @@ function RootNavigator() {
           <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
           <Stack.Screen name="StoreScreen" component={StoreScreen} />
           <Stack.Screen name="NotificationList" component={NotificationList} />
-          <Stack.Screen name="MyRoom" component={MyRoom} />
+          <Stack.Screen name="MyRoom" component={MyRoomScreen} />
           <Stack.Screen name="Setting" component={SettingsScreen} />
         </>
       ) : (

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Modal, Text, TouchableOpacity, Image, StyleSheet, Pressable } from "react-native";
 
-const CharacterDetail = ({ visible, onClose, product, onSelect }) => {
+const MyRoomItemModal = ({ visible, onClose, product, onSelect }) => {
   return (
     <Modal
       animationType="slide"
@@ -16,7 +16,7 @@ const CharacterDetail = ({ visible, onClose, product, onSelect }) => {
               <Text style={styles.modalTitle}>{product.name}</Text>
               <Image source={product.image} style={styles.modalImage} />
               <Text style={styles.modalDescription}>
-                {product.description || "캐릭터 설명이 없습니다."}
+                {product.description || "설명이 없습니다."}
               </Text>
 
               <TouchableOpacity
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CharacterDetail;
+export default MyRoomItemModal;
