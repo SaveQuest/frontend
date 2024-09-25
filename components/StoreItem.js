@@ -1,12 +1,12 @@
 // ProductItem.js
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import SafeIcon from '../components/SafeIcon'; // 가격 아이콘
 
-const StoreItem = ({ title, price, onPress }) => {
+const StoreItem = ({ title, price, onPress, imgUrl }) => {
   return (
     <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
-      <View style={styles.itemImage} />
+      <Image source={{ uri: imgUrl }} resizeMode="contain" style={styles.itemImage} />
       <Text style={styles.itemLabel}>{title}</Text>
       <View style={styles.priceContainer}>
         <SafeIcon style={styles.priceIcon} />
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginBottom: 10,
-    borderWidth:1,
-    borderColor:'#eeeeee',
+    borderWidth: 1,
+    borderColor: '#eeeeee',
     alignItems: 'center',
   },
   itemImage: {

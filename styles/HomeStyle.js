@@ -22,7 +22,7 @@ export default StyleSheet.create({
   amountUsedToday: {
     color: '#55555E',
     textAlign: 'left',
-    fontFamily: 'Pretendard-Medium',
+    fontFamily: 'WantedSans-Medium',
     fontSize: 16,
     fontWeight: '500',
     lineHeight: 18,
@@ -30,18 +30,18 @@ export default StyleSheet.create({
   },
   amountComparison: {
     color: '#666',
-    fontFamily: 'Pretendard-Medium',
+    fontFamily: 'WantedSans-Medium',
     fontSize: 16,
     fontWeight: '500',
     marginBottom: 20,
   },
   bold: {
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
     fontWeight: 'bold',
   },
   red: {
     color: 'red',
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
     fontWeight: 'bold',
   },
   card: {
@@ -67,7 +67,7 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 17,
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
     fontWeight: '700',
     color: '#389348',
     lineHeight: 19,
@@ -79,14 +79,14 @@ export default StyleSheet.create({
   },
   level: {
     fontSize: 13,
-    fontFamily: 'Pretendard-Medium',
+    fontFamily: 'WantedSans-Medium',
     fontWeight: '500',
     color: '#55555E',
     lineHeight: 19,
   },
   levelValue: {
     fontSize: 15,
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
     fontWeight: '700',
     color: '#389348',
     lineHeight: 19,
@@ -106,7 +106,7 @@ export default StyleSheet.create({
   },
   subtitle: {
     fontSize: 15,
-    fontFamily: 'Pretendard-Medium',
+    fontFamily: 'WantedSans-Medium',
     fontWeight: '500',
     color: '#55555E',
     marginTop: 13,
@@ -114,7 +114,7 @@ export default StyleSheet.create({
   },
   value: {
     fontSize: 17,
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
     fontWeight: '700',
     color: '#389348',
     lineHeight: 19,
@@ -126,7 +126,7 @@ export default StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontFamily: 'Pretendard-Bold',
+    fontFamily: 'WantedSans-Bold',
     fontWeight: '700',
     color: '#333',
     marginBottom: 10,

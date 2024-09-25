@@ -12,10 +12,10 @@ import ChallengeScreen from './screens/ChallengeScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import StoreScreen from './screens/StoreScreen';
 import DetailRank from './components/DetailRank';
-import DetailChallenge from './components/DetailChallenge';
+import ChallengeJoinScreen from './screens/ChallengeJoinScreen';
 import DetailBeforeQuest from './components/DetailBeforeQuest';
 import NotificationList from './components/NotificationListScreen';
-import SettingsScreen from './components/SettingsScreen';
+import SettingsScreen from './screens/SettingsScreen';
 import { useFonts } from 'expo-font';
 import MyRoom from './components/MyRoom';
 import { useUserStore } from './stores/userStore';
@@ -105,7 +105,7 @@ function RootNavigator() {
         <>
           <Stack.Screen name="MainPage" component={TabNavigator} />
           <Stack.Screen name="DetailRank" component={DetailRank} />
-          <Stack.Screen name="DetailChallenge" component={DetailChallenge} />
+          <Stack.Screen name="ChallengeJoinScreen" component={ChallengeJoinScreen} />
           <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
           <Stack.Screen name="StoreScreen" component={StoreScreen} />
           <Stack.Screen name="NotificationList" component={NotificationList} />
@@ -121,11 +121,10 @@ function RootNavigator() {
 
 export default function App() {
   const [loaded] = useFonts({
-    "Pretendard-Bold": require("./assets/fonts/Pretendard-Bold.otf"),
-    "Pretendard-Medium": require("./assets/fonts/Pretendard-Medium.otf"),
-    "Pretendard-Regular": require("./assets/fonts/Pretendard-Regular.otf"),
+    "WantedSans-Regular": require("./assets/fonts/WantedSans-Regular.otf"),
     "WantedSans-Medium": require("./assets/fonts/WantedSans-Medium.otf"),
     "WantedSans-SemiBold": require("./assets/fonts/WantedSans-SemiBold.otf"),
+    "WantedSans-Bold": require("./assets/fonts/WantedSans-Bold.otf"),
   });
 
   if (!loaded) return null;

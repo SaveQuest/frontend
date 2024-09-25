@@ -4,7 +4,7 @@ import {
   Text,
   View,
 } from "react-native";
-import RankBox from "./RankBox";
+import RankItem from "./RankItem";
 import DetailHeader from "./DetailHeader";
 import { Ionicons } from '@expo/vector-icons'; // 아이콘 사용
 
@@ -17,13 +17,13 @@ export default function DetailRank({ navigation }) {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.anyRank}>
           {[1, 2, 3].map((rank, index) => (
-            <RankBox
+            <RankItem
               key={index}
               count={rank}
               name={`차호림`}
               lv={998}
               cName={"지금까지 줄인 소비 금액"}
-              money={"5,000"}
+              money={5000}
               icon={
                 <Ionicons
                   name={rank === 1 ? "md-crown" : rank === 2 ? "md-crown-outline" : "md-crown"}
@@ -35,13 +35,13 @@ export default function DetailRank({ navigation }) {
           ))}
 
           {Array.from({ length: 30 }, (_, index) => (
-            <RankBox
+            <RankItem
               key={index + 3}
               count={index + 4}
               name={`차호림`}
               lv={998}
               cName={"지금까지 줄인 소비 금액"}
-              money={"5,000"}
+              money={5000}
             />
           ))}
         </View>

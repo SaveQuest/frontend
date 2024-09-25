@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 
   challenge: {
     backgroundColor: "#FFF",
-    borderRadius: 17.196,
+    borderRadius: 12,
     overflow: "hidden",
     marginBottom: "auto",
   },
@@ -38,11 +38,9 @@ const styles = StyleSheet.create({
   },
 
   border: {
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: "#EFEFEF",
     borderRadius: 10,
-    padding: 16,
-    height:"auto",
   },
 
   challengeHead: {
@@ -55,31 +53,26 @@ const styles = StyleSheet.create({
     fontSize: 23,
     fontWeight: "bold",
   },
-
   title: {
-    marginTop: 10,
-    marginBottom: 10,
   },
-
-
+  
   titleDate: {
-    fontSize: 17,
+    fontSize: 13,
     color: "#4D5764",
     fontWeight: "600",
-    fontFamily: "WantedSans-Medium",
+    fontFamily: "../assets/fonts/Pretendard-Thin.otf",
   },
 
 
   titleTitle: {
     color: "#1E1E1E",
-    fontSize: 22,
+    fontSize: 19,
     fontWeight: "bold",
-    marginBottom: 10,
+    lineHeight: 30
   },
 
   my: {
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 14,
     flexDirection: "column",
     justifyContent: "space-between",
   },
@@ -89,12 +82,14 @@ const styles = StyleSheet.create({
   },
   one: {
     color: "#575757",
-    fontSize: 18,
+    fontSize: 13,
+    fontFamily: "WantedSans-Medium"
   },
   two: {
     color: "#23282F",
-    fontSize: 22,
+    fontSize: 15,
     fontWeight: "600",
+    fontFamily: "WantedSans-SemiBold"
   },
 
   right: {
@@ -147,6 +142,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     display: "flex",
     justifyContent: "space-between",
+
   },
   rankTab: {
     width: "100%",
@@ -160,7 +156,7 @@ const styles = StyleSheet.create({
   },
   seeRankMore: {
     fontWeight: "600",
-    fontSize: 15,
+    fontSize: 13,
   },
   rankBoxFlex: {
     display: "flex",

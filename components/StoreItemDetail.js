@@ -1,8 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable } from 'react-native';
-import SafeIcon from '../components/SafeIcon'; 
+import { TouchableWithoutFeedback, Image, View, Text, StyleSheet, TouchableOpacity, Modal, Pressable } from 'react-native';
+import SafeIcon from '../components/SafeIcon';
+import { useApi } from '../hooks/useApi';
+import { requester } from '../lib/api';
+import { numberWithCommas } from '../utils';
 
 const StoreItemDetail = ({ visible, onClose, product }) => {
+  const { state: detailProduct } = useApi(() => requester.fetchStoreProductDetail(product.id), "PRD_DETAIL")
+
+  const clickPurchase = () => {
+    requester.purchaseStoreProduct(product.id).then(onClose).catch(e => console.error(e))
+  }
   return (
     <Modal
       animationType="slide"
@@ -11,22 +19,24 @@ const StoreItemDetail = ({ visible, onClose, product }) => {
       onRequestClose={onClose}
     >
       <Pressable style={styles.modalOverlay} onPress={onClose}>
-        <View style={styles.modalContent}>
-          {product && (
-            <>
-              <Text style={styles.modalTitle}>{product.title}</Text>
-              <View style={styles.modalImage} />
-              <View style={styles.priceContainer}>
-                <SafeIcon style={styles.priceIcon} />
-                <Text style={styles.modalPrice}>{product.price}</Text>
-              </View>
-              <Text style={styles.modalDescription}>{product.description}</Text>
-              <TouchableOpacity style={styles.purchaseButton}>
-                <Text style={styles.purchaseButtonText}>구매</Text>
-              </TouchableOpacity>
-            </>
-          )}
-        </View>
+        <TouchableWithoutFeedback>
+          <View style={styles.modalContent}>
+            {detailProduct && (
+              <>
+                <Text style={styles.modalTitle}>{detailProduct.name}</Text>
+                <Image source={{ uri: detailProduct.image }} resizeMode="contain" style={styles.modalImage} />
+                <View style={styles.priceContainer}>
+                  <SafeIcon style={styles.priceIcon} />
+                  <Text style={styles.modalPrice}>{numberWithCommas(detailProduct.price)}</Text>
+                </View>
+                <Text style={styles.modalDescription}>{detailProduct.description}</Text>
+                <TouchableOpacity style={styles.purchaseButton} onPress={clickPurchase}>
+                  <Text style={styles.purchaseButtonText}>구매</Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
+        </TouchableWithoutFeedback>
       </Pressable>
     </Modal>
   );
@@ -54,7 +64,7 @@ const styles = StyleSheet.create({
   modalImage: {
     width: '100%',
     height: 150,
-    backgroundColor: '#E0E0E0', 
+    backgroundColor: '#E0E0E0',
     borderRadius: 8,
     marginBottom: 10,
   },

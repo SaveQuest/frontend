@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import RankBox from './RankBox'; // 랭크 박스 컴포넌트 가져오기
+import RankItem from './RankItem'; // 랭크 박스 컴포넌트 가져오기
 
 export default function ChallengeDetail({ visible, onClose, title }) {
   return (
@@ -18,9 +18,9 @@ export default function ChallengeDetail({ visible, onClose, title }) {
           </View>
 
           <View style={styles.rankings}>
-            <RankBox count={1} name="차호림" lv={998} money="5,000" />
-            <RankBox count={2} name="차호림" lv={998} money="5,000" />
-            <RankBox count={3} name="차호림" lv={998} money="5,000" />
+            <RankItem count={1} name="차호림" lv={998} cName="지금까지 줄인 소비 금액" money={5000} />
+            <RankItem count={2} name="차호림" lv={998} cName="지금까지 줄인 소비 금액" money={5000} />
+            <RankItem count={3} name="차호림" lv={998} cName="지금까지 줄인 소비 금액" money={5000} />
           </View>
           
           <View style={styles.participants}>

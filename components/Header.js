@@ -5,9 +5,12 @@ import SafeIcon from "./SafeIcon";
 import NotificationIcon from "./NotificationIcon";
 import SettingsIcon from "./SettingsIcon";
 import { useNavigation } from '@react-navigation/native';
+import { useUserStore } from "../stores/userStore";
 
-export default function Header({ point, notificationCnt }) {
+export default function Header() {
   const navigation = useNavigation();
+  const { points, notiCnt } = useUserStore((s) => s.data)
+
   return (
     <View style={styles.header}>
       <View style={styles.svgContainer}>
@@ -27,14 +30,14 @@ export default function Header({ point, notificationCnt }) {
       <View style={styles.iconsContainer}>
         <View style={styles.iconWithText}>
           <SafeIcon />
-          <Text style={styles.iconText}>{point ?? 0}</Text>
+          <Text style={styles.iconText}>{points ?? 0}</Text>
         </View>
         <View style={styles.iconWithText}>
           <TouchableOpacity onPress={() => navigation.navigate('NotificationList')}>
             <NotificationIcon />
           </TouchableOpacity>
           <View style={styles.notificationBadge}>
-            <Text style={styles.notificationText}>{notificationCnt ?? 0}</Text>
+            <Text style={styles.notificationText}>{notiCnt ?? 0}</Text>
           </View>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('Setting')}>

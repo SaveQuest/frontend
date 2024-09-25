@@ -14,7 +14,7 @@ export default function QuestItem({
       <View style={styles.header}>
         <View style={styles.pointContainer}>
           <SafeIcon />
-          <Text style={styles.points}>{progress}</Text>
+          <Text style={styles.points}>{points}</Text>
         </View>
         <View>
           <Text style={styles.xp}>+25xp</Text>
@@ -26,12 +26,12 @@ export default function QuestItem({
       <View style={styles.amountContainer}>
         <View style={styles.amountSection}>
           <Text style={styles.label}>오늘 사용한 금액</Text>
-          <Text style={styles.amount}>{`${amountUsed.toLocaleString()}`}</Text>
+          <Text style={styles.amount}>₩{amountUsed.toLocaleString()}</Text>
         </View>
 
         <View style={[styles.amountSection, { alignItems: "flex-end" }]}>
           <Text style={styles.label}>목표 금액</Text>
-          <Text style={styles.amount}>{`₩${goal.toLocaleString()}`}</Text>
+          <Text style={styles.amount}>₩{goal.toLocaleString()}</Text>
         </View>
       </View>
 

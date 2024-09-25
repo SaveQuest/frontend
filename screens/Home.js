@@ -4,10 +4,11 @@ import { Ionicons } from '@expo/vector-icons';
 import QuestItem from "../components/QuestItem";
 import Header from "../components/Header";
 import ModalComponent from "../components/ModalComponents";
-import tasks from '../stores/tasks';
 import { useFonts } from 'expo-font';
 import { requester } from "../lib/api";
 import Skeleton from "react-native-reanimated-skeleton";
+import { useUserStore } from "../stores/userStore";
+import { useApi } from "../hooks/useApi";
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.9;
@@ -35,24 +36,17 @@ const PercentCarouselItem = ({ item }) => (
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedTasks, setSelectedTasks] = useState([]);
-
-
-  const [loaded] = useFonts({
-    "Pretendard-Bold": require("../assets/fonts/Pretendard-Bold.otf"),
-    "Pretendard-Medium": require("../assets/fonts/Pretendard-Medium.otf"),
-    "Pretendard-Regular": require("../assets/fonts/Pretendard-Regular.otf"),
-    "WantedSans-Medium": require("../assets/fonts/WantedSans-Medium.otf"),
-    "WantedSans-SemiBold": require("../assets/fonts/WantedSans-SemiBold.otf"),
-  });
-
-  if (!loaded) {
-    return null;
-  }
 
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef();
   const currentIndex = useRef(0);
+
+  const userData = useUserStore((s) => s.data)
+  const refreshUserData = useUserStore((s) => s.refreshUserData)
+
+  useEffect(() => {
+    refreshUserData()
+  }, [])
 
   useEffect(() => {
     if (!dstHome) return
@@ -83,81 +77,19 @@ export default function Home() {
     setModalVisible(true);
   };
 
-  const [dstHeader, setDstHeader] = useState({
-    "name": "주현명",
-    "points": 0,
-    "notificationCount": 0
-  })
-
-  const [dstHome, setDstHome] = useState({
-    "id": "userId",
-    "element": [
-      {
-        "type": "CAROUSEL_BASIC_CARD",
-        "content": {
-          "topRowText": "SaveQuest 이벤트",
-          "bottomRowText": "홈 화면에서 친구 초대하기"
-        },
-        "right": {
-          "imageUri": "https://sqstatic.ychan.me/character/default0.png?key=wy6hk6y1sx3gcjvkmdhef"
-        },
-        "style": {},
-        "handler": {
-          "type": "APP_SCHEME",
-          "uri": "savequest://screen/quest"
-        }
-      },
-      {
-        "type": "CAROUSEL_PERCENT_CARD",
-        "content": {
-          "topRowText": "이번달 SaveQuest로",
-          "bottomRowColorText": "13만원",
-          "bottomRowText": "아꼈어요"
-        },
-        "right": {
-          "text": "+12*"
-        },
-        "style": {
-          "bottomRowColorText": {
-            "color": "Primary/300"
-          },
-          "rightText": {
-            "color": "Primary/400",
-            "backgroundColor": "Primary/100"
-          }
-        },
-        "handler": {
-          "type": "WEBLINK",
-          "uri": "https://ychan.me"
-        }
-      }
-    ]
-
-  })
-
-  useEffect(() => {
-    requester.getDSTHeader().then(res => setDstHeader(res))
-    requester.getDSTHome().then(res => setDstHome(res))
-  }, [])
+  const { state: dstHome, refresh: refreshDstHome } = useApi(requester.getDSTQuest, "DST_HOME")
+  const { state: dstQuest, refresh: refreshDstQuest } = useApi(requester.getDSTQuest, "DST_QUEST")
 
   return (
     <View style={styles.container}>
-      <Header point={dstHeader?.point} notificationCnt={dstHeader?.notificationCount} />
+      <Header />
 
       <ScrollView contentContainerStyle={styles.scrollView}>
-        {
-          dstHeader ? <>
-            <View style={styles.welcomeMessageContainer}>
-              <Text style={styles.welcomeMessage}>
-                <Text style={styles.userName}>{dstHeader.name}</Text>님 화창한 날{'\n'}SaveQuest로 절약해보세요!
-              </Text>
-            </View>
-          </> : <>
-            <Skeleton layout={[
-              { key: "someId", width: "100%", height: 64 },
-            ]} isLoading={true} containerStyle={styles.welcomeMessageContainer} />
-          </>
-        }
+        <View style={styles.welcomeMessageContainer}>
+          <Text style={styles.welcomeMessage}>
+            <Text style={styles.userName}>{userData.name}</Text>님 화창한 날{'\n'}SaveQuest로 절약해보세요!
+          </Text>
+        </View>
 
         {
           dstHome ? <>
@@ -211,33 +143,37 @@ export default function Home() {
           </>
         }
 
-        <Text style={styles.sectionTitle}>일일 도전과제</Text>
+        <Text style={styles.sectionTitle}>주간 도전과제</Text>
+        {dstQuest ? <>
+          <View style={[styles.tasks, { marginTop: 10 }]}>
+            {dstQuest.element.length > 0 ? (
+              dstQuest.element.map((task, index) => (
+                <QuestItem
+                  key={index}
+                  points={task.top.topRowText}
+                  title={task.top.bottomRowText}
+                  amountUsed={task.right.bottomRowText}
+                  status={0}
+                  progress={task.bottom.percent}
+                  goal={task.left.bottomRowText}
+                  iconColor={0}
+                />
+              ))
+            ) : (
+              <TouchableOpacity style={styles.selectTaskButton} onPress={handleOpenModal}>
+                <Text style={styles.selectTaskButtonText}>주간 도전과제 선택</Text>
+                <Ionicons name="chevron-forward" size={20} color="#333" style={styles.arrowIcon} />
+              </TouchableOpacity>
+            )}
+          </View>
+        </> : <>
+          <Skeleton layout={[{ id: "zz", width: "100%", height: 72 }]} containerStyle={[styles.tasks, { marginTop: 10 }]} />
+        </>}
 
-        <View style={[styles.tasks, { marginTop: 10 }]}>
-          {selectedTasks.length > 0 ? (
-            selectedTasks.map((task, index) => (
-              <QuestItem
-                key={index}
-                title={task.title}
-                amountUsed={task.amountUsed}
-                status={task.status}
-                progress={task.progress}
-                goal={task.goal}
-                iconColor={task.iconColor}
-              />
-            ))
-          ) : (
-            <TouchableOpacity style={styles.selectTaskButton} onPress={handleOpenModal}>
-              <Text style={styles.selectTaskButtonText}>오늘의 도전과제 선택</Text>
-              <Ionicons name="chevron-forward" size={20} color="#333" style={styles.arrowIcon} />
-            </TouchableOpacity>
-          )}
-        </View>
 
         <ModalComponent
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
-          tasks={tasks}
           onTasksSelected={handleTasksSelected}
         />
       </ScrollView >

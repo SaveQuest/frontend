@@ -5,8 +5,8 @@ export default function Crown2({ style }) {
   return (
     <Svg
       style={style}
-      width="45"
-      height="45"
+      width="32"
+      height="32"
       viewBox="0 0 45 45"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

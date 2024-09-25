@@ -1,52 +1,23 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Platform, StatusBar } from 'react-native';
-import SafeIcon from '../components/SafeIcon'; 
-import NotificationIcon from '../components/NotificationIcon';
-import SettingsIcon from '../components/SettingsIcon';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, SafeAreaView, Platform } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import Header from "../components/Header";
 import StoreItem from '../components/StoreItem'; // 상품 컴포넌트 가져오기
 import StoreItemDetail from '../components/StoreItemDetail'; // 상품 모달 컴포넌트 가져오기
+import { useApi } from '../hooks/useApi';
+import { requester } from '../lib/api';
 
 const StoreScreen = () => {
   const [selectedTab, setSelectedTab] = useState('character');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const products = [
-    { title: '빨간맛 캐릭터', price: '1000', type: 'character', description: '어쩌구 저쩌구' },
-    { title: '펫 1', price: '1500', type: 'pet', description: '어쩌구 저쩌구' },
-    { title: '펫 2', price: '2500', type: 'pet', description: '어쩌구 저쩌구' },
-    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
-    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
-    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
-    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
-    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
-    { title: '캐릭터 2', price: '2000', type: 'character', description: '어쩌구 저쩌구' },
-  ];
+  const { state: products } = useApi(() => requester.fetchStoreProducts(selectedTab), "STORE_PRDS")
 
   const handleProductPress = (product) => {
     setSelectedProduct(product);
     setModalVisible(true);
-  };
-
-  const renderContent = () => {
-    return (
-      <View style={styles.grid}>
-        {products
-          .filter(item => item.type === selectedTab) // 선택된 탭에 맞는 상품 필터링
-          .map((item, index) => (
-            <StoreItem 
-              key={index} 
-              title={item.title} 
-              price={item.price} 
-              onPress={() => handleProductPress(item)} // 클릭 시 상품 정보 전달
-            />
-          ))}
-      </View>
-    );
   };
 
   return (
@@ -86,17 +57,28 @@ const StoreScreen = () => {
 
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.storeContainer}>
-          {renderContent()}
+          <View style={styles.grid}>
+            {products && products.products
+              .map((item, index) => (
+                <StoreItem
+                  key={index}
+                  title={item.name}
+                  price={item.price}
+                  imgUrl={item.image}
+                  onPress={() => handleProductPress(item)}
+                />
+              ))}
+          </View>
         </View>
       </ScrollView>
 
       {/* 상품 상세 모달 */}
-      <StoreItemDetail
+      {modalVisible && <StoreItemDetail
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         product={selectedProduct}
-      />
-    </SafeAreaView> 
+      />}
+    </SafeAreaView>
   );
 };
 
