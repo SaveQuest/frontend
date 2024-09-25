@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#4D5764",
     fontWeight: "600",
-    fontFamily: "../assets/fonts/Pretendard-Thin.otf",
+    fontFamily: "WantedSans-Medium",
   },
 
 
