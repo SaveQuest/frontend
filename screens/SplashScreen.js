@@ -6,8 +6,8 @@ import { useUserStore } from '../stores/userStore';
 export default function SplashScreen({ navigation }) {
   const refreshUserData = useUserStore(s => s.refreshUserData)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (requester.getToken()) {
+    const timer = setTimeout(async () => {
+      if (await requester.getToken()) {
         refreshUserData()
         navigation.replace('Main');
       } else {
