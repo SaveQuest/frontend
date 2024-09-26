@@ -16,8 +16,8 @@ const getDateTxt = (d) => {
 }
 
 export default function ChallengeJoinScreen({ navigation }) {
-  const { state: pubChallenge } = useApi(requester.fetchPublicChallenge, "PUB_CHALLENGE")
-  const { state: challengeHdr } = useApi(requester.fetchDSTChallengeHeader, "DST_CHALLENGE_JOIN_HDR")
+  const { state: pubChallenge } = useApi(() => requester.fetchPublicChallenge(), "PUB_CHALLENGE")
+  const { state: challengeHdr } = useApi(() => requester.fetchDSTChallengeHeader(), "DST_CHALLENGE_JOIN_HDR")
 
   return (
     <View style={styles.container}>

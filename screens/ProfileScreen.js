@@ -12,9 +12,7 @@ import { useUserStore } from '../stores/userStore';
 import Skeleton from 'react-native-reanimated-skeleton';
 
 const ProfileScreen = ({ navigation }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const { state: profileData } = useApi(requester.fetchProfile, "PROFILE")
-
+  const { state: profileData } = useApi(() => requester.fetchProfile(), "PROFILE")
   const handleCameraIconPress = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -30,8 +28,14 @@ const ProfileScreen = ({ navigation }) => {
       quality: 1,
     });
 
-    if (!pickerResult.canceled) {
-      setSelectedImage(pickerResult.assets[0].uri);
+    if (!pickerResult.canceled && pickerResult.assets[0]) {
+      const formData = new FormData();
+      formData.append('image', {
+        uri: pickerResult.assets[0].uri,
+        type: pickerResult.assets[0].mimeType,
+      });
+      const response = await requester.updateProfileImage(formData);
+      console.log(response);
     }
   };
 
@@ -46,7 +50,7 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.profileTextContainer}>
             <Text style={styles.profileName}>{userData.name}</Text>
 
-            {
+            {profileData.tag && <>{
               profileData ? <>
                 <View style={styles.subtitleContainer}>
                   <Text style={styles.profileSubtitle}>{profileData.tag}</Text>
@@ -54,15 +58,11 @@ const ProfileScreen = ({ navigation }) => {
               </> : <>
                 <Skeleton layout={[{ id: "zq", width: "100%", height: 72 }]} containerStyle={{}} />
               </>
-            }
+            }</>}
           </View>
 
           <View style={styles.profileImageContainer}>
-            {selectedImage ? (
-              <Image source={{ uri: selectedImage }} style={styles.profileImage} />
-            ) : (
-              <View style={styles.profileImagePlaceholder} />
-            )}
+            <Image source={profileData.profileImage ? { uri: profileData.profileImage } : require("../assets/Logo.png")} style={styles.profileImage} />
             <TouchableOpacity style={styles.cameraIcon} onPress={handleCameraIconPress}>
               <CameraIcon />
             </TouchableOpacity>

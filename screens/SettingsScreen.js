@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useApi } from '../hooks/useApi';
 import { requester } from '../lib/api';
 import { useUserStore } from '../stores/userStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NameModal = ({ visible, onClose, onSubmit }) => {
   const [txt, setTxt] = useState("")
@@ -89,7 +90,7 @@ export default function SettingsScreen() {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false)
 
-  const { state: userProfile, refresh: refreshProfile } = useApi(requester.fetchProfile, "PROFILE")
+  const { state: userProfile, refresh: refreshProfile } = useApi(() => requester.fetchProfile(), "PROFILE")
 
   const clickNameItem = () => {
     setModalVisible(true)
@@ -98,7 +99,7 @@ export default function SettingsScreen() {
   const onNameSubmit = (txt) => {
     requester.updateProfile({
       name: txt,
-      isProfilePublic: userProfile.isProfilePublic
+      isProfilePublic: userProfile.questLog.isProfilePublic
     }).then(res => {
       refresh()
     })
@@ -107,7 +108,7 @@ export default function SettingsScreen() {
   const toggleProfileVisibility = () => {
     requester.updateProfile({
       name: userProfile.name,
-      isProfilePublic: !userProfile.isProfilePublic
+      isProfilePublic: !userProfile.questLog.isProfilePublic
     }).then(res => {
       refresh()
     })
@@ -138,7 +139,7 @@ export default function SettingsScreen() {
         <View style={styles.profileSection}>
           {userProfile && <>
             <Image
-              source={{ uri: userProfile.profileImage }}
+              source={userProfile.profileImage ? { uri: userProfile.profileImage } : require("../assets/Logo.png")}
               style={styles.profileImage}
             />
             <Text style={styles.profileName}>{userProfile.name}</Text>
@@ -153,7 +154,7 @@ export default function SettingsScreen() {
 
           <TouchableOpacity style={styles.section} onPress={toggleProfileVisibility}>
             <Text style={styles.sectionTitle}>프로필 공개 여부</Text>
-            {userProfile && <Text style={styles.sectionContent}>{userProfile.isProfilePublic ? '공개' : '비공개'}</Text>}
+            {userProfile && <Text style={styles.sectionContent}>{userProfile.questLog.isProfilePublic ? '공개' : '비공개'}</Text>}
           </TouchableOpacity>
         </View>
 
@@ -161,7 +162,11 @@ export default function SettingsScreen() {
           <TouchableOpacity style={styles.section} onPress={openInstagram}>
             <Text style={styles.sectionTitle}>공식 인스타그램</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.section}>
+          <TouchableOpacity style={styles.section} onPress={() => {
+            requester.removeToken().then(() => {
+              navigation.reset({ routes: [{ name: "Splash" }] })
+            })
+          }}>
             <Text style={styles.sectionTitle}>로그아웃</Text>
           </TouchableOpacity>
         </View>

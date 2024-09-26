@@ -7,7 +7,10 @@ export default function SplashScreen({ navigation }) {
   const refreshUserData = useUserStore(s => s.refreshUserData)
   useEffect(() => {
     const timer = setTimeout(async () => {
-      if (await requester.getToken()) {
+      const token = await requester.getToken();
+      console.log("SAVED TOKEN", token)
+      
+      if (token) {
         refreshUserData()
         navigation.replace('Main');
       } else {

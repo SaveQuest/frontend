@@ -13,7 +13,9 @@ const StoreScreen = () => {
   const [selectedTab, setSelectedTab] = useState('character');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
   const { state: products } = useApi(() => requester.fetchStoreProducts(selectedTab), "STORE_PRDS")
+  console.log(products)
 
   const handleProductPress = (product) => {
     setSelectedProduct(product);
@@ -162,6 +164,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginHorizontal: 20,
     borderRadius: 8,
+    marginTop: 24
   },
   tabButton: {
     alignItems: 'center',

@@ -238,13 +238,13 @@ export const useApi = (reqFunc, mockKey = undefined) => {
                 setState(MOCK_DATA[mockKey])
             }, 1000)
         } else {
-            reqFunc(state).then((res) => setState(res))
+            reqFunc().then((res) => setState(res))
         }
     }
 
     useEffect(() => {
         loadData()
-    }, [reqFunc, mockKey])
+    }, [mockKey])
 
     return {
         state,

@@ -53,7 +53,7 @@ export default function Home() {
 
     const intervalId = setInterval(() => {
       if (flatListRef.current) {
-        currentIndex.current = (currentIndex.current + 1) % dstHome.element.length;
+        currentIndex.current = (currentIndex.current + 1) % dstHome.elements.length;
         flatListRef.current.scrollToIndex({ index: currentIndex.current, animated: true });
       }
     }, 4000);
@@ -74,11 +74,12 @@ export default function Home() {
   };
 
   const handleOpenModal = () => {
+    console.log("?")
     setModalVisible(true);
   };
 
-  const { state: dstHome, refresh: refreshDstHome } = useApi(requester.getDSTQuest, "DST_HOME")
-  const { state: dstQuest, refresh: refreshDstQuest } = useApi(requester.getDSTQuest, "DST_QUEST")
+  const { state: dstHome, refresh: refreshDstHome } = useApi(() => requester.getDSTHome(), "DST_HOME")
+  const { state: dstQuest, refresh: refreshDstQuest } = useApi(()=>requester.getDSTQuest(), "DST_QUEST")
 
   return (
     <View style={styles.container}>
@@ -94,7 +95,7 @@ export default function Home() {
         {
           dstHome ? <>
             <FlatList
-              data={dstHome.element}
+              data={dstHome.elements}
               renderItem={({ item }) => {
                 return <>
                   {
@@ -118,7 +119,7 @@ export default function Home() {
               ref={flatListRef}
             />
             <View style={styles.indicatorContainer}>
-              {dstHome.element.map((_, index) => {
+              {dstHome.elements.map((_, index) => {
                 const inputRange = [(index - 1) * (CARD_WIDTH + CARD_MARGIN * 2), index * (CARD_WIDTH + CARD_MARGIN * 2), (index + 1) * (CARD_WIDTH + CARD_MARGIN * 2)];
 
                 const dotWidth = scrollX.interpolate({

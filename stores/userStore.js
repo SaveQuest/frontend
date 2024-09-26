@@ -3,7 +3,7 @@ import { requester } from '../lib/api';
 
 export const useUserStore = create((set) => ({
   data: {
-    name: "누군가",
+    name: "",
     points: 12,
     notiCnt: 3,
   },

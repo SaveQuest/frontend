@@ -6,7 +6,8 @@ import { requester } from '../lib/api';
 import { useApi } from '../hooks/useApi';
 
 const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
-  const { state: questData } = useApi(requester.fetchWeeklyQuest, "DST_QUEST_MODAL")
+  // const { state: questData } = useApi(() => requester.fetchWeeklyQuest(), "DST_QUEST_MODAL")
+  const questData = null
 
   const [selectedTaskIdList, setSelectedTaskList] = useState([]);
   const scaleAnim = useRef(new Animated.Value(1)).current;
