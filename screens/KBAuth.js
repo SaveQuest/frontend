@@ -45,6 +45,8 @@ export default function KBCardAuthScreen() {
         await client.registerPINStep2(code, reqUserData)
         await client.registerPINStep3()
 
+        console.log(await client.fetchLoginedUserInfo())
+
         await AsyncStorage.setItem("CARD_CRED", client.serialize())
     }
 

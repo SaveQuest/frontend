@@ -100,9 +100,10 @@ export class KBPayClient {
         const res1 = await this.http.instance.post("https://m.kbcard.com/CMN/API/MOBMCXOBCZZC0017?responseContentType=json",
             vestPin.makeReqRidReq(userId)
         ).then(res => res.data);
-        
-        if (res1?.errorcode !== "0000") {
-            throw new SqClientError("STEP3-1 실패")
+
+        console.log("RES1", res1)
+        if(res1?.errorcode !== "0000" && res1?.errCode !== 0) {
+            throw new SqClientError("STEP3-1 오류")
         }
 
         this.state.vestPinRid = res1.rid
@@ -113,8 +114,9 @@ export class KBPayClient {
             qs.stringify(vestPin.makeRegisterReq(this.state.pin, nickName, res1 as any))
         ).then(res => res.data)
 
-        if (res2?.errorcode !== "0000") {
-            throw new SqClientError("STEP3-2 실패")
+        console.log("RES2", res2)
+        if(res2?.errorcode !== "0000" && res1?.errCode !== 0) {
+            throw new SqClientError("STEP3-2 오류")
         }
     }
 
