@@ -9,6 +9,9 @@ import { requester } from "../lib/api";
 import Skeleton from "react-native-reanimated-skeleton";
 import { useUserStore } from "../stores/userStore";
 import { useApi } from "../hooks/useApi";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { KBPayClient } from '../lib/scraping';
+import { QueryDate, QueryRange } from '../lib/scraping/models';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.9;
@@ -49,6 +52,28 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
+    (async () => {
+      const client = await AsyncStorage.getItem("CARD_CRED").then(res => new KBPayClient(res))
+      await client.login()
+
+      const today = new Date()
+
+      const lastMonth = new Date();
+      lastMonth.setMonth(lastMonth.getMonth() - 1);
+      const transaction = await client.fetchTxList(new QueryRange(new QueryDate(
+        lastMonth.getFullYear(),
+        lastMonth.getMonth() + 1,
+        lastMonth.getDate()
+      ), new QueryDate(
+        today.getFullYear(),
+        today.getMonth() + 1,
+        today.getDate()
+      ))).then(console.log)
+      await requester.updateCardTransaction(transaction)
+    })();
+  }, []);
+
+  useEffect(() => {
     if (!dstHome) return
 
     const intervalId = setInterval(() => {
@@ -73,8 +98,9 @@ export default function Home() {
     setModalVisible(false);
   };
 
-  const handleOpenModal = () => {
-    console.log("?")
+  const handleOpenModal = async () => {
+    const weeklyQuest = await requester.fetchWeeklyQuest()
+    console.log(weeklyQuest)
     setModalVisible(true);
   };
 

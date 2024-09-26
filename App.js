@@ -24,6 +24,7 @@ import SplashScreen from './screens/SplashScreen';
 import { useFonts } from 'expo-font';
 import CardAuthentication from './screens/CardAuth';
 import KBCardAuthScreen from './screens/KBAuth';
+import * as Updates from 'expo-updates';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -97,9 +98,23 @@ function TabNavigator() {
     </Tab.Navigator>
   );
 }
+async function checkForUpdates() {
+  try {
+    const update = await Updates.checkForUpdateAsync();
+    if (update.isAvailable) {
+      await Updates.fetchUpdateAsync();
+      await Updates.reloadAsync();
+    }
+  } catch (error) {
+    console.error('Error checking for updates:', error);
+  }
+}
 
 export default function App() {
   const [agreed, setAgreed] = useState(false);
+  useEffect(() => {
+    checkForUpdates();
+  }, []);
 
   const [loaded] = useFonts({
     "WantedSans-Regular": require("./assets/fonts/WantedSans-Regular.otf"),
