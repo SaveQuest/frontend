@@ -27,9 +27,9 @@ const AuthCodeScreen = ({ navigation }) => {
   };
 
   const handleConfirmCode = async () => {
-    console.log("입력한 인증코드:", authCode);
-    const FuckUuid = await AsyncStorage.getItem('CODE_UUID');
-    await requester.authenticate(FuckUuid, authCode);
+    // console.log("입력한 인증코드:", authCode);
+    // const FuckUuid = await AsyncStorage.getItem('CODE_UUID');
+    // await requester.authenticate(FuckUuid, authCode);
     navigation.navigate('CardAuthentication');
   };
 

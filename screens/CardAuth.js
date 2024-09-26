@@ -20,7 +20,7 @@ const cardCompanies = [
   { name: '씨티은행', image: require('../assets/card/city.png') },
 ];
 
-const CardAuthentication = () => {
+const CardAuthentication = ({navigation}) => {
   const [selectedCardIndexes, setSelectedCardIndexes] = useState([]);
 
   const handleCardPress = (index) => {
@@ -36,6 +36,10 @@ const CardAuthentication = () => {
       }
     });
   };
+
+  const noUsingCard = async() =>{
+    navigation.navigate("Main");
+  }
 
   return (
     <View style={styles.container}>
@@ -59,7 +63,7 @@ const CardAuthentication = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.noCardButton}>
+      <TouchableOpacity style={styles.noCardButton} onPress={() => noUsingCard()}>
         <Text style={styles.noCardText}>내가 쓰는 카드가 없어요</Text>
       </TouchableOpacity>
     </View>
@@ -72,7 +76,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    padding: 20,
+    padding: 25,
+    paddingTop: 40,
   },
   title: {
     fontSize: 18,
