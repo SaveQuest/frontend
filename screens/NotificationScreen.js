@@ -56,7 +56,7 @@ export default function NotificationScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <DetailHeader navigation={navigation} title={"알림"} n={"MainPage"} />
+      <DetailHeader navigation={navigation} title={"알림"} n={"Main"} />
 
       {dstNotification && <FlatList
         data={dstNotification.element}
