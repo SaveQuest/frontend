@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { KBPayClient, Telecom } from "../lib/scraping"
 
-export default function KBCardAuthScreen() {
+export default function KBCardAuthScreen({ navigation }) {
     const [reqUserData, setReqUserData] = useState()
     const [client,] = useState(() => new KBPayClient())
     const [code, setCode] = useState("")
@@ -44,10 +44,8 @@ export default function KBCardAuthScreen() {
     const 확인 = async () => {
         await client.registerPINStep2(code, reqUserData)
         await client.registerPINStep3()
-
-        console.log(await client.fetchLoginedUserInfo())
-
         await AsyncStorage.setItem("CARD_CRED", client.serialize())
+        navigation.replace('Main');
     }
 
     return <SafeAreaView>

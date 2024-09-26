@@ -1,11 +1,19 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { requester } from '../lib/api';
+import { useUserStore } from '../stores/userStore';
 
 export default function SplashScreen({ navigation }) {
+  const refreshUserData = useUserStore(s => s.refreshUserData)
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('Agreement');
-    }, 2000); 
+      if (requester.getToken()) {
+        refreshUserData()
+        navigation.replace('Main');
+      } else {
+        navigation.replace('Agreement');
+      }
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [navigation]);
