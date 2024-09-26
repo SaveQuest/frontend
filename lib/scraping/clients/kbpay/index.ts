@@ -202,7 +202,7 @@ export class KBPayClient {
             const isDomestic = data.domesticOverseaDstic === "1"; // 1: 국내, 2: 해외, 다른 값은 아마 없을 것으로 사료.
             const isForeign = data.domesticOverseaDstic === "2";
 
-            if (isForeign) continue;
+            if (isForeign) { seq++; continue };
 
             list.push(
                 {
