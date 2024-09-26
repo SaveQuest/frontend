@@ -8,7 +8,7 @@ export default function DetailBeforeQuest({ navigation }) {
       <DetailHeader
         navigation={navigation}
         title={"이전 도전과제"}
-        n={"MainPage"}
+        n={"Main"}
       />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View>

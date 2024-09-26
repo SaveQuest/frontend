@@ -22,7 +22,7 @@ export default function DetailRank({ route, navigation }) {
   return (
 
     <View style={styles.container}>
-      <DetailHeader navigation={navigation} title={'순위'} n={'MainPage'} />
+      <DetailHeader navigation={navigation} title={'순위'} n={'Main'} />
 
       {/* 전체 순위 리스트 */}
       <ScrollView contentContainerStyle={styles.scrollView}>

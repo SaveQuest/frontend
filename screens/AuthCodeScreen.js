@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import BackIcon from '../components/BackIcon'; 
 
+yarn
+
 const AuthCodeScreen = ({ navigation }) => {
   const [authCode, setAuthCode] = useState('');  
   const [timer, setTimer] = useState(180);
