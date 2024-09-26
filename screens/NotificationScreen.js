@@ -12,6 +12,7 @@ export default function NotificationScreen({ navigation }) {
   const [selectedNotification, setSelectedNotification] = useState(null);
 
   const { state: dstNotification } = useApi(()=>requester.getDSTNotification(), "DST_NOTI")
+  console.log(dstNotification)
 
   const handleOpenModal = (item) => {
     setSelectedNotification(item);

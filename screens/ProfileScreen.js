@@ -50,23 +50,29 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.profileTextContainer}>
             <Text style={styles.profileName}>{userData.name}</Text>
 
-            {profileData.tag && <>{
+            {
               profileData ? <>
-                <View style={styles.subtitleContainer}>
+                {profileData.tag && <View style={styles.subtitleContainer}>
                   <Text style={styles.profileSubtitle}>{profileData.tag}</Text>
-                </View>
+                </View>}
               </> : <>
                 <Skeleton layout={[{ id: "zq", width: "100%", height: 72 }]} containerStyle={{}} />
               </>
-            }</>}
+            }
           </View>
 
-          <View style={styles.profileImageContainer}>
-            <Image source={profileData.profileImage ? { uri: profileData.profileImage } : require("../assets/Logo.png")} style={styles.profileImage} />
-            <TouchableOpacity style={styles.cameraIcon} onPress={handleCameraIconPress}>
-              <CameraIcon />
-            </TouchableOpacity>
-          </View>
+          {
+            profileData ? <>
+              <View style={styles.profileImageContainer}>
+                <Image source={profileData.profileImage ? { uri: profileData.profileImage } : require("../assets/Logo.png")} style={styles.profileImage} />
+                <TouchableOpacity style={styles.cameraIcon} onPress={handleCameraIconPress}>
+                  <CameraIcon />
+                </TouchableOpacity>
+              </View>
+            </> : <>
+              <Skeleton layout={[{ id: "zq", width: 100, height: 100, borderRadius: 9999 }]} containerStyle={styles.profileImageContainer} />
+            </>
+          }
         </View>
 
         {

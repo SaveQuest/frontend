@@ -5,7 +5,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useApi } from '../hooks/useApi';
 import { requester } from '../lib/api';
 import { useUserStore } from '../stores/userStore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NameModal = ({ visible, onClose, onSubmit }) => {
   const [txt, setTxt] = useState("")
@@ -102,6 +101,7 @@ export default function SettingsScreen() {
       isProfilePublic: userProfile.questLog.isProfilePublic
     }).then(res => {
       refresh()
+      setModalVisible(false)
     })
   }
 
