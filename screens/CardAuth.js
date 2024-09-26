@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { requester } from '../lib/api';
 
 // 카드사 정보 배열
 const cardCompanies = [
-  { name: '신한카드', image: require('../assets/card/shinhan.png') },
+  // { name: '신한카드', image: require('../assets/card/shinhan.png') },
   //   { name: '삼성카드', image: require('../assets/card/') },
   { name: 'KB국민카드', image: require('../assets/card/gukmin.png') },
   //   { name: '롯데카드', image: require('../assets/card/') },
-  { name: '하나카드', image: require('../assets/card/hana.png') },
-  { name: 'NH농협카드', image: require('../assets/card/nonghyeop.png') },
-  //   { name: 'BC카드', image: require('../assets/card/') },
-  { name: '우리카드', image: require('../assets/card/uri.png') },
-  { name: 'IBK기업은행', image: require('../assets/card/giup.png') },
-  //   { name: 'DGB대구은행', image: require('../assets/card/') },
-  { name: '부산은행', image: require('../assets/card/busan.png') },
-  { name: 'SC제일은행', image: require('../assets/card/jail.png') },
-  //   { name: '경남은행', image: require('../assets/card/') },
-  { name: '씨티은행', image: require('../assets/card/city.png') },
+  // { name: '하나카드', image: require('../assets/card/hana.png') },
+  // { name: 'NH농협카드', image: require('../assets/card/nonghyeop.png') },
+  // //   { name: 'BC카드', image: require('../assets/card/') },
+  // { name: '우리카드', image: require('../assets/card/uri.png') },
+  // { name: 'IBK기업은행', image: require('../assets/card/giup.png') },
+  // //   { name: 'DGB대구은행', image: require('../assets/card/') },
+  // { name: '부산은행', image: require('../assets/card/busan.png') },
+  // { name: 'SC제일은행', image: require('../assets/card/jail.png') },
+  // //   { name: '경남은행', image: require('../assets/card/') },
+  // { name: '씨티은행', image: require('../assets/card/city.png') },
 ];
 
-const CardAuthentication = ({navigation}) => {
+const CardAuthentication = ({ navigation }) => {
   const [selectedCardIndexes, setSelectedCardIndexes] = useState([]);
 
   const handleCardPress = (index) => {
@@ -37,8 +37,10 @@ const CardAuthentication = ({navigation}) => {
     });
   };
 
-  const noUsingCard = async() =>{
-    navigation.navigate("Main");
+  const handleOkay = async () => {
+    if (!isCardSelected) return
+
+    navigation.navigate("KBCardAuthScreen");
   };
 
   // 선택된 카드가 있는지 확인
@@ -67,13 +69,22 @@ const CardAuthentication = ({navigation}) => {
         ))}
       </ScrollView>
       {/* 버튼 스타일 및 텍스트 동적 변경 */}
-      <TouchableOpacity
-        style={isCardSelected ? styles.cardSelectFinish : styles.noCardButton}
-        onPress={() => noUsingCard()}
-      >
-        <Text style={isCardSelected ? styles.cardSelectFinishText : styles.noCardText}>
-          {isCardSelected ? '완료' : '내가 쓰는 카드가 없어요'}
+      <TouchableOpacity onPress={handleOkay} style={[{ backgroundColor: "red" }, !isCardSelected && {
+        backgroundColor: "gray"
+      }]}>
+        <Text style={[styles.cardSelectFinishText]}>
+          완료
         </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => {
+          Alert.alert(";", "본 SaveQuest 팀은 여러 카드사를 지원하기 위해 최선을 다하고 있습니다. 머시기")
+        }}
+      >
+        <Text style={{
+          color: "gray"
+        }}>내가 쓰는 카드가 없어요</Text>
       </TouchableOpacity>
     </View>
   );

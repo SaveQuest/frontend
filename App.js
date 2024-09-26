@@ -23,6 +23,7 @@ import AuthCodeScreen from './screens/AuthCodeScreen';
 import SplashScreen from './screens/SplashScreen'; 
 import { useFonts } from 'expo-font';
 import CardAuthentication from './screens/CardAuth';
+import KBCardAuthScreen from './screens/KBAuth';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -113,12 +114,15 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Splash" component={SplashScreen} /> 
+        
         <Stack.Screen name="Agreement">
           {(props) => <AgreementScreen {...props} setAgreed={setAgreed} />}
         </Stack.Screen>
         <Stack.Screen name="Verification" component={VerificationScreen} />
         <Stack.Screen name="AuthCode" component={AuthCodeScreen}/>
         <Stack.Screen name="CardAuthentication" component={CardAuthentication} />
+        <Stack.Screen name='KBCardAuthScreen' component={KBCardAuthScreen} />
+        
         <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="DetailRank" component={DetailRank} />
         <Stack.Screen name="ChallengeJoinScreen" component={ChallengeJoinScreen} />

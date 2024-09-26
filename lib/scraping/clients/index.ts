@@ -1,0 +1,1 @@
+export { KBPayClient } from "./kbpay"

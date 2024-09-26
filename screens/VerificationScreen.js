@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Text, TextInput, TouchableOpacity, Modal, FlatList, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Modal, FlatList, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, ScrollView, Platform, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import BackIcon from '../components/BackIcon';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -84,12 +84,15 @@ export default function VerificationScreen() {
     setUserData({ name, idNumber: idNumberPart1 + idNumberPart2, phoneNumber, carrier: selectedCarrier });
 
     (async () => {
+      await AsyncStorage.setItem("NAME", name);
       await AsyncStorage.setItem("ID_NUM", idNumberPart1 + idNumberPart2);
-      const response = await requester.requestCode(phoneNumber);
-      await AsyncStorage.setItem("CODE_UUID", response.uuid);
-    })();
+      await AsyncStorage.setItem("CARRIER", selectedCarrier);
+      await AsyncStorage.setItem("PHONE_NO", phoneNumber);
 
-    navigation.navigate('AuthCode');
+      const res = await requester.requestCode(phoneNumber);
+      await AsyncStorage.setItem("CODE_UUID", res.uuid);
+      navigation.navigate('AuthCode');
+    })();
   };
 
   const isFormComplete = /^\d{6}$/.test(idNumberPart1) && /^\d{1}$/.test(idNumberPart2) && /^010\d{8}$/.test(phoneNumber) && selectedCarrier !== "통신사 선택" && name.length > 0;
