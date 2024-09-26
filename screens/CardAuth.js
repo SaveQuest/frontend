@@ -39,7 +39,10 @@ const CardAuthentication = ({navigation}) => {
 
   const noUsingCard = async() =>{
     navigation.navigate("Main");
-  }
+  };
+
+  // 선택된 카드가 있는지 확인
+  const isCardSelected = selectedCardIndexes.length > 0;
 
   return (
     <View style={styles.container}>
@@ -63,8 +66,14 @@ const CardAuthentication = ({navigation}) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.noCardButton} onPress={() => noUsingCard()}>
-        <Text style={styles.noCardText}>내가 쓰는 카드가 없어요</Text>
+      {/* 버튼 스타일 및 텍스트 동적 변경 */}
+      <TouchableOpacity
+        style={isCardSelected ? styles.cardSelectFinish : styles.noCardButton}
+        onPress={() => noUsingCard()}
+      >
+        <Text style={isCardSelected ? styles.cardSelectFinishText : styles.noCardText}>
+          {isCardSelected ? '완료' : '내가 쓰는 카드가 없어요'}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -121,6 +130,16 @@ const styles = StyleSheet.create({
   },
   noCardText: {
     color: '#555',
+    fontSize: 16,
+  },
+  cardSelectFinish: {
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    backgroundColor: '#4CAF50', // 완료 버튼의 배경색
+    borderRadius: 5,
+  },
+  cardSelectFinishText: {
+    color: '#fff',
     fontSize: 16,
   },
 });
