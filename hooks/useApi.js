@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+const USE_MOCK = false
 const MOCK_DATA = {
     DST_QUEST: {
         "id": "userId",
@@ -232,7 +233,7 @@ export const useApi = (reqFunc, mockKey = undefined) => {
 
     const loadData = () => {
         console.log("load", reqFunc, mockKey)
-        if (MOCK_DATA[mockKey]) {
+        if (USE_MOCK && MOCK_DATA[mockKey]) {
             timer = setTimeout(() => {
                 setState(MOCK_DATA[mockKey])
             }, 1000)
