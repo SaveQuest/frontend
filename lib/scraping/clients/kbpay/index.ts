@@ -102,7 +102,7 @@ export class KBPayClient {
         ).then(res => res.data);
 
         console.log("RES1", res1)
-        if(res1?.errorcode !== "0000" && res1?.errCode !== 0) {
+        if (res1?.errorcode !== "0000" && res1?.errCode !== 0) {
             throw new SqClientError("STEP3-1 오류")
         }
 
@@ -115,7 +115,7 @@ export class KBPayClient {
         ).then(res => res.data)
 
         console.log("RES2", res2)
-        if(res2?.errorcode !== "0000" && res1?.errCode !== 0) {
+        if (res2?.errorcode !== "0000" && res1?.errCode !== 0) {
             throw new SqClientError("STEP3-2 오류")
         }
     }
@@ -187,6 +187,7 @@ export class KBPayClient {
             )
 
             const data = res?.data!
+            console.log(data)
 
             if (data.resultCode !== "UCXH0000") break
 
@@ -198,15 +199,17 @@ export class KBPayClient {
             date.setHours(date.getHours() - 9); // kb가 주는건 kst로 간주하고 -9
             //
 
-            const isDomestic = data.domesticOverseaDstic === "1" // 1: 국내, 2: 해외, 다른 값은 아마 없을 것으로 사료.
-            const isForeign = data.domesticOverseaDstic === "2"
+            const isDomestic = data.domesticOverseaDstic === "1"; // 1: 국내, 2: 해외, 다른 값은 아마 없을 것으로 사료.
+            const isForeign = data.domesticOverseaDstic === "2";
+
+            if (isForeign) continue;
 
             list.push(
                 {
                     cardIssuer: "KB",
                     approvalNumber: data.allowNo,
                     approvalTime: date.getTime() / 1000 | 0,
-                    amount: isDomestic ? parseInt(data.athorAmt.replaceAll(",", "")) : ((parseFloat(data.aplyExrt.replaceAll(",", "")) * data.ovsBilAmt) | 0),
+                    amount: parseInt(data.athorAmt.replaceAll(",", "")),
                     merchant: {
                         id: data.storeNo,
                         name: data.storeName,
