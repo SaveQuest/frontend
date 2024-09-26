@@ -6,6 +6,7 @@ import BackIcon from '../components/BackIcon';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from '../styles/VerificationScreenStyles';
 import { useUserStore } from '../stores/userStore';
+import { requester } from '../lib/api';
 
 export default function VerificationScreen() {
   const [isFocused, setIsFocused] = useState(false);
@@ -84,7 +85,8 @@ export default function VerificationScreen() {
 
     (async () => {
       await AsyncStorage.setItem("ID_NUM", idNumberPart1 + idNumberPart2);
-      await requester.requestCode("+82" + phoneNumber);
+      const response = await requester.requestCode(phoneNumber);
+      await AsyncStorage.setItem("CODE_UUID", response.uuid);
     })();
 
     navigation.navigate('AuthCode');

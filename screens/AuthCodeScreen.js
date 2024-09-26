@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import BackIcon from '../components/BackIcon'; 
-
-yarn
+import BackIcon from '../components/BackIcon';
+import { requester } from '../lib/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthCodeScreen = ({ navigation }) => {
   const [authCode, setAuthCode] = useState('');  
@@ -26,10 +26,11 @@ const AuthCodeScreen = ({ navigation }) => {
     setTimer(180); 
   };
 
-  const handleConfirmCode = () => {
+  const handleConfirmCode = async () => {
     console.log("입력한 인증코드:", authCode);
-    
-    navigation.navigate('Main');
+    const FuckUuid = await AsyncStorage.getItem('CODE_UUID');
+    await requester.authenticate(FuckUuid, authCode);
+    navigation.navigate('CardAuthentication');
   };
 
   return (

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { requester } from '../lib/api';
 
 // 카드사 정보 배열
 const cardCompanies = [

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Animated, TextInput, TouchableOpacity, StyleSheet } from 'react-native'; 
+import { View, Text, Animated } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -22,6 +22,7 @@ import MyRoomScreen from './screens/MyRoomScreen';
 import AuthCodeScreen from './screens/AuthCodeScreen';
 import SplashScreen from './screens/SplashScreen'; 
 import { useFonts } from 'expo-font';
+import CardAuthentication from './screens/CardAuth';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -117,7 +118,8 @@ export default function App() {
         </Stack.Screen>
         <Stack.Screen name="Verification" component={VerificationScreen} />
         <Stack.Screen name="AuthCode" component={AuthCodeScreen}/>
-        <Stack.Screen name="Main" component={TabNavigator} /> 
+        <Stack.Screen name="CardAuthentication" component={CardAuthentication} />
+        <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="DetailRank" component={DetailRank} />
         <Stack.Screen name="ChallengeJoinScreen" component={ChallengeJoinScreen} />
         <Stack.Screen name="DetailBeforeQuest" component={DetailBeforeQuest} />
