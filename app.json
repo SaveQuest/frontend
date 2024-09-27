@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "savequst",
-    "slug": "savequst",
+    "name": "savequest",
+    "slug": "savequest",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,14 +17,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rxlama7.savequst"
+      "bundleIdentifier": "com.rxlama7.savequest"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.rxlama7.savequst"
+      "package": "com.rxlama7.savequest"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,7 +34,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "5d887bfe-0587-4453-8366-13ca623c417d"
+        "projectId": "d1554997-2363-47e2-9e6e-4da059f38ade"
       }
     }
   }
