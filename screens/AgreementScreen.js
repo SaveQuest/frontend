@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Alert, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { styles } from '../styles/AgreementScreenStyles';  
+import { styles } from '../styles/AgreementScreenStyles';
 import { useNavigation } from '@react-navigation/native';
 
 export default function AgreementScreen({ setAgreed }) {
@@ -15,7 +15,7 @@ export default function AgreementScreen({ setAgreed }) {
     marketing: false,
   });
 
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
 
   const toggleAll = () => {
     const newValue = !allChecked;
@@ -38,7 +38,7 @@ export default function AgreementScreen({ setAgreed }) {
 
   const handleNext = () => {
     if (terms.service && terms.privacy && terms.openBanking && terms.thirdParty && terms.identity) {
-      setAgreed(true); 
+      setAgreed(true);
       navigation.navigate('Verification');
     } else {
       Alert.alert('필수 항목에 모두 동의해 주세요.');
@@ -48,12 +48,12 @@ export default function AgreementScreen({ setAgreed }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.agreementTitle}>약관동의</Text>
-  
+
       <Text style={styles.title}>
         SaveQuest{'\n'}
         <Text style={styles.highlight}>약관 동의</Text>가 필요해요
       </Text>
-  
+
       <TouchableOpacity
         style={[
           styles.allCheckboxContainer,
@@ -70,13 +70,13 @@ export default function AgreementScreen({ setAgreed }) {
           서비스 이용약관 전체동의
         </Text>
       </TouchableOpacity>
-  
+
       <Text style={styles.noticeTitle}>유의사항</Text>
-  
+
       <Text style={styles.notice}>
         SaveQuest 서비스는 만 17세 이상만 이용할 수 있으며, 만 17세 미만의 경우 서비스 가입이 제한될 수 있습니다.
       </Text>
-  
+
       <View style={styles.checkboxContainer}>
         <TouchableOpacity style={styles.checkboxItem} onPress={() => toggleCheckbox('service')}>
           <View style={[styles.checkboxIconContainer, terms.service && styles.checked]}>
@@ -88,7 +88,7 @@ export default function AgreementScreen({ setAgreed }) {
           </View>
           <Text style={styles.checkboxText}>SaveQuest 서비스 이용약관 (필수)</Text>
         </TouchableOpacity>
-  
+
         <TouchableOpacity style={styles.checkboxItem} onPress={() => toggleCheckbox('privacy')}>
           <View style={[styles.checkboxIconContainer, terms.privacy && styles.checked]}>
             <Ionicons
@@ -99,7 +99,7 @@ export default function AgreementScreen({ setAgreed }) {
           </View>
           <Text style={styles.checkboxText}>개인정보 수집 이용 동의 (필수)</Text>
         </TouchableOpacity>
-  
+
         <TouchableOpacity style={styles.checkboxItem} onPress={() => toggleCheckbox('openBanking')}>
           <View style={[styles.checkboxIconContainer, terms.openBanking && styles.checked]}>
             <Ionicons
@@ -110,7 +110,7 @@ export default function AgreementScreen({ setAgreed }) {
           </View>
           <Text style={styles.checkboxText}>오픈뱅킹서비스 수집 · 이용 · 제공 전체 동의 (필수)</Text>
         </TouchableOpacity>
-  
+
         <TouchableOpacity style={styles.checkboxItem} onPress={() => toggleCheckbox('thirdParty')}>
           <View style={[styles.checkboxIconContainer, terms.thirdParty && styles.checked]}>
             <Ionicons
@@ -121,7 +121,7 @@ export default function AgreementScreen({ setAgreed }) {
           </View>
           <Text style={styles.checkboxText}>본인인증/전자서명을 위한 개인정보 제3자 제공동의 (필수)</Text>
         </TouchableOpacity>
-  
+
         <TouchableOpacity style={styles.checkboxItem} onPress={() => toggleCheckbox('identity')}>
           <View style={[styles.checkboxIconContainer, terms.identity && styles.checked]}>
             <Ionicons
@@ -132,7 +132,7 @@ export default function AgreementScreen({ setAgreed }) {
           </View>
           <Text style={styles.checkboxText}>본인 확인 서비스 전체 동의 (필수)</Text>
         </TouchableOpacity>
-  
+
         <TouchableOpacity style={styles.checkboxItem} onPress={() => toggleCheckbox('marketing')}>
           <View style={[styles.checkboxIconContainer, terms.marketing && styles.checked]}>
             <Ionicons
@@ -144,7 +144,11 @@ export default function AgreementScreen({ setAgreed }) {
           <Text style={styles.checkboxText}>마케팅 이용에 대한 동의 (선택)</Text>
         </TouchableOpacity>
       </View>
-  
+
+      <TouchableOpacity onPress={() => Linking.openURL("https://desert-machine-32b.notion.site/10e0537865a680318b74d1d301d10bbf?pvs=25")}>
+        <Text style={{ color: "#888" }}>약관 보기</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity
         style={[
           styles.submitButton,
@@ -152,7 +156,7 @@ export default function AgreementScreen({ setAgreed }) {
             ? styles.submitButtonActive
             : styles.submitButtonInactive
         ]}
-        onPress={handleNext} 
+        onPress={handleNext}
         disabled={!terms.service || !terms.privacy || !terms.openBanking || !terms.thirdParty || !terms.identity}
       >
         <Text style={[
