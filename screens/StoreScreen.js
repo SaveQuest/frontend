@@ -43,10 +43,10 @@ const StoreScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tabButton}
-          onPress={() => setSelectedTab('background')}
+          onPress={() => setSelectedTab('tag')}
         >
-          <Feather name="home" size={24} color={selectedTab === 'background' ? '#4CAF50' : '#BDBDBD'} />
-          <Text style={selectedTab === 'background' ? styles.tabTextActive : styles.tabText}>배경</Text>
+          <Feather name="tag" size={24} color={selectedTab === 'tag' ? '#4CAF50' : '#BDBDBD'} />
+          <Text style={selectedTab === 'tag' ? styles.tabTextActive : styles.tabText}>칭호</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tabButton}
