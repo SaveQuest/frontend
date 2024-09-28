@@ -105,7 +105,7 @@ export default function Home() {
   };
 
   const { state: dstHome, refresh: refreshDstHome } = useApi(() => requester.getDSTHome(), "DST_HOME")
-  const { state: dstQuest, refresh: refreshDstQuest } = useApi(()=>requester.getDSTQuest(), "DST_QUEST")
+  const { state: dstQuest, refresh: refreshDstQuest } = useApi(() => requester.getDSTQuest(), "DST_QUEST")
 
   console.log(dstHome)
   return (
@@ -201,11 +201,11 @@ export default function Home() {
         </>}
 
 
-        <ModalComponent
+        {modalVisible && <ModalComponent
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
           onTasksSelected={handleTasksSelected}
-        />
+        />}
       </ScrollView >
     </View >
   );
