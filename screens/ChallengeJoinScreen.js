@@ -27,7 +27,7 @@ export default function ChallengeJoinScreen({ navigation }) {
           style={styles.header}
         >
           <View style={styles.headerContent}>
-            <TouchableOpacity onPress={() => navigation.navigate("MainPage")}>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
               <ArrowIcon color={"white"} />
             </TouchableOpacity>
           </View>
@@ -52,7 +52,7 @@ export default function ChallengeJoinScreen({ navigation }) {
 
       <View style={styles.contents}>
         {pubChallenge && pubChallenge.challenges.map(e => {
-          return <ChallengeBox key={"PUB_CHALLENGE_" + e.id} title={e.name} date={getDateTxt(e.endsAt)} people={e.people} coin={e.totalReward} cost={e.entryFee} />
+          return <ChallengeBox key={"PUB_CHALLENGE_" + e.id} challengeId={e.id} title={e.name} date={e.endsAt} people={e.people} coin={e.totalReward} cost={e.entryFee} />
         })}
       </View>
     </View>

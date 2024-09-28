@@ -24,7 +24,7 @@ export default function RankItem({ count, name, lv, cName, money }) {
 
       <View style={styles.Box3}>
         <Text style={styles.valueName}>{cName}</Text>
-        <Text style={styles.value}>₩{numberWithCommas(money)}</Text>
+        <Text style={styles.value}>{money}</Text>
       </View>
     </View>
   );

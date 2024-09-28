@@ -17,7 +17,7 @@ const ProfileScreen = ({ navigation }) => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert("You've refused to allow this app to access your photos!");
+      alert("파일 접근 권한을 허용해야 프로필 사진을 변경할 수 있습니다.");
       return;
     }
 

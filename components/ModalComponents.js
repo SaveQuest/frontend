@@ -6,8 +6,7 @@ import { requester } from '../lib/api';
 import { useApi } from '../hooks/useApi';
 
 const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
-  // const { state: questData } = useApi(() => requester.fetchWeeklyQuest(), "DST_QUEST_MODAL")
-  const questData = null
+  const { state: questData } = useApi(() => requester.fetchWeeklyQuest(), "DST_QUEST_MODAL")
 
   const [selectedTaskIdList, setSelectedTaskList] = useState([]);
   const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -32,6 +31,10 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
       ]).start();
     }
   };
+  const closeAndReload = () => {
+    onClose();
+    navigator.navigate("Home", { refresh: true });
+  }
 
   const handleDone = () => {
     if (selectedTaskIdList.length !== 3) {
@@ -40,7 +43,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
     }
 
     requester.selectWeeklyQuest(selectedTaskIdList).then(
-      () => onClose()
+      () => closeAndReload()
     )
   };
 

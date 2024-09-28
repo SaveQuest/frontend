@@ -37,7 +37,7 @@ const PercentCarouselItem = ({ item }) => (
   </View>
 );
 
-export default function Home({ navigation }) {
+export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -53,30 +53,23 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      const cardCred = await AsyncStorage.getItem("CARD_CRED");
-      if (!cardCred) {
-        navigation.replace("CardAuthentication")
-        return
-      }
-      // const client = new KBPayClient(cardCred)
-      // await client.login()
+      const client = await AsyncStorage.getItem("CARD_CRED").then(res => new KBPayClient(res))
+      await client.login()
 
-      // const today = new Date()
+      const today = new Date()
 
-      // const lastMonth = new Date();
-      // lastMonth.setMonth(lastMonth.getMonth() - 1);
-
-      // const transaction = await client.fetchTxList(new QueryRange(new QueryDate(
-      //   lastMonth.getFullYear(),
-      //   lastMonth.getMonth() + 1,
-      //   lastMonth.getDate()
-      // ), new QueryDate(
-      //   today.getFullYear(),
-      //   today.getMonth() + 1,
-      //   today.getDate()
-      // )));
-
-      // await requester.updateCardTransaction(transaction)
+      const lastMonth = new Date();
+      lastMonth.setMonth(lastMonth.getMonth() - 1);
+      const transaction = await client.fetchTxList(new QueryRange(new QueryDate(
+        lastMonth.getFullYear(),
+        lastMonth.getMonth() + 1,
+        lastMonth.getDate()
+      ), new QueryDate(
+        today.getFullYear(),
+        today.getMonth() + 1,
+        today.getDate()
+      )))
+      await requester.updateCardTransaction(transaction)
     })();
   }, []);
 
@@ -93,18 +86,28 @@ export default function Home({ navigation }) {
     return () => clearInterval(intervalId);
   }, [dstHome]);
 
-  const handleTasksSelected = () => {
-    refreshDstQuest();
+  const handleTasksSelected = (newTasks) => {
+    const updatedTasks = newTasks.map(task => {
+      const amountUsed = parseInt(task.amountUsed.replace(/[₩,]/g, ''), 10);
+      const goal = parseInt(task.goal.replace(/[₩,]/g, ''), 10);
+      const progress = Math.min(100, Math.round((amountUsed / goal) * 100));
+      return { ...task, progress };
+    });
+
+    setSelectedTasks((prevTasks) => [...prevTasks, ...updatedTasks]);
     setModalVisible(false);
   };
 
   const handleOpenModal = async () => {
+    console.log('hello')
+    const weeklyQuest = await requester.fetchWeeklyQuest()
     setModalVisible(true);
   };
 
   const { state: dstHome, refresh: refreshDstHome } = useApi(() => requester.getDSTHome(), "DST_HOME")
-  const { state: dstQuest, refresh: refreshDstQuest } = useApi(() => requester.getDSTQuest(), "DST_QUEST")
+  const { state: dstQuest, refresh: refreshDstQuest } = useApi(()=>requester.getDSTQuest(), "DST_QUEST")
 
+  console.log(dstHome)
   return (
     <View style={styles.container}>
       <Header />
@@ -142,25 +145,27 @@ export default function Home({ navigation }) {
               )}
               ref={flatListRef}
             />
-            <View style={styles.indicatorContainer}>
-              {dstHome.elements.map((_, index) => {
-                const inputRange = [(index - 1) * (CARD_WIDTH + CARD_MARGIN * 2), index * (CARD_WIDTH + CARD_MARGIN * 2), (index + 1) * (CARD_WIDTH + CARD_MARGIN * 2)];
+            {dstHome.elements &&
+              <View style={styles.indicatorContainer}>
+                {dstHome.elements.map((_, index) => {
+                  const inputRange = [(index - 1) * (CARD_WIDTH + CARD_MARGIN * 2), index * (CARD_WIDTH + CARD_MARGIN * 2), (index + 1) * (CARD_WIDTH + CARD_MARGIN * 2)];
 
-                const dotWidth = scrollX.interpolate({
-                  inputRange,
-                  outputRange: [10, 30, 10],
-                  extrapolate: 'clamp',
-                });
+                  const dotWidth = scrollX.interpolate({
+                    inputRange,
+                    outputRange: [10, 30, 10],
+                    extrapolate: 'clamp',
+                  });
 
-                const dotOpacity = scrollX.interpolate({
-                  inputRange,
-                  outputRange: [1, 0.3, 1],
-                  extrapolate: 'clamp',
-                });
+                  const dotOpacity = scrollX.interpolate({
+                    inputRange,
+                    outputRange: [1, 0.3, 1],
+                    extrapolate: 'clamp',
+                  });
 
-                return <Animated.View key={index} style={[styles.indicator, { width: dotWidth, opacity: dotOpacity }]} />;
-              })}
-            </View>
+                  return <Animated.View key={index} style={[styles.indicator, { width: dotWidth, opacity: dotOpacity }]} />;
+                })}
+              </View>
+            }
           </> : <>
             <Skeleton layout={[
               { key: "someId", width: "100%", height: 64 },
@@ -194,6 +199,7 @@ export default function Home({ navigation }) {
         </> : <>
           <Skeleton layout={[{ id: "zz", width: "100%", height: 72 }]} containerStyle={[styles.tasks, { marginTop: 10 }]} />
         </>}
+
 
         <ModalComponent
           visible={modalVisible}

@@ -1,8 +1,20 @@
 import React from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import RankItem from './RankItem'; // 랭크 박스 컴포넌트 가져오기
+import RankItem from './RankItem';
+import { useApi } from '../hooks/useApi';
+import { requester } from '../lib/api'; // 랭크 박스 컴포넌트 가져오기
 
-export default function ChallengeDetail({ visible, onClose, title }) {
+export default function ChallengeDetail({ navigation, visible, onClose, challengeId }) {
+  const { state: detail } = useApi(() => requester.fetchChallengeDetail(challengeId), "CHALL_DETAIL")
+
+  const joinChallengeHandler = () => {
+    requester.joinChallenge(challengeId).then(() => {
+      onClose()
+      navigation.navigate("ChallengeDetail")
+    })
+  }
+
+  if (!detail) return
   return (
     <Modal
       animationType="slide"
@@ -13,28 +25,30 @@ export default function ChallengeDetail({ visible, onClose, title }) {
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <View style={styles.modalContentHeader}>
-            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.title}>{detail.name}</Text>
             <Text style={styles.date}>6월 15일 까지</Text>
           </View>
 
-          <View style={styles.rankings}>
-            <RankItem count={1} name="차호림" lv={998} cName="지금까지 줄인 소비 금액" money={5000} />
-            <RankItem count={2} name="차호림" lv={998} cName="지금까지 줄인 소비 금액" money={5000} />
-            <RankItem count={3} name="차호림" lv={998} cName="지금까지 줄인 소비 금액" money={5000} />
-          </View>
+          {detail.rankings &&
+            <View style={styles.rankings}>
+              {detail.rankings.map((rank, index) => (
+                <RankItem count={index+1} name={rank.name} lv={rank.level} cName={rank.element[0].name} money={rank.element[0].amount} />
+              ))}
+            </View>
+          }
           
           <View style={styles.participants}>
             <View style={styles.target}>
               <Text style={styles.participantLabel}>참가 인원:</Text>
-              <Text style={styles.participantCount}>290</Text>
+              <Text style={styles.participantCount}>{detail.people}</Text>
             </View>
             <View style={styles.target}>
               <Text style={styles.coinLabel}>걸려있는 코인 수:</Text>
-              <Text style={styles.coinCount}>29,000</Text>
+              <Text style={styles.coinCount}>{detail.totalReward}</Text>
             </View>
           </View>
 
-          <TouchableOpacity style={styles.joinButton}>
+          <TouchableOpacity style={styles.joinButton} onPress={joinChallengeHandler}>
             <Text style={styles.joinButtonText}>참가하기</Text>
           </TouchableOpacity>
 
@@ -91,25 +105,25 @@ const styles = StyleSheet.create({
     marginBottom: 10, // 간격 조정
   },
   participantLabel: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#333',
     marginRight: 5, // 간격 조정
   },
   participantCount: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#43b319',
     marginLeft: 5, // 간격 조정
   },
   coinLabel: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#333',
     marginRight: 5, // 간격 조정
   },
   coinCount: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#43b319',
     marginLeft: 5, // 간격 조정

@@ -13,6 +13,7 @@ import Skeleton from "react-native-reanimated-skeleton";
 const ChallengeScreen = ({ navigation }) => {
   const { state: dstChallenge } = useApi(() => requester.fetchDSTChallenge(), "DST_CHALLENGE_PAGE")
   console.log(dstChallenge)
+  console.log(dstChallenge.element.questInfo.bottom)
   
   return (
     <>
@@ -42,7 +43,7 @@ const ChallengeScreen = ({ navigation }) => {
             </TouchableOpacity>
           </Card>
 
-          {dstChallenge ? <View style={styles.challenge}>
+          {dstChallenge && dstChallenge.noElement !== true ? <View style={styles.challenge}>
             <ImageBackground
               source={require("../assets/LogoBackground.png")}
               style={styles.header}
@@ -56,16 +57,17 @@ const ChallengeScreen = ({ navigation }) => {
               }, styles.border]}>
                 <View style={styles.title}>
                   <Text style={styles.titleTitle}>
-                    {dstChallenge.questInfo.content.topRowText}
+                    {dstChallenge.element.questInfo.content.topRowText}
                   </Text>
-                  <Text style={styles.titleDate}>{dstChallenge.questInfo.content.bottomRowText}</Text>
+                  <Text style={styles.titleDate}>{dstChallenge.element.questInfo.content.bottomRowText}</Text>
                 </View>
                 <View style={styles.my}>
                   <View style={styles.left}>
                     {
-                      dstChallenge.questInfo.bottom.content.map(e => {
+                      dstChallenge.element.questInfo.bottom.content.map(e => {
+                        console.log('2', e)
                         if (e.type === "QUEST_DATA_CARD") {
-                          return <View key={e.type + e.content.topRowText}>
+                          return <View key={e.type + e.topRowText}>
                             <Text style={styles.one}>{e.content.topRowText}</Text>
                             <Text style={styles.two}>{e.content.bottomRowText}</Text>
                           </View>
@@ -91,7 +93,7 @@ const ChallengeScreen = ({ navigation }) => {
                   </View>
                 </TouchableOpacity>
                 {
-                  dstChallenge.questInfo.ranking.map((e, idx) => <RankItem
+                  dstChallenge.element.questInfo.ranking.map((e, idx) => <RankItem
                     key={idx}
                     count={idx + 1}
                     name={e.name}
@@ -104,7 +106,10 @@ const ChallengeScreen = ({ navigation }) => {
               </View>
             </View>
           </View> : <>
-            <Skeleton layout={[{ id: "aaq", width: "100%", height: 100 }]} containerStyle={styles.challenge} />
+          {
+            dstChallenge && dstChallenge.noElement === true ? <Text>참가한 챌린지가 아직 없습니다 :)</Text>
+              : <Skeleton layout={[{ id: "aaq", width: "100%", height: 100 }]} containerStyle={styles.challenge} />
+          }
           </>}
 
         </ScrollView>

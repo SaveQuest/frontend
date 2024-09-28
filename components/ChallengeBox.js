@@ -5,7 +5,7 @@ import SafeIcon from "./SafeIcon";
 import ChallengeDetail from "../components/ChallengeDetail";
 import { numberWithCommas } from "../utils";
 
-export default function ChallengeBox({ title, date, people, coin, cost }) {
+export default function ChallengeBox({ challengeId, title, date, people, coin, cost }) {
   const [modalVisible, setModalVisible] = React.useState(false);
 
   const handleOpenModal = () => {
@@ -54,6 +54,7 @@ export default function ChallengeBox({ title, date, people, coin, cost }) {
         visible={modalVisible}
         onClose={handleCloseModal}
         title={title}
+        challengeId={challengeId}
       />
     </View>
   );
