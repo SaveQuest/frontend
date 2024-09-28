@@ -87,20 +87,11 @@ export default function Home() {
   }, [dstHome]);
 
   const handleTasksSelected = (newTasks) => {
-    const updatedTasks = newTasks.map(task => {
-      const amountUsed = parseInt(task.amountUsed.replace(/[₩,]/g, ''), 10);
-      const goal = parseInt(task.goal.replace(/[₩,]/g, ''), 10);
-      const progress = Math.min(100, Math.round((amountUsed / goal) * 100));
-      return { ...task, progress };
-    });
-
-    setSelectedTasks((prevTasks) => [...prevTasks, ...updatedTasks]);
+    refreshDstQuest()
     setModalVisible(false);
   };
 
   const handleOpenModal = async () => {
-    console.log('hello')
-    const weeklyQuest = await requester.fetchWeeklyQuest()
     setModalVisible(true);
   };
 
