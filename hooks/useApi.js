@@ -101,7 +101,7 @@ const MOCK_DATA = {
                     }, {
                         "type": "QUEST_DATA_CARD",
                         "content": {
-                            "topRowText": "지금까지 줄인 소비금액",
+                            "topRowText": "지금까지 사용한 소비금액",
                             "bottomRowText": "₩5,000"
                         }
                     }
@@ -201,7 +201,7 @@ const MOCK_DATA = {
         "isProfilePublic": true,
         "profileImage": "https://sqstatic.ychan.me/character/default0.png?key=wy6hk6y1sx3gcjvkmdhef",
         "element": [
-            { "name": "지금까지 줄인 소비금액", "value": "99,000" },
+            { "name": "지금까지 사용한 소비금액", "value": "99,000" },
             { "name": "성공한 도전과제", "value": "321개" }
         ],
         "questLog": {
@@ -228,7 +228,7 @@ const MOCK_DATA = {
     }
 }
 
-export const useApi = (reqFunc, mockKey = null) => {
+export const useApi = (reqFunc, mockKey = null, key = null) => {
     const [state, setState] = useState(null);
 
     const loadData = () => {
@@ -244,7 +244,7 @@ export const useApi = (reqFunc, mockKey = null) => {
 
     useEffect(() => {
         loadData()
-    }, [mockKey])
+    }, [mockKey, key])
 
     return {
         state,

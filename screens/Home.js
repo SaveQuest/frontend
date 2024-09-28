@@ -60,16 +60,16 @@ export default function Home() {
 
       const lastMonth = new Date();
       lastMonth.setMonth(lastMonth.getMonth() - 1);
-      const transaction = await client.fetchTxList(new QueryRange(new QueryDate(
-        lastMonth.getFullYear(),
-        lastMonth.getMonth() + 1,
-        lastMonth.getDate()
-      ), new QueryDate(
-        today.getFullYear(),
-        today.getMonth() + 1,
-        today.getDate()
-      )))
-      await requester.updateCardTransaction(transaction)
+      // const transaction = await client.fetchTxList(new QueryRange(new QueryDate(
+      //   lastMonth.getFullYear(),
+      //   lastMonth.getMonth() + 1,
+      //   lastMonth.getDate()
+      // ), new QueryDate(
+      //   today.getFullYear(),
+      //   today.getMonth() + 1,
+      //   today.getDate()
+      // )))
+      // await requester.updateCardTransaction(transaction)
     })();
   }, []);
 

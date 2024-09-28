@@ -3,14 +3,16 @@ import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import RankItem from './RankItem';
 import { useApi } from '../hooks/useApi';
 import { requester } from '../lib/api'; // 랭크 박스 컴포넌트 가져오기
+import { useNavigation } from '@react-navigation/native';
 
-export default function ChallengeDetail({ navigation, visible, onClose, challengeId }) {
+export default function ChallengeDetail({ visible, onClose, challengeId }) {
   const { state: detail } = useApi(() => requester.fetchChallengeDetail(challengeId), "CHALL_DETAIL")
+  const navigation = useNavigation()
 
   const joinChallengeHandler = () => {
     requester.joinChallenge(challengeId).then(() => {
       onClose()
-      navigation.navigate("ChallengeDetail")
+      navigation.goBack()
     })
   }
 

@@ -12,8 +12,8 @@ import Skeleton from "react-native-reanimated-skeleton";
 
 const ChallengeScreen = ({ navigation }) => {
   const { state: dstChallenge } = useApi(() => requester.fetchDSTChallenge(), "DST_CHALLENGE_PAGE")
-  console.log(dstChallenge)
-  console.log(dstChallenge.element.questInfo.bottom)
+  console.log("za", JSON.stringify(dstChallenge))
+  // console.log(dstChallenge.element.questInfo.bottom)
   
   return (
     <>
@@ -67,7 +67,7 @@ const ChallengeScreen = ({ navigation }) => {
                       dstChallenge.element.questInfo.bottom.content.map(e => {
                         console.log('2', e)
                         if (e.type === "QUEST_DATA_CARD") {
-                          return <View key={e.type + e.topRowText}>
+                          return <View key={e.type + e.content.topRowText}>
                             <Text style={styles.one}>{e.content.topRowText}</Text>
                             <Text style={styles.two}>{e.content.bottomRowText}</Text>
                           </View>
@@ -93,13 +93,13 @@ const ChallengeScreen = ({ navigation }) => {
                   </View>
                 </TouchableOpacity>
                 {
-                  dstChallenge.element.questInfo.ranking.map((e, idx) => <RankItem
+                  dstChallenge.element.ranking.map((e, idx) => <RankItem
                     key={idx}
                     count={idx + 1}
                     name={e.name}
                     lv={e.level}
-                    cName={"지금까지 줄인 소비 금액"}
-                    money={e.totalSavedUsage}
+                    cName={e.element[0].name}
+                    money={e.element[0].amount}
                   />)
                 }
 

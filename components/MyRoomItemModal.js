@@ -14,15 +14,15 @@ const MyRoomItemModal = ({ visible, onClose, product, onSelect }) => {
           {product && (
             <>
               <Text style={styles.modalTitle}>{product.name}</Text>
-              <Image source={product.image} style={styles.modalImage} />
-              <Text style={styles.modalDescription}>
+              <Image source={{ uri: product.imageUrl }} style={styles.modalImage} />
+              {/* <Text style={styles.modalDescription}>
                 {product.description || "설명이 없습니다."}
-              </Text>
+              </Text> */}
 
               <TouchableOpacity
                 style={styles.purchaseButton}
                 onPress={() => {
-                  onSelect(product); 
+                  onSelect(product);
                   onClose();
                 }}
               >
@@ -58,9 +58,9 @@ const styles = StyleSheet.create({
   },
   modalImage: {
     width: 120,
-    height: 120,  
+    height: 120,
     marginBottom: 20,
-    resizeMode: 'contain', 
+    resizeMode: 'contain',
   },
   modalDescription: {
     fontSize: 16,

@@ -33,7 +33,7 @@ const ChallengeHeaderComponent = () => {
           <View style={styles.statBoxWithBorder}>  
             <Text style={styles.statTitle}>나의 한달 평균 소비 금액</Text>
             <Text style={styles.statAmount}>₩54,000</Text>
-            <Text style={styles.statTitle}>지금까지 줄인 소비 금액</Text>
+            <Text style={styles.statTitle}>지금까지 사용한 소비 금액</Text>
             <Text style={styles.statAmount}>₩3,000</Text>
           </View>
         </View>

@@ -5,7 +5,7 @@ import SafeIcon from "./SafeIcon";
 import ChallengeDetail from "../components/ChallengeDetail";
 import { numberWithCommas } from "../utils";
 
-export default function ChallengeBox({ challengeId, title, date, people, coin, cost }) {
+export default function ChallengeBox({ challengeId, title, date, people, coin, cost, isJoined }) {
   const [modalVisible, setModalVisible] = React.useState(false);
 
   const handleOpenModal = () => {
@@ -35,7 +35,7 @@ export default function ChallengeBox({ challengeId, title, date, people, coin, c
               <Text style={styles.itemText}>{numberWithCommas(coin)}</Text>
             </View>
           </View>
-          <TouchableOpacity onPress={handleOpenModal}>
+          <TouchableOpacity onPress={handleOpenModal} disabled={isJoined} style={[isJoined && { opacity: 0.5 }]}>
             <View style={styles.startButton}>
               <Text style={styles.startButtonText}>참가</Text>
               <View style={styles.startButtonContext}>

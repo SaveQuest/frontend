@@ -12,7 +12,7 @@ import { requester } from "../lib/api";
 export default function DetailRank({ route, navigation }) {
   const { id } = route.params
   const { state: challData } = useApi(() => { if (id) return requester.fetchChallengeDetail(id) }, "CHALL_DETAIL")
-
+  console.log("chall", challData)
   if (!id) {
     navigation.goBack()
     return <></>

@@ -24,33 +24,24 @@ export default function MyRoom({ navigation }) {
   const [selectedTab, setSelectedTab] = useState("character");
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { state: zz } = useApi(() => requester.fetchInventory("tag"))
-  console.log("zz", zz)
+  const [selectedItem, setSelectedItem] = useState(null)
 
-  const handleCharacterPress = (character) => {
-    // setSelectedCharacter(character);
+  const { state: zz } = useApi(() => requester.fetchInventory(selectedTab), "", selectedItem)
+  console.log(zz)
+
+  const handleItemSelect = async (item) => {
+    await requester.equipInventoryItem(item.id)
+    refresh()
+  };
+
+  const handleItemPress = (item) => {
+    setSelectedItem(item);
     setModalVisible(true);
-  };
-
-  const handleCharacterSelect = (character) => {
-    setCharacterImage(character.image);
-    setModalVisible(false);
-  };
-
-  const handlePetSelect = (pet) => {
-    setPetImage(pet.image);
-    setModalVisible(false);
   };
 
   const handleCloseModal = () => {
     setModalVisible(false);
-    // setSelectedCharacter(null);
-    setSelectedPet(null);
-  };
-
-  const handleTitleSelect = (index) => {
-    setSelectedTitleIndex(index);
-    // 탭 전환을 없앰, selectedTab을 변경하지 않음
+    setSelectedItem(null);
   };
 
   return (
@@ -104,32 +95,32 @@ export default function MyRoom({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          {/* {selectedTab !== "tag" && (
+          {zz && selectedTab !== "tag" && (
             <ScrollView contentContainerStyle={styles.characterList}>
-              {characters.map((character, index) => (
-                <TouchableOpacity key={index} style={styles.characterItem} onPress={() => handleCharacterPress(character)}>
-                  <Image source={character.image} style={styles.characterItemImage} />
-                  <Text style={styles.characterItemLabel}>{character.name}</Text>
+              {zz.map((item, index) => (
+                <TouchableOpacity key={"CHA" + index} style={styles.characterItem} onPress={() => handleItemPress(item)}>
+                  <Image source={{ uri: item.imageUrl }} style={styles.characterItemImage} />
+                  <Text style={styles.characterItemLabel}>{item.name}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
-          )} */}
+          )}
 
-          {/* {selectedTab === "tag" && (
+          {zz && selectedTab === "tag" && (
             <ScrollView style={styles.titleList}>
-              {titles.map((title, index) => (
+              {zz.map((item, index) => (
                 <TouchableOpacity
-                  key={index}
-                  style={[styles.titleBox, { backgroundColor: selectedTitleIndex === index ? "#4CAF50" : "#DCF5E9" }]}
-                  onPress={() => handleTitleSelect(index)} // 칭호 선택 시 호출
+                  key={"TAG" + index}
+                  style={[styles.titleBox, { backgroundColor: item.isEquipped ? "#4CAF50" : "#DCF5E9" }]}
+                  onPress={() => handleItemPress(item)} // 칭호 선택 시 호출
                 >
-                  <Text style={[styles.titleBoxText, { color: selectedTitleIndex === index ? "#FFF" : "#87AD8E" }]}>{title}</Text>
+                  <Text style={[styles.titleBoxText, { color: item.isEquipped ? "#FFF" : "#87AD8E" }]}>{item.name}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
-          )} */}
+          )}
 
-          {/* <Modal
+          <Modal
             transparent={true}
             animationType="slide"
             visible={modalVisible}
@@ -138,10 +129,10 @@ export default function MyRoom({ navigation }) {
             <CharacterDetail
               visible={true}
               onClose={handleCloseModal}
-              product={selectedCharacter || selectedPet}
-              onSelect={selectedCharacter ? handleCharacterSelect : handlePetSelect}
+              product={selectedItem}
+              onSelect={handleItemSelect}
             />
-          </Modal> */}
+          </Modal>
         </View>
       </View>
     </View>
