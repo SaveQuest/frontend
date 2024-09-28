@@ -37,7 +37,7 @@ const PercentCarouselItem = ({ item }) => (
   </View>
 );
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -53,23 +53,30 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
-      const client = await AsyncStorage.getItem("CARD_CRED").then(res => new KBPayClient(res))
-      await client.login()
+      const cardCred = await AsyncStorage.getItem("CARD_CRED");
+      if (!cardCred) {
+        navigation.replace("CardAuthentication")
+        return
+      }
+      // const client = new KBPayClient(cardCred)
+      // await client.login()
 
-      const today = new Date()
+      // const today = new Date()
 
-      const lastMonth = new Date();
-      lastMonth.setMonth(lastMonth.getMonth() - 1);
-      const transaction = await client.fetchTxList(new QueryRange(new QueryDate(
-        lastMonth.getFullYear(),
-        lastMonth.getMonth() + 1,
-        lastMonth.getDate()
-      ), new QueryDate(
-        today.getFullYear(),
-        today.getMonth() + 1,
-        today.getDate()
-      ))).then(console.log)
-      await requester.updateCardTransaction(transaction)
+      // const lastMonth = new Date();
+      // lastMonth.setMonth(lastMonth.getMonth() - 1);
+
+      // const transaction = await client.fetchTxList(new QueryRange(new QueryDate(
+      //   lastMonth.getFullYear(),
+      //   lastMonth.getMonth() + 1,
+      //   lastMonth.getDate()
+      // ), new QueryDate(
+      //   today.getFullYear(),
+      //   today.getMonth() + 1,
+      //   today.getDate()
+      // )));
+
+      // await requester.updateCardTransaction(transaction)
     })();
   }, []);
 
@@ -86,26 +93,17 @@ export default function Home() {
     return () => clearInterval(intervalId);
   }, [dstHome]);
 
-  const handleTasksSelected = (newTasks) => {
-    const updatedTasks = newTasks.map(task => {
-      const amountUsed = parseInt(task.amountUsed.replace(/[₩,]/g, ''), 10);
-      const goal = parseInt(task.goal.replace(/[₩,]/g, ''), 10);
-      const progress = Math.min(100, Math.round((amountUsed / goal) * 100));
-      return { ...task, progress };
-    });
-
-    setSelectedTasks((prevTasks) => [...prevTasks, ...updatedTasks]);
+  const handleTasksSelected = () => {
+    refreshDstQuest();
     setModalVisible(false);
   };
 
   const handleOpenModal = async () => {
-    const weeklyQuest = await requester.fetchWeeklyQuest()
-    console.log(weeklyQuest)
     setModalVisible(true);
   };
 
   const { state: dstHome, refresh: refreshDstHome } = useApi(() => requester.getDSTHome(), "DST_HOME")
-  const { state: dstQuest, refresh: refreshDstQuest } = useApi(()=>requester.getDSTQuest(), "DST_QUEST")
+  const { state: dstQuest, refresh: refreshDstQuest } = useApi(() => requester.getDSTQuest(), "DST_QUEST")
 
   return (
     <View style={styles.container}>
@@ -196,7 +194,6 @@ export default function Home() {
         </> : <>
           <Skeleton layout={[{ id: "zz", width: "100%", height: 72 }]} containerStyle={[styles.tasks, { marginTop: 10 }]} />
         </>}
-
 
         <ModalComponent
           visible={modalVisible}

@@ -48,7 +48,7 @@ const CardAuthentication = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>내 명의의 카드로 본인 인증을 할 수 있어요</Text>
+      <Text style={styles.title}>내 카드를{"\n"}등록할 수 있어요</Text>
       <ScrollView contentContainerStyle={styles.cardContainer}>
         {cardCompanies.map((company, index) => (
           <TouchableOpacity
@@ -56,9 +56,7 @@ const CardAuthentication = ({ navigation }) => {
             style={[
               styles.card,
               {
-                backgroundColor: selectedCardIndexes.includes(index) ? '#e6ffe6' : '#f0f0f0',
                 borderColor: selectedCardIndexes.includes(index) ? '#b2d8b2' : '#f0f0f0',
-                borderWidth: selectedCardIndexes.includes(index) ? 2 : 0,
               }
             ]}
             onPress={() => handleCardPress(index)}
@@ -68,9 +66,9 @@ const CardAuthentication = ({ navigation }) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      {/* 버튼 스타일 및 텍스트 동적 변경 */}
-      <TouchableOpacity onPress={handleOkay} style={[{ backgroundColor: "red" }, !isCardSelected && {
-        backgroundColor: "gray"
+
+      <TouchableOpacity disabled={!isCardSelected} onPress={handleOkay} style={[{ alignItems: "center", justifyContent: "center", borderRadius: 12, padding: 16, marginBottom: 24, backgroundColor: "#43B319" }, !isCardSelected && {
+        backgroundColor: "#b4e1a3"
       }]}>
         <Text style={[styles.cardSelectFinishText]}>
           완료
@@ -79,11 +77,12 @@ const CardAuthentication = ({ navigation }) => {
 
       <TouchableOpacity
         onPress={() => {
-          Alert.alert(";", "본 SaveQuest 팀은 여러 카드사를 지원하기 위해 최선을 다하고 있습니다. 머시기")
+          Alert.alert("ㅁㄴㅇㄹ", "본 SaveQuest 팀은 여러 카드사를 지원하기 위해 최선을 다하고 있습니다.")
         }}
       >
         <Text style={{
-          color: "gray"
+          color: "gray",
+          alignSelf: "center"
         }}>내가 쓰는 카드가 없어요</Text>
       </TouchableOpacity>
     </View>
@@ -94,34 +93,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#ffffff',
     padding: 25,
-    paddingTop: 40,
+    paddingTop: 75,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center',
   },
   cardContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginBottom: 20,
+    marginTop: 24,
   },
   card: {
     width: 100,
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 5,
+    borderWidth: 2,
+    backgroundColor: "#f0f0f0"
   },
   cardImage: {
     width: 50,
@@ -152,6 +145,7 @@ const styles = StyleSheet.create({
   cardSelectFinishText: {
     color: '#fff',
     fontSize: 16,
+    fontFamily: "WantedSans-Medium"
   },
 });
 

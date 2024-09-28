@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,55 +13,28 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
 import CharacterDetail from "../components/MyRoomItemModal";
+import { useUserStore } from "../stores/userStore";
+import { useApi } from "../hooks/useApi";
+import { requester } from "../lib/api";
 
 export default function MyRoom({ navigation }) {
+  const userData = useUserStore(s => s.data)
+  const { state: userRoom, refresh } = useApi(() => requester.fetchUserRoom())
+
   const [selectedTab, setSelectedTab] = useState("character");
-  const [selectedTitleIndex, setSelectedTitleIndex] = useState(6);
-  const [selectedCharacter, setSelectedCharacter] = useState(null);
-  const [characterImage, setCharacterImage] = useState(require("../assets/character/black.png"));
-  const [selectedPet, setSelectedPet] = useState(null);
-  const [petImage, setPetImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const titles = [
-    "절약 초보자",
-    "절약 중급자",
-    "절약 상급자",
-    "절약의 천재",
-    "절약의 왕",
-    "절약의 전설",
-    "절약의 신",
-  ];
-
-  const characters = [
-    { name: "빨간머리 캐릭터", image: require("../assets/character/red.png") },
-    { name: "초록머리 캐릭터", image: require("../assets/character/green.png") },
-    { name: "파란머리 캐릭터", image: require("../assets/character/blue.png") },
-    { name: "검은머리 캐릭터", image: require("../assets/character/black.png") },
-    { name: "보라머리 캐릭터", image: require("../assets/character/purple.png") },
-    { name: "노란머리 캐릭터", image: require("../assets/character/yellow.png") },
-  ];
-
-  const pets = [
-    { name: "고양이", image: require("../assets/pet/cat.png") },
-    { name: "강아지", image: require("../assets/pet/dog.png") },
-    { name: "햄스터", image: require("../assets/pet/ham.png") },
-    { name: "판다", image: require("../assets/pet/panda.png") },
-  ];
+  const { state: zz } = useApi(() => requester.fetchInventory("tag"))
+  console.log("zz", zz)
 
   const handleCharacterPress = (character) => {
-    setSelectedCharacter(character);
+    // setSelectedCharacter(character);
     setModalVisible(true);
   };
 
   const handleCharacterSelect = (character) => {
     setCharacterImage(character.image);
     setModalVisible(false);
-  };
-
-  const handlePetPress = (pet) => {
-    setSelectedPet(pet);
-    setModalVisible(true);
   };
 
   const handlePetSelect = (pet) => {
@@ -71,7 +44,7 @@ export default function MyRoom({ navigation }) {
 
   const handleCloseModal = () => {
     setModalVisible(false);
-    setSelectedCharacter(null);
+    // setSelectedCharacter(null);
     setSelectedPet(null);
   };
 
@@ -85,15 +58,15 @@ export default function MyRoom({ navigation }) {
       <DetailHeader navigation={navigation} title={"마이룸"} n={"Main"} />
       <View style={{ flex: 1, paddingHorizontal: 20 }}>
         <View style={{ alignItems: "center", justifyContent: "center", flexDirection: "row", position: 'relative' }}>
-          <Image
+          {userRoom?.character && <Image
             style={styles.character}
-            source={characterImage}
-          />
-          {petImage && (
+            source={{ uri: userRoom.character.imageUrl }}
+          />}
+          {userRoom?.pet && (
             <View style={styles.petWrapper}>
               <Image
-                style={styles.petImage} 
-                source={petImage}
+                style={styles.petImage}
+                source={{ uri: userRoom.pet.imageUrl }}
                 resizeMode="contain"
               />
             </View>
@@ -101,15 +74,15 @@ export default function MyRoom({ navigation }) {
         </View>
 
         <View style={{ flexDirection: "row", width: "100%", alignItems: "flex-end", justifyContent: "center", marginTop: 10 }}>
-          <Text style={{ alignItems: "center", fontSize: 32, fontWeight: "bold", padding: 0, margin: 0 }}>차호림</Text>
+          <Text style={{ alignItems: "center", fontSize: 32, fontWeight: "bold", padding: 0, margin: 0 }}>{userData.name}</Text>
           <View style={{ flexDirection: "row", marginBottom: 5, alignItems: "flex-end", marginLeft: 5 }}>
-            <Text style={{ color: "#55555E", fontSize: 14, fontWeight: 500, marginBottom: 2 }}>Lv.</Text>
-            <Text style={{ color: "#81C966", fontSize: 21, fontWeight: 700 }}>99</Text>
+            {/* <Text style={{ color: "#55555E", fontSize: 14, fontWeight: 500, marginBottom: 2 }}>Lv.</Text>
+            <Text style={{ color: "#81C966", fontSize: 21, fontWeight: 700 }}>{userData.}</Text> */}
           </View>
         </View>
-        <View style={{ alignSelf: "center", paddingHorizontal: 12, paddingVertical: 3, backgroundColor: "#DCF5E9", borderRadius: 8, marginTop: 5 }}>
-          <Text style={{ color: "#87AD8E", fontSize: 16, fontWeight: 700, textAlign: "center" }}>{titles[selectedTitleIndex]}</Text>
-        </View>
+        {userRoom?.tag && <View style={{ alignSelf: "center", paddingHorizontal: 12, paddingVertical: 3, backgroundColor: "#DCF5E9", borderRadius: 8, marginTop: 5 }}>
+          <Text style={{ color: "#87AD8E", fontSize: 16, fontWeight: 700, textAlign: "center" }}>{userRoom.tag.name}</Text>
+        </View>}
 
         <View style={styles.items}>
           <View style={styles.tabContainer}>
@@ -121,9 +94,9 @@ export default function MyRoom({ navigation }) {
               <MaterialIcons name="pets" size={24} color={selectedTab === "pet" ? "#4CAF50" : "#BDBDBD"} />
               <Text style={selectedTab === "pet" ? styles.tabTextActive : styles.tabText}>펫</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.tabButton} onPress={() => setSelectedTab("background")}>
-            <Feather name="award" size={24} color={selectedTab === "background" ? "#4CAF50" : "#BDBDBD"} />
-              <Text style={selectedTab === "background" ? styles.tabTextActive : styles.tabText}>칭호</Text>
+            <TouchableOpacity style={styles.tabButton} onPress={() => setSelectedTab("tag")}>
+              <Feather name="tag" size={24} color={selectedTab === "tag" ? "#4CAF50" : "#BDBDBD"} />
+              <Text style={selectedTab === "tag" ? styles.tabTextActive : styles.tabText}>칭호</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.tabButton} onPress={() => setSelectedTab("randombox")}>
               <Feather name="box" size={24} color={selectedTab === "randombox" ? "#4CAF50" : "#BDBDBD"} />
@@ -131,7 +104,7 @@ export default function MyRoom({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          {selectedTab === "character" && (
+          {/* {selectedTab !== "tag" && (
             <ScrollView contentContainerStyle={styles.characterList}>
               {characters.map((character, index) => (
                 <TouchableOpacity key={index} style={styles.characterItem} onPress={() => handleCharacterPress(character)}>
@@ -140,22 +113,23 @@ export default function MyRoom({ navigation }) {
                 </TouchableOpacity>
               ))}
             </ScrollView>
-          )}
+          )} */}
 
-          {selectedTab === "pet" && (
-            <ScrollView contentContainerStyle={styles.characterList}>
-              {pets.map((pet, index) => (
-                <TouchableOpacity key={index} style={styles.characterItem} onPress={() => handlePetPress(pet)}>
-                  <View style={styles.petItemWrapper}>
-                    <Image source={pet.image} style={styles.petItemImage} resizeMode="contain" />
-                  </View>
-                  <Text style={styles.characterItemLabel}>{pet.name}</Text>
+          {/* {selectedTab === "tag" && (
+            <ScrollView style={styles.titleList}>
+              {titles.map((title, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={[styles.titleBox, { backgroundColor: selectedTitleIndex === index ? "#4CAF50" : "#DCF5E9" }]}
+                  onPress={() => handleTitleSelect(index)} // 칭호 선택 시 호출
+                >
+                  <Text style={[styles.titleBoxText, { color: selectedTitleIndex === index ? "#FFF" : "#87AD8E" }]}>{title}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
-          )}
+          )} */}
 
-          <Modal
+          {/* <Modal
             transparent={true}
             animationType="slide"
             visible={modalVisible}
@@ -167,21 +141,7 @@ export default function MyRoom({ navigation }) {
               product={selectedCharacter || selectedPet}
               onSelect={selectedCharacter ? handleCharacterSelect : handlePetSelect}
             />
-          </Modal>
-
-          {selectedTab === "background" && (
-            <ScrollView style={styles.titleList}>
-              {titles.map((title, index) => (
-                <TouchableOpacity 
-                  key={index} 
-                  style={[styles.titleBox, { backgroundColor: selectedTitleIndex === index ? "#4CAF50" : "#DCF5E9" }]}
-                  onPress={() => handleTitleSelect(index)} // 칭호 선택 시 호출
-                >
-                  <Text style={[styles.titleBoxText, { color: selectedTitleIndex === index ? "#FFF" : "#87AD8E" }]}>{title}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          )}
+          </Modal> */}
         </View>
       </View>
     </View>
@@ -199,12 +159,12 @@ const styles = StyleSheet.create({
   },
   petWrapper: {
     position: 'absolute',
-    bottom: 15, 
-    right: 60, 
+    bottom: 15,
+    right: 60,
   },
   petImage: {
-    width: 60, 
-    height: 60, 
+    width: 60,
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
   },

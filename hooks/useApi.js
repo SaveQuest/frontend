@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const USE_MOCK = true
+const USE_MOCK = false
 const MOCK_DATA = {
     DST_QUEST: {
         "id": "userId",
@@ -228,7 +228,7 @@ const MOCK_DATA = {
     }
 }
 
-export const useApi = (reqFunc, mockKey = undefined) => {
+export const useApi = (reqFunc, mockKey = null) => {
     const [state, setState] = useState(null);
 
     const loadData = () => {
