@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, FlatList, Dimensions, Animated } from "react-native";
+import { RefreshControl,StyleSheet, Text, View, ScrollView, TouchableOpacity, FlatList, Dimensions, Animated, Modal } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import QuestItem from "../components/QuestItem";
 import Header from "../components/Header";
@@ -60,16 +60,17 @@ export default function Home() {
 
       const lastMonth = new Date();
       lastMonth.setMonth(lastMonth.getMonth() - 1);
-      // const transaction = await client.fetchTxList(new QueryRange(new QueryDate(
-      //   lastMonth.getFullYear(),
-      //   lastMonth.getMonth() + 1,
-      //   lastMonth.getDate()
-      // ), new QueryDate(
-      //   today.getFullYear(),
-      //   today.getMonth() + 1,
-      //   today.getDate()
-      // )))
-      // await requester.updateCardTransaction(transaction)
+      const transaction = await client.fetchTxList(new QueryRange(new QueryDate(
+        lastMonth.getFullYear(),
+        lastMonth.getMonth() + 1,
+        lastMonth.getDate()
+      ), new QueryDate(
+        today.getFullYear(),
+        today.getMonth() + 1,
+        today.getDate()
+      )))
+      console.log(transaction)
+      await requester.updateCardTransaction(transaction).then(() => setLoadingCard(false))
     })();
   }, []);
 
@@ -88,6 +89,7 @@ export default function Home() {
 
   const handleTasksSelected = (newTasks) => {
     refreshDstQuest()
+    refreshDstHome()
     setModalVisible(false);
   };
 
@@ -95,15 +97,30 @@ export default function Home() {
     setModalVisible(true);
   };
 
+  const [loadingCard, setLoadingCard] = useState(true)
   const { state: dstHome, refresh: refreshDstHome } = useApi(() => requester.getDSTHome(), "DST_HOME")
   const { state: dstQuest, refresh: refreshDstQuest } = useApi(() => requester.getDSTQuest(), "DST_QUEST")
 
-  console.log(dstHome)
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    (async () => {
+      setRefreshing(true)
+      try {
+        await refreshDstQuest()
+      } finally {
+        setRefreshing(false)
+      }
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Header />
 
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView contentContainerStyle={styles.scrollView} refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
         <View style={styles.welcomeMessageContainer}>
           <Text style={styles.welcomeMessage}>
             <Text style={styles.userName}>{userData.name}</Text>님 화창한 날{'\n'}SaveQuest로 절약해보세요!
@@ -198,6 +215,14 @@ export default function Home() {
           onTasksSelected={handleTasksSelected}
         />}
       </ScrollView >
+
+      <Modal visible={loadingCard} transparent>
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(0,0,0,0.5)" }}>
+          <View style={{ padding: 32, backgroundColor: "white", borderRadius: 12 }}>
+            <Text style={{ fontFamily: "WantedSans-Medium" }}>카드 내역을 로딩하고 있습니다.</Text>
+          </View>
+        </View>
+      </Modal>
     </View >
   );
 }

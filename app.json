@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/5d887bfe-0587-4453-8366-13ca623c417d"
+      "url": "https://u.expo.dev/d1554997-2363-47e2-9e6e-4da059f38ade"
     },
     "splash": {
       "image": "./assets/splash.png",
@@ -36,6 +36,9 @@
       "eas": {
         "projectId": "d1554997-2363-47e2-9e6e-4da059f38ade"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

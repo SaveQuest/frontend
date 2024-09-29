@@ -130,3 +130,5 @@ docs/pages/versions/*/react-native/*.diff
 **/ios/.xcode.env.local
 
 /node_modules
+
+/dist

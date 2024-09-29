@@ -10,7 +10,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
 
   const [selectedTaskIdList, setSelectedTaskList] = useState([]);
   const scaleAnim = useRef(new Animated.Value(1)).current;
-
+  console.log("questData", questData)
   const handleTaskSelect = (id) => {
     if (selectedTaskIdList.includes(id)) {
       setSelectedTaskList((prev) => prev.filter(i => i !== id));
@@ -31,10 +31,6 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
       ]).start();
     }
   };
-  const closeAndReload = () => {
-    onClose();
-    navigator.navigate("Home", { refresh: true });
-  }
 
   const handleDone = () => {
     if (selectedTaskIdList.length !== 3) {
@@ -43,7 +39,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
     }
 
     requester.selectWeeklyQuest(selectedTaskIdList).then(
-      () => closeAndReload()
+      () => onTasksSelected()
     )
   };
 
@@ -54,7 +50,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
       visible={visible}
       onRequestClose={onClose}
     >
-      {questData && <View style={styles.modalOverlay}>
+      <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
             <Text style={{ fontFamily: "WantedSans-SemiBold", fontSize: 24 }}>주간 도전과제 선택</Text>
@@ -64,7 +60,7 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
           </View>
           <Text style={{ marginTop: 0 }}></Text>
 
-          <ScrollView contentContainerStyle={styles.taskList}>
+          {questData && <ScrollView contentContainerStyle={styles.taskList}>
             {questData.quest.map((task, index) => {
               const selected = selectedTaskIdList.includes(task.id);
 
@@ -86,14 +82,14 @@ const ModalComponent = ({ visible, onClose, onTasksSelected }) => {
                 </View>
               </TouchableOpacity>
             })}
-          </ScrollView>
+          </ScrollView>}
 
           <TouchableOpacity style={styles.doneButton} onPress={handleDone}>
             <Text style={styles.doneButtonText}>완료</Text>
           </TouchableOpacity>
         </View>
       </View>
-      }
+
     </Modal>
   );
 };
@@ -130,6 +126,7 @@ const styles = StyleSheet.create({
   },
   taskList: {
     width: '100%',
+    flex: 1
   },
   taskItem: {
     flexDirection: 'row',

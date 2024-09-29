@@ -14,7 +14,7 @@ const StoreScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const { state: products } = useApi(() => requester.fetchStoreProducts(selectedTab), "STORE_PRDS")
+  const { state: products } = useApi(() => requester.fetchStoreProducts(selectedTab), "STORE_PRDS", selectedTab)
   console.log(products)
 
   const handleProductPress = (product) => {

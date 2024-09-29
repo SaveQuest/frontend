@@ -231,14 +231,14 @@ const MOCK_DATA = {
 export const useApi = (reqFunc, mockKey = null, key = null) => {
     const [state, setState] = useState(null);
 
-    const loadData = () => {
+    const loadData = async () => {
         console.log("load", reqFunc, mockKey)
         if (USE_MOCK && MOCK_DATA[mockKey]) {
             timer = setTimeout(() => {
                 setState(MOCK_DATA[mockKey])
             }, 1000)
         } else {
-            reqFunc().then((res) => setState(res))
+            await reqFunc().then((res) => setState(res))
         }
     }
 

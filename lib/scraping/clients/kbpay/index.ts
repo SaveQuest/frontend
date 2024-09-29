@@ -174,9 +174,9 @@ export class KBPayClient {
         let seq = 0;
         const list = [];
 
+        await this.http.instance.get("https://m.kbcard.com/MKB/DVIEW/KMBM0001")
         while (1) {
             console.log("request", seq)
-            await this.http.instance.get("https://m.kbcard.com/MKB/DVIEW/KMBM0001")
 
             const res = await this.http.instance.post("https://m.kbcard.com/MKB/API/KMBM0001?responseContentType=json&mainCC=a",
                 "" + new URLSearchParams({

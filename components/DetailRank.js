@@ -12,12 +12,11 @@ import { requester } from "../lib/api";
 export default function DetailRank({ route, navigation }) {
   const { id } = route.params
   const { state: challData } = useApi(() => { if (id) return requester.fetchChallengeDetail(id) }, "CHALL_DETAIL")
-  console.log("chall", challData)
+
   if (!id) {
     navigation.goBack()
     return <></>
   }
-
 
   return (
 
@@ -34,7 +33,7 @@ export default function DetailRank({ route, navigation }) {
               name={rank.name}
               lv={rank.level}
               cName={rank.element[0].name}
-              money={rank.element[0].value}
+              money={rank.element[0].amount}
             />
           ))}
         </View>

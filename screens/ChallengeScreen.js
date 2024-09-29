@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView, TouchableOpacity, Text, ImageBackground } from "react-native";
+import { RefreshControl, View, ScrollView, TouchableOpacity, Text, ImageBackground } from "react-native";
 import Head from "../components/Header";
 import SafeIcon from "../components/SafeIcon";
 import styles from "../styles/QuestsScreenStlyes";
@@ -11,16 +11,30 @@ import { useApi } from "../hooks/useApi";
 import Skeleton from "react-native-reanimated-skeleton";
 
 const ChallengeScreen = ({ navigation }) => {
-  const { state: dstChallenge } = useApi(() => requester.fetchDSTChallenge(), "DST_CHALLENGE_PAGE")
+  const { state: dstChallenge, refresh } = useApi(() => requester.fetchDSTChallenge(), "DST_CHALLENGE_PAGE")
   console.log("za", JSON.stringify(dstChallenge))
-  // console.log(dstChallenge.element.questInfo.bottom)
-  
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    (async () => {
+      setRefreshing(true)
+      try {
+        await refresh()
+      } finally {
+        setRefreshing(false)
+      }
+    })();
+  }, []);
+
   return (
     <>
       <View style={styles.container}>
         <Head />
 
-        <ScrollView contentContainerStyle={styles.scrollView}>
+        <ScrollView contentContainerStyle={styles.scrollView} refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
           <Card>
             <TouchableOpacity onPress={() => navigation.navigate("ChallengeJoinScreen")}>
               <View
@@ -106,10 +120,10 @@ const ChallengeScreen = ({ navigation }) => {
               </View>
             </View>
           </View> : <>
-          {
-            dstChallenge && dstChallenge.noElement === true ? <Text>참가한 챌린지가 아직 없습니다 :)</Text>
-              : <Skeleton layout={[{ id: "aaq", width: "100%", height: 100 }]} containerStyle={styles.challenge} />
-          }
+            {
+              dstChallenge && dstChallenge.noElement === true ? <Text>참가한 챌린지가 아직 없습니다 :)</Text>
+                : <Skeleton layout={[{ id: "aaq", width: "100%", height: 100 }]} containerStyle={styles.challenge} />
+            }
           </>}
 
         </ScrollView>
